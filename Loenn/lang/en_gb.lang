@@ -1,0 +1,7 @@
+# Sample Entity
+entities.DoonvHelper/SampleEntity.placements.name.normal=Sample Entity (DoonvHelper)
+entities.DoonvHelper/SampleEntity.attributes.description.sampleProperty=A sample property for your entity.
+
+# Sample Trigger
+triggers.DoonvHelper/SampleTrigger.placements.name.normal=Sample Trigger (DoonvHelper)
+triggers.DoonvHelper/SampleTrigger.attributes.description.sampleProperty=A sample property for your trigger.
