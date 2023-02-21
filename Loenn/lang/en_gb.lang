@@ -1,7 +1,16 @@
-# Sample Entity
-entities.DoonvHelper/SampleEntity.placements.name.normal=Sample Entity (DoonvHelper)
-entities.DoonvHelper/SampleEntity.attributes.description.sampleProperty=A sample property for your entity.
+# Configuration
+mods.DoonvHelper.name=Doonv Helper
 
-# Sample Trigger
-triggers.DoonvHelper/SampleTrigger.placements.name.normal=Sample Trigger (DoonvHelper)
-triggers.DoonvHelper/SampleTrigger.attributes.description.sampleProperty=A sample property for your trigger.
+# Custom Badeline Boost
+entities.DoonvHelper/CustomBadelineBoost.placements.name.normal=Custom Badeline Boost
+entities.DoonvHelper/CustomBadelineBoost.placements.description.normal=A Badeline Boost with a ton of customization options.
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.lockCamera=Upon activation, the camera cannot pan away from the entity.
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.canSkip=Badeline will skip to the next position if the player is too far to the right of the current one  (100 pixels).
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.cutsceneBird=For disabling the bird in the cutscene. You absolute monster.
+
+# Solid Color
+entities.DoonvHelper/SolidColor.placements.name.normal=Solid Color
+entities.DoonvHelper/SolidColor.placements.description.normal=A colored, resizable rectangle.
+entities.DoonvHelper/SolidColor.attributes.description.color=The color of the entity. Does not support alpha.
+entities.DoonvHelper/SolidColor.attributes.description.depth=The render depth of the entity.\nLarger numbers are further back and smaller numbers are further forward.\nDepth table reference:\nBGTerrain = 10000\nBGMirrors = 9500\nBGDecals = 9000\nBGParticles = 8000\nSolidsBelow = 5000\nBelow = 2000\nNPCs = 1000\nTheoCrystal = 100\nPlayer = 0\nDust = -50\nPickups = -100\nSeeker = -200\nParticles = -8000\nAbove = -8500\nSpinners = -8500\nSolids = -9000\nFGTerrain = -10000\nFGDecals = -10500\nDreamBlocks = -11000\nPlayerDreamDashing = -12000\nEnemy = -12500\nFakeWalls = -13000\nFGParticles = -50000\nTop = -1000000\nFormationSequences = -2000000
+

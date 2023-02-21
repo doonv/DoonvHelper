@@ -1,1 +1,3 @@
 SAMPLE_DIALOG_TEXT= Some sample text for your mod.
+DOONVHELPER_TESTING_001=[BADELINE normal left] wanna talk with birb?
+[MADELINE determined right] yes!
