@@ -164,46 +164,38 @@ namespace Celeste.Mod.DoonvHelper.Entities
             }
         }
 
-        private const string UnlockedFlag = "unlocked_satellite";
+        private string completeFlag = "unlocked_satellite";
 
+		// THIS is **perfection** right here. Absolute masterpiece
         public static readonly Dictionary<string, Color> Colors = new Dictionary<string, Color>
-    {
-        {
-            "U",
-            Calc.HexToColor("f0f0f0")
-        },
-        {
-            "L",
-            Calc.HexToColor("9171f2")
-        },
-        {
-            "DR",
-            Calc.HexToColor("0a44e0")
-        },
-        {
-            "UR",
-            Calc.HexToColor("b32d00")
-        },
-        {
-            "UL",
-            Calc.HexToColor("ffcd37")
-        }
-    };
+		{
+			{ "L",   new Color(0.568f, 0.443f, 0.949f) },
+			{ "R",   new Color(0.608f, 1.000f, 0.659f) },
+			{ "U",   new Color(0.941f, 0.941f, 0.941f) },
+			{ "D",   new Color(0.310f, 0.231f, 0.357f) },
+			{ "UL" , new Color(1.000f, 0.803f, 0.215f) },
+			{ "UR" , new Color(0.702f, 0.176f, 0.000f) },
+			{ "DL" , new Color(0.145f, 0.608f, 0.561f) },
+			{ "DR" , new Color(0.039f, 0.266f, 0.878f) }
+		};
 
         public static readonly Dictionary<string, string> Sounds = new Dictionary<string, string>
-    {
-        { "U", "event:/game/01_forsaken_city/console_white" },
-        { "L", "event:/game/01_forsaken_city/console_purple" },
-        { "DR", "event:/game/01_forsaken_city/console_blue" },
-        { "UR", "event:/game/01_forsaken_city/console_red" },
-        { "UL", "event:/game/01_forsaken_city/console_yellow" }
-    };
+		{
+			{ "L", "event:/game/01_forsaken_city/console_purple" },
+            { "R", "event:/game/01_forsaken_city/console_purple" }, // Placeholder
+			{ "U", "event:/game/01_forsaken_city/console_white" },
+            { "D", "event:/game/01_forsaken_city/console_purple" }, // Placeholder
+			{ "UL", "event:/game/01_forsaken_city/console_yellow" },
+			{ "UR", "event:/game/01_forsaken_city/console_red" },
+            { "DL", "event:/game/01_forsaken_city/console_purple" }, // Placeholder
+			{ "DR", "event:/game/01_forsaken_city/console_blue" },
+		};
 
         public static readonly Dictionary<string, ParticleType> Particles = new Dictionary<string, ParticleType>();
 
-        private static readonly string[] Code = new string[6] { "U", "L", "DR", "UR", "L", "UL" };
+        private string[] Code = new string[] { "U", "L", "DR", "UR", "L", "UL"};
 
-        private static List<string> uniqueCodes = new List<string>();
+        private List<string> uniqueCodes = new List<string>();
 
         private bool enabled;
 
@@ -243,9 +235,44 @@ namespace Celeste.Mod.DoonvHelper.Entities
 
         private SoundSource staticLoopSfx;
 
-        public CustomSatellite(EntityData data, Vector2 offset)
-            : base(data.Position + offset)
+        private bool isCosmetic;
+        private bool requireSight;
+        private float volume;
+
+        // Checks if a position is on screen or not
+        private bool PositionOnScreen(Camera camera, Vector2 position, float tolerance = 0.0f)
         {
+            return (
+                (position.X > camera.X - tolerance && position.X < camera.X + 320f + tolerance) 
+                && 
+                (position.Y > camera.Y - tolerance && position.Y < camera.Y + 180f + tolerance)
+            );
+        }
+
+        public CustomSatellite(
+            Vector2 position,
+            Vector2 offset,
+            Vector2[] nodes,
+            string dashSequence = "U,L,DR,UR,L,UL",
+            bool isCosmetic = false,
+            bool requireSight = false,
+            string completeFlag = "unlocked_satellite",
+            float volume = 1.0f
+        ) : base(position + offset) {
+            this.Code = dashSequence.ToUpper().Split(','); 
+            this.volume = volume;
+            this.requireSight = requireSight;
+            this.completeFlag = completeFlag;
+            this.isCosmetic = isCosmetic;
+            Particles.Clear();
+            foreach (KeyValuePair<string, Color> color in Colors)
+            {
+                Particles.Add(color.Key, new ParticleType(Player.P_DashA)
+                {
+                    Color = color.Value,
+                    Color2 = Color.Lerp(color.Value, Color.White, 0.5f)
+                });
+            }
             Add(sprite = new Image(GFX.Game["objects/citysatellite/dish"]));
             Add(pulse = new Image(GFX.Game["objects/citysatellite/light"]));
             Add(computer = new Image(GFX.Game["objects/citysatellite/computer"]));
@@ -260,8 +287,8 @@ namespace Celeste.Mod.DoonvHelper.Entities
             computerScreenNoise.AddLoop("static", "", 0.05f);
             computerScreenNoise.Play("static");
             computer.Position = (computerScreen.Position = (computerScreenShine.Position = (computerScreenNoise.Position = new Vector2(8f, 8f))));
-            birdFlyPosition = offset + data.Nodes[0];
-            gemSpawnPosition = offset + data.Nodes[1];
+            birdFlyPosition = offset + nodes[0];
+            gemSpawnPosition = offset + nodes[1];
             Add(dashListener = new DashListener());
             dashListener.OnDash = delegate (Vector2 dir)
             {
@@ -297,7 +324,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                             flag = false;
                         }
                     }
-                    if (flag && level.Camera.Left + 32f < gemSpawnPosition.X && enabled)
+                    if (flag && (PositionOnScreen((Scene as Level).Camera, gemSpawnPosition, -16f) || !requireSight) && enabled)
                     {
                         Add(new Coroutine(UnlockGem()));
                     }
@@ -316,11 +343,27 @@ namespace Celeste.Mod.DoonvHelper.Entities
             staticLoopSfx.Position = computer.Position;
         }
 
+        
+
+        public CustomSatellite(EntityData data, Vector2 offset)
+            : this(
+                position:     data.Position, 
+                offset:       offset, 
+                nodes:        data.Nodes,
+                dashSequence: data.Attr("dashSequence", defaultValue: "U,L,DR,UR,L,UL"),
+                isCosmetic:    data.Bool("cosmetic", defaultValue: false),
+                requireSight: data.Bool("requireSight", defaultValue: true),
+                completeFlag: data.Attr("completeFlag", defaultValue: "unlocked_satellite"),
+                volume:       data.Float("volume", defaultValue: 1.0f)
+            )
+        {
+        }
+
         public override void Added(Scene scene)
         {
             base.Added(scene);
             level = scene as Level;
-            enabled = !level.Session.HeartGem && !level.Session.GetFlag("unlocked_satellite");
+            enabled = !level.Session.HeartGem && !level.Session.GetFlag(completeFlag);
             if (enabled)
             {
                 foreach (string uniqueCode in uniqueCodes)
@@ -339,7 +382,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             {
                 staticLoopSfx.Play("event:/game/01_forsaken_city/console_static_loop");
             }
-            if (!level.Session.HeartGem && level.Session.GetFlag("unlocked_satellite"))
+            if (!level.Session.HeartGem && level.Session.GetFlag(completeFlag))
             {
                 HeartGem entity = new HeartGem(gemSpawnPosition);
                 level.Add(entity);
@@ -368,10 +411,14 @@ namespace Celeste.Mod.DoonvHelper.Entities
                     }
                     pulse.Color = (computerScreen.Color = Colors[Code[i]]);
                     pulseBloom.Visible = (pulse.Visible = true);
-                    Audio.Play(Sounds[Code[i]], Position + computer.Position);
+                    Audio.Play(Sounds[Code[i]], Position + computer.Position).setVolume(volume);
                     yield return 0.5f;
                     pulseBloom.Visible = (pulse.Visible = false);
-                    Audio.Play((i < Code.Length - 1) ? "event:/game/01_forsaken_city/console_static_short" : "event:/game/01_forsaken_city/console_static_long", Position + computer.Position);
+                    Audio.Play(
+                        (i < Code.Length - 1) ?
+                        "event:/game/01_forsaken_city/console_static_short" :
+                        "event:/game/01_forsaken_city/console_static_long",
+                    Position + computer.Position).setVolume(volume);
                     yield return 0.2f;
                 }
                 Add(Alarm.Create(Alarm.AlarmMode.Oneshot, delegate
@@ -397,7 +444,13 @@ namespace Celeste.Mod.DoonvHelper.Entities
 
         private IEnumerator UnlockGem()
         {
-            level.Session.SetFlag("unlocked_satellite");
+            if (isCosmetic) {
+                yield break;
+            }
+            if (!String.IsNullOrWhiteSpace(completeFlag)) {
+                level.Session.SetFlag(completeFlag);
+            }
+                
             birdFinishSfx.Position = birdFlyPosition - Position;
             birdFinishSfx.Play("event:/game/01_forsaken_city/birdbros_finish");
             staticLoopSfx.Play("event:/game/01_forsaken_city/console_static_loop");
@@ -428,19 +481,19 @@ namespace Celeste.Mod.DoonvHelper.Entities
             particles.Tag = Tags.FrozenUpdate;
             particles.Emit(BirdNPC.P_Feather, 24, birdFlyPosition, new Vector2(4f, 4f));
             level.Add(particles);
-            HeartGem gem = new HeartGem(birdFlyPosition)
+            HeartGem heart = new HeartGem(birdFlyPosition)
             {
                 Tag = Tags.FrozenUpdate
             };
-            level.Add(gem);
+            level.Add(heart);
             yield return null;
-            gem.ScaleWiggler.Start();
+            heart.ScaleWiggler.Start();
             yield return 0.85f;
-            SimpleCurve curve = new SimpleCurve(gem.Position, gemSpawnPosition, (gem.Position + gemSpawnPosition) / 2f + new Vector2(0f, -64f));
+            SimpleCurve curve = new SimpleCurve(heart.Position, gemSpawnPosition, (heart.Position + gemSpawnPosition) / 2f + new Vector2(0f, -64f));
             for (float t = 0f; t < 1f; t += Engine.DeltaTime)
             {
                 yield return null;
-                gem.Position = curve.GetPoint(Ease.CubeInOut(t));
+                heart.Position = curve.GetPoint(Ease.CubeInOut(t));
             }
             yield return 0.5f;
             particles.RemoveSelf();

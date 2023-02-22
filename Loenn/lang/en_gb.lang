@@ -13,4 +13,13 @@ entities.DoonvHelper/SolidColor.placements.name.normal=Solid Color
 entities.DoonvHelper/SolidColor.placements.description.normal=A colored, resizable rectangle.
 entities.DoonvHelper/SolidColor.attributes.description.color=The color of the entity. Does not support alpha.
 entities.DoonvHelper/SolidColor.attributes.description.depth=The render depth of the entity.\nLarger numbers are further back and smaller numbers are further forward.\nDepth table reference:\nBGTerrain = 10000\nBGMirrors = 9500\nBGDecals = 9000\nBGParticles = 8000\nSolidsBelow = 5000\nBelow = 2000\nNPCs = 1000\nTheoCrystal = 100\nPlayer = 0\nDust = -50\nPickups = -100\nSeeker = -200\nParticles = -8000\nAbove = -8500\nSpinners = -8500\nSolids = -9000\nFGTerrain = -10000\nFGDecals = -10500\nDreamBlocks = -11000\nPlayerDreamDashing = -12000\nEnemy = -12500\nFakeWalls = -13000\nFGParticles = -50000\nTop = -1000000\nFormationSequences = -2000000
+entities.DoonvHelper/SolidColor.attributes.description.alpha=A number between 0 and 1 that determines the color's transparency.
+
+entities.DoonvHelper/CustomSatellite.placements.name.normal=Custom Satellite
+entities.DoonvHelper/CustomSatellite.placements.description.normal=That one crystal heart thingy from Ch1, but better.
+entities.DoonvHelper/CustomSatellite.attributes.description.volume=Controls the volume.\nWhile you can go with high values like 5, please, don't. Or else your Lönn license is getting revoked.
+entities.DoonvHelper/CustomSatellite.attributes.description.requireSight=Whether the satellite has to be seen by the player in order to get activated.
+entities.DoonvHelper/CustomSatellite.attributes.description.completeFlag=The flag used to mark that the player has activated the satellite.\nLeaving this blank will result in the satellite resetting every time the player dies/leaves the room. (Not recommended)
+entities.DoonvHelper/CustomSatellite.attributes.description.cosmetic=The crystal heart will never show up when this is activated and the satellite would simply serve a cosmetic purpose.
+entities.DoonvHelper/CustomSatellite.attributes.description.dashSequence=A sequence of comma-seperated values which are equal to a sequence of dashes.\nDash Values:\nU = Up\nD = Down\nL = Left\nR = Right\nUL = Up-Left\nUR = Up-Right\nDL = Down-Left\nDR = Down-Right
 

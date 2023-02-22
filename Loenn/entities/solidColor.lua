@@ -8,6 +8,10 @@ solidColor.fieldInformation = {
     },
     color = {
         fieldType = "color"
+    },
+    alpha = {
+        minimumValue = 0.0,
+        maximumValue = 1.0
     }
 }
 solidColor.placements = {
@@ -16,7 +20,8 @@ solidColor.placements = {
         width = 8,
         height = 8,
         depth = 5000,
-        color = "6969ee"
+        color = "6969ee",
+        alpha = 1.0
     }
 }
 
