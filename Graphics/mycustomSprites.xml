@@ -5,6 +5,5 @@
         <Anim id="idle" path="idle" frames="0-5" delay="0.08" goto="idle:10,flash:2,blink"/>
         <Anim id="flash" path="idle" frames="6-11" delay="0.08" goto="idle"/>
         <Anim id="blink" path="idle" frames="12-25" delay="0.08" goto="idle"/>
-        <Anim id="stretch" path="stretch" frames="12-25" delay="0.08" goto="stretch"/>
     </DoonvHelper_CustomBadelineBoost>
 </Sprites>

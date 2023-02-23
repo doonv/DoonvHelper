@@ -1,6 +1,10 @@
-- Name: DoonvHelper
+- DLL: bin/DoonvHelper.dll
+  Name: DoonvHelper
   Version: 0.1.0
-  DLL: bin/DoonvHelper.dll
   Dependencies:
+    - Name: AurorasHelper
+      Version: 0.1.19
     - Name: Everest
       Version: 1.3471.0
+    - Name: MaxHelpingHand
+      Version: 1.24.1

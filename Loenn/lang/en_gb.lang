@@ -23,3 +23,7 @@ entities.DoonvHelper/CustomSatellite.attributes.description.completeFlag=The fla
 entities.DoonvHelper/CustomSatellite.attributes.description.cosmetic=The crystal heart will never show up when this is activated and the satellite would simply serve a cosmetic purpose.
 entities.DoonvHelper/CustomSatellite.attributes.description.dashSequence=A sequence of comma-seperated values which are equal to a sequence of dashes.\nDash Values:\nU = Up\nD = Down\nL = Left\nR = Right\nUL = Up-Left\nUR = Up-Right\nDL = Down-Left\nDR = Down-Right
 
+# Dash Code Gate
+entities.DoonvHelper/DashCodeGate.placements.name.normal=Dash Code Gate
+entities.DoonvHelper/DashCodeGate.attributes.description.persistenceFlag=The flag that activates when the gate is activated and that is used to keep the gate open even if the player dies or leaves the room.\n Leave empty to make the gate not persistant.
+entities.DoonvHelper/DashCodeGate.attributes.description.sprite=Changes the visual appearance of the switch gate.
