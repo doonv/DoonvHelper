@@ -34,7 +34,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             bool haveBird = true
         )
         {
-            Console.WriteLine("badeline cutscene -1");
             this.player = player;
             this.boost = boost;
             this.sayDialog = sayDialog;
@@ -50,7 +49,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 Add(new Coroutine(CutsceneDialogOnly()));
                 return;
             }
-            Console.WriteLine("badeline cutscene 0");
             Audio.SetMusic(null);
             ScreenWipe.WipeColor = Color.White;
             hasGolden = false;
@@ -74,7 +72,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
         }
         private IEnumerator Cutscene()
         {
-            Console.WriteLine("badeline cutscene 1");
             Engine.TimeRate = 1f;
             boost.Active = false;
             yield return null;
@@ -86,7 +83,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             {
                 yield return 0.152f;
             }
-            Console.WriteLine("badeline cutscene 2");
             cameraOffset = new Vector2(0f, -20f);
             boost.Active = true;
             player.EnforceLevelBounds = false;
@@ -149,7 +145,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 boost.Active = true;
                 return;
             }
-            if (WasSkipped && boost != null && boost.Ch9FinalBoostSfx != null)
+            if (WasSkipped && boost != null)
             {
                 boost.Ch9FinalBoostSfx.stop(STOP_MODE.ALLOWFADEOUT);
                 boost.Ch9FinalBoostSfx.release();
@@ -164,7 +160,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             player.Active = true;
             player.Speed = Vector2.Zero;
             player.EnforceLevelBounds = true;
-            player.StateMachine.State = 0;
             player.DummyFriction = true;
             player.DummyGravity = true;
             player.DummyAutoAnimate = true;
@@ -184,6 +179,9 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 new FadeWipe(level, wipeIn: true) {
                     Duration = 2f
                 };
+                
+                player.StateMachine.Locked = false;
+                player.StateMachine.State = 0;
             };
         }
 

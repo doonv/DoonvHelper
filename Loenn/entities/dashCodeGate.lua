@@ -46,9 +46,13 @@ gate.fieldInformation = {
     code = {
         validator = isValidListOfDashes
     },
-    iconDirection = {
+    iconOrientation = {
         options = {"Horizontal", "Vertical", "Auto"},
         editable = false
+    },
+    columns = {
+        fieldType = "integer",
+        minimumValue = 1
     }
 }
 
@@ -59,8 +63,9 @@ gate.placements = {
         height = 16,
         sprite = "stars",
         persistenceFlag = "",
-        iconDirection = "Auto",
-        code = "U,D,L,R"
+        iconOrientation = "Auto",
+        code = "U,D,L,R",
+        columns = 1
     }
 }
 
