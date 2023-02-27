@@ -290,6 +290,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                     this,
                     preLaunchDialog,
                     cutsceneTeleport,
+                    goldenTeleport,
                     cutsceneBird
                 ));
 
@@ -328,7 +329,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 {
                     Position = Vector2.Lerp(from, to, t.Eased);
                     stretch.Scale.X = 1f + Calc.YoYo(t.Eased) * 2f;
-                    stretch.Scale.Y = 1f - Calc.YoYo(t.Eased) * 0.75f;
+                    stretch.Scale.Y = (1f - Calc.YoYo(t.Eased) * 0.75f) * (Math.Abs(stretch.Rotation) < (Math.PI / 2f) ? 1f : -1f);
                     if (t.Eased < 0.9f && Scene.OnInterval(0.03f))
                     {
                         TrailManager.Add(this, transitionColor, 0.5f, frozenUpdate: false, useRawDeltaTime: false);

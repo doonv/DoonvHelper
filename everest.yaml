@@ -2,9 +2,7 @@
   Name: DoonvHelper
   Version: 0.1.0
   Dependencies:
-    - Name: AurorasHelper
-      Version: 0.1.19
     - Name: Everest
       Version: 1.3471.0
-    - Name: MaxHelpingHand
-      Version: 1.24.1
+    - Name: ExtendedVariantMode
+      Version: 0.26.2

@@ -1,2 +1,57 @@
-SAMPLE_DIALOG_TEXT= Some sample text for your mod.
+
+
 DOONVHELPER_TESTING_001=[BADELINE serious_alt left] epic demonstration of custom badeline boost 
+
+DoonvHelper__DoonvHelper={# ffffff}Doonv{#}Helper™ 
+DoonvHelper_doonvhelpertesting__colorblocks={# ff8080}C{#}{# ffb366}o{#}{# ffff80}l{#}{# 80ff80}o{#}{# 8080ff}r {#}{# b366ff}B{#}{# e680ff}l{#}{# ff8080}o{#}{# ffb366}c{#}{# ffff80}k{#}{# 80ff80}s{#}
+DoonvHelper_doonvhelpertesting__dashcodegate={# ffffff}D{#}{# c9e4f6}a{#}{# 93c8e7}s{#}{# 5fa9cf}h {#}{# 2e8cbc}C{#}{# 0072b2}o{#}{# 005a9c}d{#}{# 004a87}e {#}{# 003f76}G{#}{# 003660}a{#}{# 002d4d}t{#}{# 00263b}e{#}
+
+DoonvHelper=DoonvHelper™
+DoonvHelper_doonvhelpertesting=DoonvHelper™ Testing
+DoonvHelper_doonvhelpertesting_postcard={big}You got mail!{/big}{n}{# E5DDDA}This mail has no purpose at all!{n}Well actually, it does have a purpose kinda.{#}{n}Read the guestbooks for information!
+DoonvHelper_doonvhelpertesting_main=
+    Hello there! 
+    Welcome to the {+DoonvHelper__DoonvHelper} Testing Grounds!
+    There are 4 directions for you to go from here. Each one showing off a different feature.
+    I highly recommend you open up Lönn and try to figure out how to use the entities without help.
+    I want my entities to be easy to use so your feedback on your Lönn experience will be very helpful.
+    But if you wanna play with the entities first, that's okay!
+    Anyway,
+    Just go in a random direction and have fun! Please let me know of any bugs.
+    Make sure to read the text in every room, It'll tell you useful information such as known bugs and how to use the entities.
+    - Doonv
+DoonvHelper_doonvhelpertesting_colorblocks=
+    {~}{+DoonvHelper_doonvhelpertesting__colorblocks}{# 8080ff}!{#}{/~}
+    {+DoonvHelper_doonvhelpertesting__colorblocks} are... well uuh... they're very cool and...
+    uhhh...
+    ...
+    I'm gonna be honest, this is the most boring entity in {+DoonvHelper__DoonvHelper}.
+    It's literally just a solid color. and It's not even solid! It's just... Something I guess...
+    I only made {+DoonvHelper_doonvhelpertesting__colorblocks} because it made debugging cooler. But who even cares?
+    Whatever...
+    So uhh..
+    Go have fun with it i guess??
+
+DoonvHelper_doonvhelpertesting_dashcodegate=
+    {~}{+DoonvHelper_doonvhelpertesting__dashcodegate}!{/~}
+    The {+DoonvHelper_doonvhelpertesting__dashcodegate} is a switch gate. But instead of getting activated by switches,
+    [MADELINE normal left] It gets activated by dash codes?
+    [] It gets activated by dash codes!
+    [MADELINE peaceful left] I knew it.
+    [] Basically... You dash in a specific order, and then the gate opens!
+    It's that simple!
+    The arrows indicate how much of the code you have completed.
+    Known Issues: Complete sound effect is kinda jank, will fix soon.
+    Also, {>> 0.5}{# ff0000}{*}IF YOU SAY POINTLESS MACHINES ONE MORE TIME I'LL-{/*}{#}{>>}
+    I'm sorry. Anyways!
+    Have fun!!!
+
+DoonvHelper_doonvhelpertesting_badelineboost=
+    {# d678db}{~}Custom Badeline Boost{/~}{#}
+    It's like a badeline boost but with customization options... yeah...
+    Most of the cool stuff is in Lönn. You can customize a lot of things so make sure to open up Lönn and check that out.
+    The orb above you makes badeline say some stuff and triggers the cutscene with the birb.
+    You can customize where that cutscene goes + golden support. {# 444444}{~}(Secret?){/~}{#}
+    That is pretty much it.
+    I hope you appreciate the :frogeline:
+    

@@ -101,7 +101,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			return code_counter;
 		}
 
-		private Vector2 getArrowDrawPos(int arrowId, bool debug = false) {
+		private Vector2 getArrowDrawPos(int arrowId) {
 			//! WARNING: Bad code ahead!
 			// Viewer discretion is advised.
 
@@ -121,19 +121,17 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			if (orientation ==  IconOrientation.Horizontal) {
 				int columnSize = (int)Math.Ceiling((double)code.Length / (double)columns);
 				int currentColumn = (arrowId) / columnSize; // Stores the column we should be in.
-				if (debug)
-					Console.WriteLine(String.Format("{0} = {1} | {2}", (arrowId), currentColumn, (int)Math.Ceiling((double)code.Length / (double)columns)));
 				return
 					this.Position + // Get our positon
 					new Vector2(this.Width / 2f, this.Height / 2f) + // Center it to our block
 					new Vector2(
-						(arrowId - (currentColumn * columnSize)) * ((activeIcons[0].Height + iconDistance)),
-						currentColumn * (activeIcons[0].Width + iconDistance)
-					) + // Go down depending on arrow_id
+						(arrowId - (currentColumn * columnSize)) * ((activeIcons[0].Width + iconDistance)),
+						currentColumn * (activeIcons[0].Height + iconDistance)
+					) + // Go right depending on arrow_id
 					new Vector2(
-						-(activeIcons[0].Height + iconDistance) * (columnSize / 2),
-						(columns - 1) * -((activeIcons[0].Width + iconDistance) / 2f)
-					); // Shift all arrows up depending on how many arrows we can have.
+						((columnSize - 1) / 2f) * -(float)(activeIcons[0].Width + iconDistance),
+						(columns - 1) * -((activeIcons[0].Height + iconDistance) / 2f)
+					); // Shift all arrows left depending on how many arrows and columns we can have.
 			} else {
 				float currentColumn = arrowId % columns; // Stores the column we should be in.
 				return
@@ -144,9 +142,9 @@ namespace Celeste.Mod.DoonvHelper.Entities
 						(arrowId - currentColumn) * ((activeIcons[0].Height + iconDistance) / columns)
 					) + // Go down depending on arrow_id
 					new Vector2(
-						(columns - 1) * -(( + iconDistance) / 2f),
+						(columns - 1) * -((activeIcons[0].Width + iconDistance) / 2f),
 						(code.Length / columns - 1) * -((activeIcons[0].Height + iconDistance) / 2f)
-					); // Shift all arrows up depending on how many arrows we can have.
+					); // Shift all arrows up depending on how many arrows and columns we can have.
 			}
 
 		}
@@ -314,10 +312,10 @@ namespace Celeste.Mod.DoonvHelper.Entities
     	{
     		base.Awake(scene);
 
-			for (int i = 0; i < code.Length; i++)
-			{
-				getArrowDrawPos(i, true);
-			}
+			// for (int i = 0; i < code.Length; i++)
+			// {
+			// 	getArrowDrawPos(i, true);
+			// }
 
 			// If we have already activated the gate and the gate has a persistence flag
 			// added to it, and the player goes back into the room with the gate.

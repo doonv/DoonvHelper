@@ -8,12 +8,12 @@ entities.DoonvHelper/CustomBadelineBoost.attributes.description.lockCamera=Upon 
 entities.DoonvHelper/CustomBadelineBoost.attributes.description.canSkip=Badeline will skip to the next position if the player is too far to the right of the current one  (100 pixels).
 entities.DoonvHelper/CustomBadelineBoost.attributes.description.cutsceneBird=For disabling the bird in the cutscene. You absolute monster.
 
-# Solid Color
-entities.DoonvHelper/SolidColor.placements.name.normal=Solid Color
-entities.DoonvHelper/SolidColor.placements.description.normal=A colored, resizable rectangle.
-entities.DoonvHelper/SolidColor.attributes.description.color=The color of the entity. Does not support alpha.
-entities.DoonvHelper/SolidColor.attributes.description.depth=The render depth of the entity.\nLarger numbers are further back and smaller numbers are further forward.\nDepth table reference:\nBGTerrain = 10000\nBGMirrors = 9500\nBGDecals = 9000\nBGParticles = 8000\nSolidsBelow = 5000\nBelow = 2000\nNPCs = 1000\nTheoCrystal = 100\nPlayer = 0\nDust = -50\nPickups = -100\nSeeker = -200\nParticles = -8000\nAbove = -8500\nSpinners = -8500\nSolids = -9000\nFGTerrain = -10000\nFGDecals = -10500\nDreamBlocks = -11000\nPlayerDreamDashing = -12000\nEnemy = -12500\nFakeWalls = -13000\nFGParticles = -50000\nTop = -1000000\nFormationSequences = -2000000
-entities.DoonvHelper/SolidColor.attributes.description.alpha=A number between 0 and 1 that determines the color's transparency.
+# Color Block
+entities.DoonvHelper/ColorBlock.placements.name.normal=Solid Color Block
+entities.DoonvHelper/ColorBlock.placements.description.normal=A colored, resizable rectangle.
+entities.DoonvHelper/ColorBlock.attributes.description.color=The color of the entity. Does not support alpha.
+entities.DoonvHelper/ColorBlock.attributes.description.depth=The render depth of the entity.\nLarger numbers are further back and smaller numbers are further forward.\nDepth table reference:\nBGTerrain = 10000\nBGMirrors = 9500\nBGDecals = 9000\nBGParticles = 8000\nSolidsBelow = 5000\nBelow = 2000\nNPCs = 1000\nTheoCrystal = 100\nPlayer = 0\nDust = -50\nPickups = -100\nSeeker = -200\nParticles = -8000\nAbove = -8500\nSpinners = -8500\nSolids = -9000\nFGTerrain = -10000\nFGDecals = -10500\nDreamBlocks = -11000\nPlayerDreamDashing = -12000\nEnemy = -12500\nFakeWalls = -13000\nFGParticles = -50000\nTop = -1000000\nFormationSequences = -2000000
+entities.DoonvHelper/ColorBlock.attributes.description.alpha=A number between 0 and 1 that determines the color's transparency.
 
 entities.DoonvHelper/CustomSatellite.placements.name.normal=Custom Satellite
 entities.DoonvHelper/CustomSatellite.placements.description.normal=That one crystal heart thingy from Ch1, but better.
@@ -25,5 +25,9 @@ entities.DoonvHelper/CustomSatellite.attributes.description.dashSequence=A seque
 
 # Dash Code Gate
 entities.DoonvHelper/DashCodeGate.placements.name.normal=Dash Code Gate
-entities.DoonvHelper/DashCodeGate.attributes.description.persistenceFlag=The flag that activates when the gate is activated and that is used to keep the gate open even if the player dies or leaves the room.\n Leave empty to make the gate not persistant.
+entities.DoonvHelper/DashCodeGate.placements.description.normal=A switch gate that gets activated by a sequence of dashes.
+entities.DoonvHelper/DashCodeGate.attributes.description.persistenceFlag=The flag that activates when the gate is activated and that is used to keep the gate open even if the player dies or leaves the room.\nIt can be anything really. Leave empty to make the gate not persistant.
 entities.DoonvHelper/DashCodeGate.attributes.description.sprite=Changes the visual appearance of the switch gate.
+entities.DoonvHelper/DashCodeGate.attributes.description.code=The code needed to activate the gate. This is a sequence of comma-seperated values.\nDash Values:\n\nU = Up Dash\nD = Down Dash\nL = Left Dash\nR = Right Dash\nUL = Up-Left Dash\nUR = Up-Right Dash\nDL = Down-Left Dash\nDR = Down-Right
+entities.DoonvHelper/DashCodeGate.attributes.description.iconOrientation=The way the arrow icons are oriented.\n\nAuto: Automatically pick either horizontal or vertical placement depending on the dimensions of the gate.\nVertical: The arrows will go from top to bottom.\nHorizontal: The arrows will go from left to right.
+entities.DoonvHelper/DashCodeGate.attributes.description.columns=Description not done yet please ping Doonv#7063 with a good description ok thankies

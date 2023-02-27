@@ -1,7 +1,7 @@
 local utils = require("utils")
 
 local solidColor = {}
-solidColor.name = "DoonvHelper/SolidColor"
+solidColor.name = "DoonvHelper/ColorBlock"
 solidColor.fieldInformation = {
     depth = {
         fieldType = "integer"

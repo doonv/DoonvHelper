@@ -5,14 +5,14 @@ using System;
 
 namespace Celeste.Mod.DoonvHelper.Entities {
     
-    [CustomEntity("DoonvHelper/SolidColor")]
-    public class SolidColor : Entity {
+    [CustomEntity("DoonvHelper/ColorBlock")]
+    public class ColorBlock : Entity {
 
         private Color color;
         private float width;
         private float height;
         private float alpha;
-        public SolidColor(Vector2 position, float width, float height, Color color, float alpha = 1.0f, int depth = 5000)
+        public ColorBlock(Vector2 position, float width, float height, Color color, float alpha = 1.0f, int depth = 5000)
             : base(position) 
         {
             this.width = width;
@@ -21,7 +21,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
             this.Depth = depth;
             this.alpha = alpha;
         }
-        public SolidColor(EntityData data, Vector2 offset)
+        public ColorBlock(EntityData data, Vector2 offset)
             : this(
                 data.Position + offset, 
                 data.Width, data.Height, 

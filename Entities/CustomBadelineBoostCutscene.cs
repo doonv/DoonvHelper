@@ -31,6 +31,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             CustomBadelineBoost boost,
             string sayDialog = "CH9_LAST_BOOST",
             string teleportTo = "",
+            string goldenTeleportTo = "",
             bool haveBird = true
         )
         {
