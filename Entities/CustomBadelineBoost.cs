@@ -70,7 +70,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             this.canSkip = canSkip;
             this.preLaunchDialog = preLaunchDialog;
             this.cutsceneTeleport = cutsceneTeleport;
-            this.goldenTeleport = cutsceneTeleport;
+            this.goldenTeleport = goldenTeleport;
             this.cutsceneBird = cutsceneBird;
             this.transitionColor = transitionColor.GetValueOrDefault(Calc.HexToColor("ff6def"));
             base.Collider = new Circle(16f);
@@ -259,7 +259,10 @@ namespace Celeste.Mod.DoonvHelper.Entities
 
             if (finalBoost)
             {
-                Vector2 screenSpaceFocusPoint = new Vector2(Calc.Clamp(player.X - level.Camera.X, 120f, 200f), Calc.Clamp(player.Y - level.Camera.Y, 60f, 120f));
+                Vector2 screenSpaceFocusPoint = new Vector2(
+                    Calc.Clamp(player.X - level.Camera.X, 120f, 200f),
+                    Calc.Clamp(player.Y - level.Camera.Y, 60f, 120f)
+                );
                 Add(new Coroutine(level.ZoomTo(screenSpaceFocusPoint, 1.5f, 0.18f)));
                 Engine.TimeRate = 0.5f;
             }
@@ -283,7 +286,10 @@ namespace Celeste.Mod.DoonvHelper.Entities
             // }
             Console.WriteLine("badeline test 7");
 
-            if ((!String.IsNullOrWhiteSpace(preLaunchDialog) || !String.IsNullOrWhiteSpace(cutsceneTeleport)) && finalBoost)
+            if ((
+                !String.IsNullOrWhiteSpace(preLaunchDialog) || 
+                !String.IsNullOrWhiteSpace(cutsceneTeleport)
+            ) && finalBoost)
             {
                 Scene.Add(new CustomBadelineBoostCutscene(
                     player,
@@ -329,7 +335,9 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 {
                     Position = Vector2.Lerp(from, to, t.Eased);
                     stretch.Scale.X = 1f + Calc.YoYo(t.Eased) * 2f;
-                    stretch.Scale.Y = (1f - Calc.YoYo(t.Eased) * 0.75f) * (Math.Abs(stretch.Rotation) < (Math.PI / 2f) ? 1f : -1f);
+                    stretch.Scale.Y = 
+                        (1f - Calc.YoYo(t.Eased) * 0.75f) * 
+                        (Math.Abs(stretch.Rotation) < (Math.PI / 2f) ? 1f : -1f);
                     if (t.Eased < 0.9f && Scene.OnInterval(0.03f))
                     {
                         TrailManager.Add(this, transitionColor, 0.5f, frozenUpdate: false, useRawDeltaTime: false);

@@ -31,6 +31,7 @@ DoonvHelper_doonvhelpertesting_colorblocks=
     Whatever...
     So uhh..
     Go have fun with it i guess??
+    Known Issues: There are no known issues. {+thought}It's a solid color what did you expect?{+endthought}
 
 DoonvHelper_doonvhelpertesting_dashcodegate=
     {~}{+DoonvHelper_doonvhelpertesting__dashcodegate}!{/~}
@@ -41,10 +42,10 @@ DoonvHelper_doonvhelpertesting_dashcodegate=
     [] Basically... You dash in a specific order, and then the gate opens!
     It's that simple!
     The arrows indicate how much of the code you have completed.
-    Known Issues: Complete sound effect is kinda jank, will fix soon.
     Also, {>> 0.5}{# ff0000}{*}IF YOU SAY POINTLESS MACHINES ONE MORE TIME I'LL-{/*}{#}{>>}
     I'm sorry. Anyways!
     Have fun!!!
+    Known Issues: Complete sound effect is kinda jank, will fix soon.
 
 DoonvHelper_doonvhelpertesting_badelineboost=
     {# d678db}{~}Custom Badeline Boost{/~}{#}
@@ -54,4 +55,17 @@ DoonvHelper_doonvhelpertesting_badelineboost=
     You can customize where that cutscene goes + golden support. {# 444444}{~}(Secret?){/~}{#}
     That is pretty much it.
     I hope you appreciate the :frogeline:
+    Known Issues: 1. Skipping the cutscene breaks the game kinda.
+    If you have debug mode enabled {# ffffff}you can press F5 to fix this{#} and get control of madeline.
+    2. Little to no descritions in Lönn. I'll fix this VERY soon.
     
+DoonvHelper_doonvhelpertesting_satellite=
+    {%}{*}Custom Satellite!{/*}{/%}
+    Custom Satellite is a custom version of the "bird color" puzzle from Chapter 1.
+    The things you can customize are: 1. The code 2. The volume of the bleeps 3. Whever it's cosmetic. 
+    That's basically it.
+    I have added bird colors for all 8 dash directions and made sure they are distinguishable by color blind people.
+    If you are colorblind please let me know if you can distinguish the bird colors.
+    If you solve this puzzle you can get the crystal heart and "win" this level.
+    {+thought}I am looking forward to the any% TAS!{+endthought}
+    Known Issues: There are no known issues.

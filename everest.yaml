@@ -2,6 +2,8 @@
   Name: DoonvHelper
   Version: 0.1.0
   Dependencies:
+    - Name: ContortHelper
+      Version: 1.5.5
     - Name: Everest
       Version: 1.3471.0
     - Name: ExtendedVariantMode

@@ -25,6 +25,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
         private string sayDialog;
         private bool haveBird;
         private string teleportTo;
+        private string goldenTeleportTo;
 
         public CustomBadelineBoostCutscene(
             Player player,
@@ -39,6 +40,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             this.boost = boost;
             this.sayDialog = sayDialog;
             this.teleportTo = teleportTo;
+            this.goldenTeleportTo = goldenTeleportTo;
             this.haveBird = haveBird;
             base.Depth = 10010;
         }
@@ -53,14 +55,14 @@ namespace Celeste.Mod.DoonvHelper.Entities
             Audio.SetMusic(null);
             ScreenWipe.WipeColor = Color.White;
             hasGolden = false;
-            // foreach (Follower follower in player.Leader.Followers)
-            // {
-            //     if (follower.Entity is Strawberry strawberry && strawberry.Golden)
-            //     {
-            //         hasGolden = true;
-            //         break;
-            //     }
-            // }
+            foreach (Follower follower in player.Leader.Followers)
+            {
+                if (follower.Entity is Strawberry strawberry && strawberry.Golden)
+                {
+                    hasGolden = true;
+                    break;
+                }
+            }
             Add(new Coroutine(Cutscene()));
         }
 
@@ -146,16 +148,17 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 boost.Active = true;
                 return;
             }
-            if (WasSkipped && boost != null)
+            if (WasSkipped && boost != null && boost.Ch9FinalBoostSfx != null)
             {
                 boost.Ch9FinalBoostSfx.stop(STOP_MODE.ALLOWFADEOUT);
                 boost.Ch9FinalBoostSfx.release();
             }
             string nextLevelName = teleportTo;
             Player.IntroTypes nextLevelIntro = Player.IntroTypes.Transition;
-            if (hasGolden)
+            // Logger.Log(LogLevel.Info, "DoonvHelper", String.Format("goo goo ga ga | {0} - {1} - {2}", hasGolden, goldenTeleportTo, teleportTo));
+            if (hasGolden && !String.IsNullOrEmpty(goldenTeleportTo))
             {
-                nextLevelName = "end-golden";
+                nextLevelName = goldenTeleportTo;
                 nextLevelIntro = Player.IntroTypes.Jump;
             }
             player.Active = true;
@@ -165,6 +168,8 @@ namespace Celeste.Mod.DoonvHelper.Entities
             player.DummyGravity = true;
             player.DummyAutoAnimate = true;
             player.ForceCameraUpdate = false;
+            player.StateMachine.Locked = false;
+            player.StateMachine.State = 0;
             Engine.TimeRate = 1f;
             Level.OnEndOfFrame += delegate
             {
@@ -174,15 +179,13 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 {
                     Level.Wipe.Cancel();
                 }
-                if (hasGolden) {
-                    Level.SnapColorGrade("golden");
-                }
+                // if (hasGolden) {
+                //     Level.SnapColorGrade("golden");
+                // }
                 new FadeWipe(level, wipeIn: true) {
                     Duration = 2f
                 };
-                
-                player.StateMachine.Locked = false;
-                player.StateMachine.State = 0;
+                ScreenWipe.WipeColor = Color.White;
             };
         }
 
