@@ -32,7 +32,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
         {
         }
         
-        // World's most complicated function:
+        // World's most complicated function
         public override void Render()
         {
             Draw.Rect(base.X, base.Y, width, height, color * alpha);

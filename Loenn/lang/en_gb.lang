@@ -7,6 +7,17 @@ entities.DoonvHelper/CustomBadelineBoost.placements.description.normal=A Badelin
 entities.DoonvHelper/CustomBadelineBoost.attributes.description.lockCamera=Upon activation, the camera cannot pan away from the entity.
 entities.DoonvHelper/CustomBadelineBoost.attributes.description.canSkip=Badeline will skip to the next position if the player is too far to the right of the current one  (100 pixels).
 entities.DoonvHelper/CustomBadelineBoost.attributes.description.cutsceneBird=For disabling the bird in the cutscene. You absolute monster.
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.cutsceneTeleport=If a roomname is entered, then the Booster's behavior will change to similar of the final boost in farewell.\nAfter the cutscene ends the player will be teleported to the room specified.
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.goldenTeleport=Requires "Cutscene Teleport".\nIf the player has a golden strawberry then the player will teleport to the room specified here instead of the room specified in "Cutscene Teleport".
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.preLaunchDialog=Dialog that plays before launching. Leave empty to have no dialog before launching.
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.ambientParticle1=The first color of the ambient particles that show when the booster is idle.
+entities.DoonvHelper/CustomBadelineBoost.attributes.name.ambientParticle1=Ambient Particle 1
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.ambientParticle2=The second color of the ambient particles that show when the booster is idle.
+entities.DoonvHelper/CustomBadelineBoost.attributes.name.ambientParticle2=Ambient Particle 2
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.moveImage=The image used for when moving between nodes.\nThe rest of the boost can be sprited via Sprites.xml. (Unzip DoonvHelper and view the Sprites.xml for an example)
+entities.DoonvHelper/CustomBadelineBoost.attributes.name.moveColor=Move Trail Color
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.moveColor=The color of the trail used for when moving between nodes.
+entities.DoonvHelper/CustomBadelineBoost.attributes.description.moveParticleColor=The color of the particles used for when moving between nodes.
 
 # Color Block
 entities.DoonvHelper/ColorBlock.placements.name.normal=Solid Color Block

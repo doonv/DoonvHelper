@@ -1,3 +1,7 @@
+local utils = require("utils")
+local loadedState = require("loaded_state")
+local logging = require("logging")
+
 return {
     name = "DoonvHelper/CustomBadelineBoost",
     depth = -1000000,
@@ -16,12 +20,32 @@ return {
         },
         moveColor = {
             fieldType = "color"
+        },
+        cutsceneTeleport = {
+            fieldType = "DoonvHelper.room_name_or_empty"
+        },
+        goldenTeleport = {
+            fieldType = "DoonvHelper.room_name_or_empty"
         }
+    },
+    fieldOrder = {
+        "x", "y",
+        "cutsceneTeleport", 
+        "goldenTeleport", 
+        "preLaunchDialog", 
+        "cutsceneBird",
+        "lockCamera",
+        "ambientParticle1",
+        "ambientParticle2",
+        "moveColor",
+        "moveParticleColor",
+        "moveImage",
+        "canSkip",
     },
     placements = {
         name = "normal",
         data = {
-            lockCamera = true,
+            lockCamera = false,
             canSkip = false,
             preLaunchDialog = "",
             cutsceneTeleport = "",

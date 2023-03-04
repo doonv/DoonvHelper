@@ -154,22 +154,13 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 boost.Ch9FinalBoostSfx.release();
             }
             string nextLevelName = teleportTo;
-            Player.IntroTypes nextLevelIntro = Player.IntroTypes.Transition;
+            Player.IntroTypes nextLevelIntro = Player.IntroTypes.None;
             // Logger.Log(LogLevel.Info, "DoonvHelper", String.Format("goo goo ga ga | {0} - {1} - {2}", hasGolden, goldenTeleportTo, teleportTo));
             if (hasGolden && !String.IsNullOrEmpty(goldenTeleportTo))
             {
                 nextLevelName = goldenTeleportTo;
                 nextLevelIntro = Player.IntroTypes.Jump;
             }
-            player.Active = true;
-            player.Speed = Vector2.Zero;
-            player.EnforceLevelBounds = true;
-            player.DummyFriction = true;
-            player.DummyGravity = true;
-            player.DummyAutoAnimate = true;
-            player.ForceCameraUpdate = false;
-            player.StateMachine.Locked = false;
-            player.StateMachine.State = 0;
             Engine.TimeRate = 1f;
             Level.OnEndOfFrame += delegate
             {
@@ -186,6 +177,16 @@ namespace Celeste.Mod.DoonvHelper.Entities
                     Duration = 2f
                 };
                 ScreenWipe.WipeColor = Color.White;
+
+                player.Active = true;
+                player.Speed = Vector2.Zero;
+                player.EnforceLevelBounds = true;
+                player.DummyFriction = true;
+                player.DummyGravity = true;
+                player.DummyAutoAnimate = true;
+                player.ForceCameraUpdate = false;
+                player.StateMachine.State = 0;
+                player.StateMachine.Locked = false;
             };
         }
 
