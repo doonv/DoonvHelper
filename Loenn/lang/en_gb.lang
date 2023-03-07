@@ -42,3 +42,16 @@ entities.DoonvHelper/DashCodeGate.attributes.description.sprite=Changes the visu
 entities.DoonvHelper/DashCodeGate.attributes.description.code=The code needed to activate the gate. This is a sequence of comma-seperated values.\nDash Values:\n\nU = Up Dash\nD = Down Dash\nL = Left Dash\nR = Right Dash\nUL = Up-Left Dash\nUR = Up-Right Dash\nDL = Down-Left Dash\nDR = Down-Right
 entities.DoonvHelper/DashCodeGate.attributes.description.iconOrientation=The way the arrow icons are oriented.\n\nAuto: Automatically pick either horizontal or vertical placement depending on the dimensions of the gate.\nVertical: The arrows will go from top to bottom.\nHorizontal: The arrows will go from left to right.
 entities.DoonvHelper/DashCodeGate.attributes.description.columns=Description not done yet please ping Doonv#7063 with a good description ok thankies
+
+# Intro Car
+entities.DoonvHelper/CustomIntroCar.placements.name.normal=Custom Intro Car
+entities.DoonvHelper/CustomIntroCar.placements.description.normal=The ULTIMATE way to disappoint your players!
+entities.DoonvHelper/CustomIntroCar.attributes.description.disappearDistance=The radius of the circle that checks for the player.
+
+# comf
+entities.DoonvHelper/ComfySpot.placements.name.normal=Comfy Spot
+# The mightiest door ever made
+entities.DoonvHelper/ComfDoor.placements.name.normal=Almighty Mighty Comf Door
+entities.DoonvHelper/ComfDoor.placements.description.normal=Full Name: The Almighty Mighty Comf Door Of Death And Suffering
+entities.DoonvHelper/ComfDoor.attributes.description.requires=Determines the number of Crystal Hearts required to open the heart door. Everest keeps track of hearts collected within the level set.
+entities.DoonvHelper/ComfDoor.attributes.description.startHidden=Whether the door should start hidden and come crashing down when the player approaches.\nWill destroy dash blocks as it crashes down

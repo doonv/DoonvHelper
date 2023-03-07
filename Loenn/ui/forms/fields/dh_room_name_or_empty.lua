@@ -2,7 +2,7 @@ local stringField = require("ui.forms.fields.string")
 local utils = require("utils")
 local loadedState = require("loaded_state")
 
--- Shamelessly stolen from VivHelper, except this one accepts empty values.
+-- Shamelessly "borrowed" from VivHelper, except this one accepts empty values.
 
 local dh_room_names = {}
 dh_room_names.fieldType = "DoonvHelper.room_name_or_empty"

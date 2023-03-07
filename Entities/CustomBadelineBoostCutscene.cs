@@ -92,20 +92,17 @@ namespace Celeste.Mod.DoonvHelper.Entities
             yield return null;
             BlackholeBG blackholeBG = Level.Background.Get<BlackholeBG>();
             if (blackholeBG != null) {
-                Console.WriteLine("badeline cutscene 3");
                 blackholeBG.Direction = -2.5f;
                 blackholeBG.SnapStrength(Level, BlackholeBG.Strengths.High);
                 blackholeBG.CenterOffset.Y = 100f;
                 blackholeBG.OffsetOffset.Y = -50f;
             }
-            Console.WriteLine("badeline cutscene 3");
             Add(wave = new Coroutine(WaveCamera()));
             if (haveBird) {
                 Add(new Coroutine(BirdRoutine(0.8f)));
             }
             Level.Add(streaks = new AscendManager.Streaks(null));
             float p2;
-            Console.WriteLine("badeline cutscene 4");
             for (p2 = 0f; p2 < 1f; p2 += Engine.DeltaTime / 12f)
             {
                 fadeToWhite = p2;
@@ -125,7 +122,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             {
                 Duration = 4f
             };
-            Console.WriteLine("badeline cutscene 5");
             if (!hasGolden)
             {
                 Audio.SetMusic("event:/new_content/music/lvl10/granny_farewell");
@@ -138,7 +134,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 yield return null;
             }
             yield return wipe.Wait();
-            // Console.WriteLine("badeline cutscene 6");
             EndCutscene(Level);
         }
 

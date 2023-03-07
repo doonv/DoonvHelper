@@ -8,7 +8,7 @@ DoonvHelper_doonvhelpertesting__dashcodegate={# ffffff}D{#}{# c9e4f6}a{#}{# 93c8
 
 DoonvHelper=DoonvHelper™
 DoonvHelper_doonvhelpertesting=DoonvHelper™ Testing
-DoonvHelper_doonvhelpertesting_postcard={big}You got mail!{/big}{n}{# E5DDDA}This mail has no purpose at all!{n}Well actually, it does have a purpose kinda.{#}{n}Read the guestbooks for information!
+# DoonvHelper_doonvhelpertesting_postcard={big}You got mail!{/big}{n}{# E5DDDA}This mail has no purpose at all!{n}Well actually, it does have a purpose kinda.{#}{n}Read the guestbooks for information!
 DoonvHelper_doonvhelpertesting_main=
     Hello there! 
     Welcome to the {+DoonvHelper__DoonvHelper} Testing Grounds!
@@ -66,4 +66,10 @@ DoonvHelper_doonvhelpertesting_satellite=
     If you are colorblind please let me know if you can distinguish the bird colors.
     If you solve this puzzle you can get the crystal heart and "win" this level.
     {+thought}I am looking forward to the any% TAS!{+endthought}
-    Known Issues: There are no known issues.
+    Known Issues: There are no unqiue sound effects for the new dash directions.
+
+DoonvHelper_doonvhelpertesting_comf2=
+    I, 
+    I don't understand your life choices.
+    [MADELINE normal left] ...
+    [MADELINE sadder left] ...

@@ -76,7 +76,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             base.Collider = new Circle(16f);
             Add(new PlayerCollider(OnPlayer));
             Add(sprite = GFX.SpriteBank.Create("DoonvHelper_CustomBadelineBoost"));
-            Console.WriteLine(transitionImage);
             Add(stretch = 
                 transitionImage != null 
                 ? transitionImage 
@@ -191,7 +190,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             //     }
             //     endLevel = finalBoost && finalCh9Boost && !flag;
             // }
-            Console.WriteLine("badeline test 1");
             // Stopwatch sw = new Stopwatch();
             // sw.Start();
             if (finalBoost) {
@@ -209,7 +207,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             {
                 player.Drop();
             }
-            Console.WriteLine("badeline test 2");
 
             player.StateMachine.State = 11;
             player.DummyAutoAnimate = false;
@@ -229,7 +226,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             {
                 num = -1;
             }
-            Console.WriteLine("badeline test 3");
 
             BadelineDummy badeline = new BadelineDummy(Position);
             Scene.Add(badeline);
@@ -239,7 +235,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             Vector2 playerTo = Position + new Vector2(num * 4, -3f);
             Vector2 badelineFrom = badeline.Position;
             Vector2 badelineTo = Position + new Vector2(-num * 4, 3f);
-            Console.WriteLine("badeline test 4");
 
             for (float p = 0f; p < 1f; p += Engine.DeltaTime / 0.2f)
             {
@@ -255,7 +250,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 badeline.Position = Vector2.Lerp(badelineFrom, badelineTo, p);
                 yield return null;
             }
-            Console.WriteLine("badeline test 5");
 
             if (finalBoost)
             {
@@ -270,7 +264,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             {
                 Audio.Play("event:/char/badeline/booster_throw", Position);
             }
-            Console.WriteLine("badeline test 6");
 
             badeline.Sprite.Play("boost");
             yield return 0.1f;
@@ -284,7 +277,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             //     level.TimerStopped = true;
             //     level.RegisterAreaComplete();
             // }
-            Console.WriteLine("badeline test 7");
 
             if ((
                 !String.IsNullOrWhiteSpace(preLaunchDialog) || 
@@ -319,7 +311,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
             }, 0.15f, start: true));
             (Scene as Level).Shake();
             holding = null;
-            Console.WriteLine("badeline test 8");
 
             if (!finalBoost)
             {
@@ -359,19 +350,13 @@ namespace Celeste.Mod.DoonvHelper.Entities
                         Audio.Play("event:/char/badeline/booster_reappear", Position);
                     }
                 };
-                Console.WriteLine("badeline test 9");
 
                 Add(tween);
                 relocateSfx.Play("event:/char/badeline/booster_relocate");
                 Input.Rumble(RumbleStrength.Strong, RumbleLength.Medium);
                 level.DirectionalShake(-Vector2.UnitY);
                 level.Displacement.AddBurst(Center, 0.4f, 8f, 32f, 0.5f);
-
-                Console.WriteLine("badeline test 10!!!!");
-            }
-            else
-            {
-                Console.WriteLine("badeline test 10 i guess");
+            } else {
 
                 if (!String.IsNullOrWhiteSpace(preLaunchDialog) || !String.IsNullOrWhiteSpace(cutsceneTeleport))
                 {

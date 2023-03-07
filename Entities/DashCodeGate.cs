@@ -41,26 +41,30 @@ namespace Celeste.Mod.DoonvHelper.Entities
 		public bool moved = false;
 		public int columns;
 
+		/// <summary>
+		/// Converts a dash vector into a dash code.
+		/// </summary>
+		/// <param name="dir">A dash vector.</param>
+		/// <returns>A dash code. (i.e. UL, R, D, DL, R, U)</returns>
         private string DashVectorToCode(Vector2 dir) {
             string text = "";
+
             if (dir.Y < 0f)
-            {
                 text = "U";
-            }
             else if (dir.Y > 0f)
-            {
                 text = "D";
-            }
             if (dir.X < 0f)
-            {
                 text += "L";
-            }
             else if (dir.X > 0f)
-            {
                 text += "R";
-            }
+			
             return text;
         }
+		/// <summary>
+		/// Convert a dash code to a Vector2
+		/// </summary>
+		/// <param name="code">A dash code. (i.e. UL, R, D, DL, R, U)</param>
+		/// <returns>A normalized vector2</returns>
 		private Vector2 CodeToDashVector(string code) {
 			Vector2 res = new Vector2(0f, 0f);
 			foreach (char c in code) {
@@ -80,6 +84,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 						break;
 				}
 			}
+			res.Normalize();
 			return res;
 		}
 		/// <summary>
@@ -101,6 +106,11 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			return code_counter;
 		}
 
+		/// <summary>
+		/// Gets the (centered) draw position of an arrow.
+		/// </summary>
+		/// <param name="arrowId">The id of the arrow</param>
+		/// <returns>The draw position</returns>
 		private Vector2 getArrowDrawPos(int arrowId) {
 			//! WARNING: Bad code ahead!
 			// Viewer discretion is advised.
