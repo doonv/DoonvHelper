@@ -88,7 +88,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			return res;
 		}
 		/// <summary>
-		/// 	500 IQ algoritym right here.
+		/// 	500 IQ algorithm right here.
 		/// 	Computes how much of the code is activated
 		/// </summary>
 		/// <returns>
@@ -101,7 +101,15 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			{
 				if (currentInputs[i] == code[code_counter]) {
 					code_counter += 1;
-				} else { code_counter = 0; }
+				} else {
+					// If the code counter is greater than 0 and the current input does not match the corresponding code item, 
+					// the loop variable i is decremented by 1. This is done to ensure that the loop re-evaluates the previous input, 
+					// as it may have been the start of a correct code sequence.
+					if (code_counter > 0) {
+						i--;
+					}
+					code_counter = 0;
+				}
 			}
 			return code_counter;
 		}
@@ -382,6 +390,9 @@ namespace Celeste.Mod.DoonvHelper.Entities
     		base.Render();
     	}
 
+		/// <summary>
+		/// Moves and activates the dash gate.
+		/// </summary>
     	private IEnumerator Sequence(Vector2 node)
     	{
     		Vector2 start = Position;

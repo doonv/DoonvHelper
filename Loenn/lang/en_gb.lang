@@ -46,12 +46,17 @@ entities.DoonvHelper/DashCodeGate.attributes.description.columns=Description not
 # Intro Car
 entities.DoonvHelper/CustomIntroCar.placements.name.normal=Custom Intro Car
 entities.DoonvHelper/CustomIntroCar.placements.description.normal=The ULTIMATE way to disappoint your players!
-entities.DoonvHelper/CustomIntroCar.attributes.description.disappearDistance=The radius of the circle that checks for the player.
+entities.DoonvHelper/CustomIntroCar.attributes.description.disappearDistance=The radius of the circle that checks for the player (in pixels).
+entities.DoonvHelper/CustomIntroCar.attributes.description.road=Whether a road should appear near the car.
+entities.DoonvHelper/CustomIntroCar.attributes.description.road=Whether barriers should appear near the car.
+entities.DoonvHelper/CustomIntroCar.attributes.description.keepWheels=Whether to keep the wheels after disappearing. Very funny.
+entities.DoonvHelper/CustomIntroCar.attributes.description.disappearanceType=Choose your method of player suffering. :)
+entities.DoonvHelper/CustomIntroCar.attributes.description.persistenceFlag=If a flag name (any string really) is entered, that flag will be activated upon disappearance 
 
 # comf
 entities.DoonvHelper/ComfySpot.placements.name.normal=Comfy Spot
 # The mightiest door ever made
 entities.DoonvHelper/ComfDoor.placements.name.normal=Almighty Mighty Comf Door
 entities.DoonvHelper/ComfDoor.placements.description.normal=Full Name: The Almighty Mighty Comf Door Of Death And Suffering
-entities.DoonvHelper/ComfDoor.attributes.description.requires=Determines the number of Crystal Hearts required to open the heart door. Everest keeps track of hearts collected within the level set.
+entities.DoonvHelper/ComfDoor.attributes.description.requires=Determines the number of Comfs required to open the comf door. DoonvHelper keeps track of comfs collected within this level only (Not whole level set).
 entities.DoonvHelper/ComfDoor.attributes.description.startHidden=Whether the door should start hidden and come crashing down when the player approaches.\nWill destroy dash blocks as it crashes down

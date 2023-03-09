@@ -83,7 +83,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
         public CustomIntroCar(EntityData data, Vector2 offset)
             : this(
                 data.Position + offset,
-                data.Float("triggerDistance", 50f),
+                data.Float("disappearDistance", 50f),
                 (DisappearanceType)Enum.Parse(
 					typeof(DisappearanceType),
 					data.Attr("disappearanceType", "Instant"),

@@ -105,7 +105,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 					return Requires;
 				}
 				if (Scene != null) {
-					return DoonvHelperModule.SaveData.ComfLevelData[new LevelSideID(Scene)].Count;
+					return DoonvHelperModule.SaveData.ComfLevelData.SafeGet(new LevelSideID(Scene)).Count;
 				}
 				return 0;
 			}
@@ -116,6 +116,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 		public bool Opened { get; private set; }
 
 		private float openAmount => openPercent * openDistance;
+		private Vector2 comfers;
 
 		public ComfDoor(EntityData data, Vector2 offset)
 			: base(data.Position + offset)
@@ -131,6 +132,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			}
 			icon = GFX.Game.GetAtlasSubtextures("objects/DoonvHelper/comfDoor/icon");
 			startHidden = data.Bool("startHidden");
+			comfers = new Vector2(0f, 0f);
 		}
 
 		public override void Added(Scene scene)
@@ -257,7 +259,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 					}
 					int num2 = (int)Counter;
 					int target = Math.Min(HeartGems, Requires);
-					Counter = Calc.Approach(Counter, target, Engine.DeltaTime * (float)Requires * 0.4f);
+					Counter = Calc.Approach(Counter, target, Engine.DeltaTime * (float)Requires * 0.2f);
 					if (num2 != (int)Counter)
 					{
 						yield return 0.1f;
@@ -316,6 +318,8 @@ namespace Celeste.Mod.DoonvHelper.Entities
 				offset += 12f * Engine.DeltaTime;
 				mist.X -= 4f * Engine.DeltaTime;
 				mist.Y -= 24f * Engine.DeltaTime;
+				comfers.X += 8f * Engine.DeltaTime;
+				comfers.Y += 8f * Engine.DeltaTime;
 				for (int i = 0; i < particles.Length; i++)
 				{
 					particles[i].Position.Y += particles[i].Speed * Engine.DeltaTime;
@@ -407,7 +411,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			{
 				for (int j = 0; j < bounds.Height; j += num2)
 				{
-					mTexture.GetSubtexture((int)Mod(mist.X, num), (int)Mod(mist.Y, num2), Math.Min(num, bounds.Width - i), Math.Min(num2, bounds.Height - j), temp2);
+					mTexture.GetSubtexture((int)Mod(comfers.X, num), (int)Mod(comfers.Y, num2), Math.Min(num, bounds.Width - i), Math.Min(num2, bounds.Height - j), temp2);
 
 					temp2.Draw(new Vector2(bounds.X + i, bounds.Y + j), Vector2.Zero, Color.White);
 				}

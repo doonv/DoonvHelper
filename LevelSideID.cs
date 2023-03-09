@@ -28,6 +28,5 @@ namespace Celeste.Mod.DoonvHelper
             levelSID = areakey.GetSID();
             side = areakey.Mode;
         }
-        
     }
 }

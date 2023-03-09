@@ -31,7 +31,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
         public override void Added(Scene scene)
         {
             base.Added(scene);
-            this.comfdata = DoonvHelperModule.SaveData.ComfLevelData[new LevelSideID(scene)];
+            this.comfdata = DoonvHelperModule.SaveData.ComfLevelData.SafeGet(new LevelSideID(scene));
             Add(comfCounter = new ComfCounter(centeredX: false, comfdata.Count));
         }
 

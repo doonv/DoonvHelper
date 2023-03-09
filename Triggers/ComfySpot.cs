@@ -20,12 +20,13 @@ namespace Celeste.Mod.DoonvHelper.Entities {
 
         public override void OnEnter(Player player) {
             Logger.Log(LogLevel.Info, "DoonvHelper", "Enter");
-            if (!DoonvHelperModule.SaveData.ComfLevelData[levelID].Contains(entityID)) {
-                DoonvHelperModule.SaveData.ComfLevelData[levelID].Add(entityID);
+            List<EntityID> comfdata = DoonvHelperModule.SaveData.ComfLevelData.SafeGet(levelID);
+            if (!comfdata.Contains(entityID)) {
+               comfdata.Add(entityID);
                 (Scene as Level).Add(new SummitCheckpoint.ConfettiRenderer(player.Position));
             }
 
-            foreach(EntityID item in DoonvHelperModule.SaveData.ComfLevelData[levelID])
+            foreach(EntityID item in comfdata)
             {
                 Logger.Log(LogLevel.Info, "DoonvHelper", item.ToString());
             }
