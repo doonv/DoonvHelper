@@ -89,6 +89,7 @@ DoonvHelper_doonvhelpertesting_comf=
     Also, if see the comf counter outside of levels with "Comfy Spot" triggers in them, that is not intended please report that.
     Known Issues: Does not play well with other mods that add collectibles and stuff. (E\.x\. Dash Count Mod, Death Count Mod)
     That's pretty much it, however I smell a lot of unknown issues.
+    Oh btw will have to crouch-dash into the comf spots to get into them. You can crouch dash by binding it in the menu.
 
 DoonvHelper_doonvhelpertesting_comf_monologue_1=[MADELINE normal left] Dear player, I just wanted to say
 DoonvHelper_doonvhelpertesting_comf_monologue_2=[MADELINE normal left] I was REALLY bored when doing this
