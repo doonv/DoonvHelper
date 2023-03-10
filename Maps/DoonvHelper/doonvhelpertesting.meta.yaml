@@ -1,0 +1,5 @@
+CompleteScreen:
+    Atlas: "Endscreens/DoonvHelper"
+    Layers:
+      - Type: "layer"
+        Images: [ "fractaline" ] # why the heck does this look good

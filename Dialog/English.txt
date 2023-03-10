@@ -8,19 +8,19 @@ DoonvHelper_doonvhelpertesting__dashcodegate={# ffffff}D{#}{# c9e4f6}a{#}{# 93c8
 
 DoonvHelper=DoonvHelper™
 DoonvHelper_doonvhelpertesting=DoonvHelper™ Testing
-poem_DoonvHelper_doonvhelpertesting_A=I was REALLY bored... Okay?
+poem_DoonvHelper_doonvhelpertesting_A=*madeline talking* is very funny
 # DoonvHelper_doonvhelpertesting_postcard={big}You got mail!{/big}{n}{# E5DDDA}This mail has no purpose at all!{n}Well actually, it does have a purpose kinda.{#}{n}Read the guestbooks for information!
 DoonvHelper_doonvhelpertesting_main=
     Hello there! 
-    Welcome to the {+DoonvHelper__DoonvHelper} Testing Grounds!
-    Before we get started, {# ffffff}{*}PLEASE{/*}{#} switch to a DEBUG save file.
+    Welcome to the {+DoonvHelper__DoonvHelper} Beta 2 Testing Grounds!
+    Before we get started, {# ffffff}{*}PLEASE{/*}{#} switch to a temporary/debug save file.
     I'm experimenting with weird shit that may or may not go wrong, so please use a save file that you are willing to lose.
     Because it {# ffffff}{*}might{/*}{#} spontaneously combust.
     Got it?{0.3} Good!
-    There are 4 directions for you to go from here. Each one showing off a different feature.
+    There are 6 directions for you to go from here. Each one showing off a different feature.
     Just go in a random direction and have fun! Please let me know of any bugs.
     Make sure to read the text in every room, It'll tell you useful information such as known bugs and how to use the entities.
-    Oh and, If you're just looking for the comf, bottom left! :))))
+    Oh and, If you're just looking for the comf, bottom left!{0.5} :))))
     - Doonv
 DoonvHelper_doonvhelpertesting_colorblocks=
     {~}{+DoonvHelper_doonvhelpertesting__colorblocks}{# 8080ff}!{#}{/~}
@@ -38,11 +38,8 @@ DoonvHelper_doonvhelpertesting_colorblocks=
 DoonvHelper_doonvhelpertesting_dashcodegate=
     {~}{+DoonvHelper_doonvhelpertesting__dashcodegate}!{/~}
     The {+DoonvHelper_doonvhelpertesting__dashcodegate} is a switch gate. But instead of getting activated by switches,
-    [MADELINE normal left] It gets activated by dash codes?
-    [] It gets activated by dash codes!
-    [MADELINE peaceful left] I knew it.
-    [] Basically... You dash in a specific order, and then the gate opens!
-    It's that simple!
+    It gets activated by dash codes!
+    Basically... You dash in a specific order, and then the gate opens.
     The arrows indicate how much of the code you have completed.
     Also, {>> 0.5}{# ff0000}{*}IF YOU SAY POINTLESS MACHINES ONE MORE TIME I'LL-{/*}{#}{>>}
     I'm sorry. Anyways!
@@ -73,17 +70,18 @@ DoonvHelper_doonvhelpertesting_satellite=
 DoonvHelper_doonvhelpertesting_car=
     I am not sorry! :)
     Not at all! :)
-    What were you expecting comf or something? :)
+    What were you expecting a comf showcase or something? :)
     (laughs villainously){0.5}               :)
-    [MADELINE angry right] ...
 
 DoonvHelper_doonvhelpertesting_comf=
     {# ffffff}{*}{~}{big}Comf{/big}{/~}{/*}{#}
-    The legendary comf counter is finally here!!! After like 800 lines of code and a week I have FINALLY coded it!
+    The legendary comf counter is finally here!!! After like...
+    *sigh*{0.5} 800 lines of code...
+    ANYWAYS
     Basically, You plot down a "Comfy Spot" trigger in your level of choice. And-
     ...
     {big}THATS IT{/big}
-    Yeah! It's as easy as placing down a strawberry, and then after that {+DoonvHelper__DoonvHelper} will handle everything else!
+    It's as easy as placing down a strawberry, and then after that {+DoonvHelper__DoonvHelper} will handle everything else!
     When you enter a "Comfy Spot" trigger, your comf counter goes up by one.
     What do you do with comf? Not much, however I have added a comf door! It's like a heart door, but with comf.
     Btw the comf door only works with the comfs collected in the current level. Not the entire level set.
@@ -92,11 +90,11 @@ DoonvHelper_doonvhelpertesting_comf=
     Known Issues: Does not play well with other mods that add collectibles and stuff. (E\.x\. Dash Count Mod, Death Count Mod)
     That's pretty much it, however I smell a lot of unknown issues.
 
-
-DoonvHelper_doonvhelpertesting_comf_monologue_1=[MADELINE normal left] Dear player,
-DoonvHelper_doonvhelpertesting_comf_monologue_2=[MADELINE normal left] I just wanted to let you know,
-DoonvHelper_doonvhelpertesting_comf_monologue_3=[MADELINE normal left] Why are you doing this?
-DoonvHelper_doonvhelpertesting_comf_monologue_4=[MADELINE normal left] Look at you, making me break my back.
-DoonvHelper_doonvhelpertesting_comf_monologue_5=[MADELINE normal left] You really think I find comfs funny?
-DoonvHelper_doonvhelpertesting_comf_monologue_6=[MADELINE upset left] I do not.
-DoonvHelper_doonvhelpertesting_comf_monologue_0=[MADELINE_MIRROR normal left] coding is awesome{>> 0.001}!?{>>} nevermind actually.{>> 0.01}..{>>} But hey, at least we got a cool comf counter, right{>> 0.00000001}?????{>>}
+DoonvHelper_doonvhelpertesting_comf_monologue_1=[MADELINE normal left] Dear player, I just wanted to say
+DoonvHelper_doonvhelpertesting_comf_monologue_2=[MADELINE normal left] I was REALLY bored when doing this
+DoonvHelper_doonvhelpertesting_comf_monologue_3=[MADELINE normal left] So uhh, I made this dumb ending
+DoonvHelper_doonvhelpertesting_comf_monologue_4=[MADELINE normal left] Y'know after all of this,,,,,
+DoonvHelper_doonvhelpertesting_comf_monologue_5=[MADELINE normal left] This is the best worst feature in {+DoonvHelper__DoonvHelper}.
+DoonvHelper_doonvhelpertesting_comf_monologue_6=[MADELINE upset left] The worst because Everest doesn't have an API for collectibles so implementing this was REALLY boring.
+DoonvHelper_doonvhelpertesting_comf_monologue_7=[MADELINE normal left] Comfs are very funni tho
+DoonvHelper_doonvhelpertesting_comf_monologue_0=[MADELINE_MIRROR normal left] coding is awes o{>> 0.002}m...{>>} and this was fun{>> 0.001}..{>>} i like the comf counter{>> 0.000000001}.. .. ... .....{>>}
