@@ -1,5 +1,3 @@
-
-
 DOONVHELPER_TESTING_001=[BADELINE serious_alt left] epic demonstration of custom badeline boost 
 
 DoonvHelper__DoonvHelper={# ffffff}Doonv{#}Helper™ 
@@ -8,8 +6,10 @@ DoonvHelper_doonvhelpertesting__dashcodegate={# ffffff}D{#}{# c9e4f6}a{#}{# 93c8
 
 DoonvHelper=DoonvHelper™
 DoonvHelper_doonvhelpertesting=DoonvHelper™ Testing
-poem_DoonvHelper_doonvhelpertesting_A=*madeline talking* is very funny
+poem_DoonvHelper_doonvhelpertesting_A=*madeline talking*
 # DoonvHelper_doonvhelpertesting_postcard={big}You got mail!{/big}{n}{# E5DDDA}This mail has no purpose at all!{n}Well actually, it does have a purpose kinda.{#}{n}Read the guestbooks for information!
+DoonvHelper_doonvhelpertesting_endscreen_title=u no got everything :angry:
+DoonvHelper_doonvhelpertesting_endscreen_title_full=da GOOD GOOD anding :hapi;
 DoonvHelper_doonvhelpertesting_main=
     Hello there! 
     Welcome to the {+DoonvHelper__DoonvHelper} Beta 2 Testing Grounds!
@@ -91,11 +91,4 @@ DoonvHelper_doonvhelpertesting_comf=
     That's pretty much it, however I smell a lot of unknown issues.
     Oh btw will have to crouch-dash into the comf spots to get into them. You can crouch dash by binding it in the menu.
 
-DoonvHelper_doonvhelpertesting_comf_monologue_1=[MADELINE normal left] Dear player, I just wanted to say
-DoonvHelper_doonvhelpertesting_comf_monologue_2=[MADELINE normal left] I was REALLY bored when doing this
-DoonvHelper_doonvhelpertesting_comf_monologue_3=[MADELINE normal left] So uhh, I made this dumb ending
-DoonvHelper_doonvhelpertesting_comf_monologue_4=[MADELINE normal left] Y'know after all of this,,,,,
-DoonvHelper_doonvhelpertesting_comf_monologue_5=[MADELINE normal left] This is the best worst feature in {+DoonvHelper__DoonvHelper}.
-DoonvHelper_doonvhelpertesting_comf_monologue_6=[MADELINE upset left] The worst because Everest doesn't have an API for collectibles so implementing this was REALLY boring.
-DoonvHelper_doonvhelpertesting_comf_monologue_7=[MADELINE normal left] Comfs are very funni tho
-DoonvHelper_doonvhelpertesting_comf_monologue_0=[MADELINE_MIRROR normal left] coding is awes o{>> 0.002}m...{>>} and this was fun{>> 0.001}..{>>} i like the comf counter{>> 0.000000001}.. .. ... .....{>>}
+DoonvHelper_doonvhelpertesting_comfheart_madelinetalking=[MADELINE_MIRROR normal left] coding is awes o{>> 0.002}m...{>>} and this was fun{>> 0.001}..{>>} i like the comf counter{>> 0.000000001}.. .. ... .....{>>}

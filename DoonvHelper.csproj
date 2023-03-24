@@ -21,6 +21,7 @@
 
     <ItemGroup>
         <PackageReference Include="MonoMod.RuntimeDetour" Version="22.01.04.03" PrivateAssets="all" ExcludeAssets="runtime" />
+        <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -29,6 +30,12 @@
         </Reference>
         <Reference Include="$(CelestePrefix)\MMHOOK_Celeste.dll">
             <Private>false</Private>
+        </Reference>
+        <Reference Include="Guneline">
+            <HintPath>..\..\ModsUnzipped\Guneline\Guneline.dll</HintPath>
+        </Reference>
+        <Reference Include="LuaCutscenes">
+            <HintPath>..\..\ModsUnzipped\LuaCutscenes\LuaCutscenes.dll</HintPath>
         </Reference>
     </ItemGroup>
 

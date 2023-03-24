@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Celeste;
+using Celeste.Mod.DoonvHelper.DoonvHelperUtils;
 using Microsoft.Xna.Framework;
 using Monocle;
 

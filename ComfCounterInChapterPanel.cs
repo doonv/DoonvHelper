@@ -8,6 +8,7 @@ using Mono.Cecil.Cil;
 using System.Reflection;
 using Monocle;
 using System.Collections;
+using Celeste.Mod.DoonvHelper.DoonvHelperUtils;
 
 namespace Celeste.Mod.DoonvHelper
 {

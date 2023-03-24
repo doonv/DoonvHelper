@@ -60,3 +60,19 @@ entities.DoonvHelper/ComfDoor.placements.name.normal=Almighty Mighty Comf Door
 entities.DoonvHelper/ComfDoor.placements.description.normal=Full Name: The Almighty Mighty Comf Door Of Death And Suffering
 entities.DoonvHelper/ComfDoor.attributes.description.requires=Determines the number of Comfs required to open the comf door. DoonvHelper keeps track of comfs collected within this level only (Not whole level set).
 entities.DoonvHelper/ComfDoor.attributes.description.startHidden=Whether the door should start hidden and come crashing down when the player approaches.\nWill destroy dash blocks as it crashes down
+
+# Custom NPC
+entities.DoonvHelper/CustomNPC.placements.name.normal=Custom NPC
+entities.DoonvHelper/CustomNPC.attributes.name.aiType=AI Type
+entities.DoonvHelper/CustomNPC.attributes.name.hitboxXOffset=Hitbox X Offset
+entities.DoonvHelper/CustomNPC.attributes.name.hitboxYOffset=Hitbox Y Offset
+
+entities.DoonvHelper/DialogNPC.placements.name.normal=Dialog NPC
+entities.DoonvHelper/DialogNPC.attributes.name.aiType=AI Type
+entities.DoonvHelper/DialogNPC.attributes.name.hitboxXOffset=Hitbox X Offset
+entities.DoonvHelper/DialogNPC.attributes.name.hitboxYOffset=Hitbox Y Offset
+
+entities.DoonvHelper/CustomEnemy.placements.name.normal=Custom Enemy
+entities.DoonvHelper/CustomEnemy.attributes.name.aiType=AI Type
+entities.DoonvHelper/CustomEnemy.attributes.name.hitboxXOffset=Hitbox X Offset
+entities.DoonvHelper/CustomEnemy.attributes.name.hitboxYOffset=Hitbox Y Offset

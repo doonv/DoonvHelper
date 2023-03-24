@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Guneline;
 using Microsoft.Xna.Framework;
 using MonoMod.RuntimeDetour;
 using Celeste.Mod.DoonvHelper.Entities;
@@ -8,6 +9,8 @@ using Mono.Cecil.Cil;
 using System.Reflection;
 using Monocle;
 using System.Collections;
+using MonoMod.Utils;
+using Celeste.Mod.DoonvHelper.DoonvHelperUtils;
 
 namespace Celeste.Mod.DoonvHelper {
     public class DoonvHelperModule : EverestModule {
@@ -40,19 +43,52 @@ namespace Celeste.Mod.DoonvHelper {
                 Logger.SetLogLevel(nameof(DoonvHelperModule), LogLevel.Verbose);
             #endif
         }
-
-
+        private Hook gunelineHook;
         public override void Load() {
+            
             On.Celeste.Level.Begin += ModLevelBegin;
+            if (Everest.Loader.DependencyLoaded(new() {
+                Name = "Guneline",
+                Version = new Version(1, 0, 0)
+            })) {
+                HookGuneline();
+            }
+            // IL.Celeste.Mod.Gun
+            // On.Celeste.Mod.Bul
             chapterPanel.HookMethods();
         }
-        public override void PrepareMapDataProcessors(MapDataFixup context) {
-            context.Add<DoonvHelperMapDataProcessor>();
+
+        private void HookGuneline()
+        {
+            
+            gunelineHook = new Hook(
+                typeof(Guneline.Bullet).GetMethod("CollisionCheck", BindingFlags.NonPublic | BindingFlags.Instance), 
+                modGunelineBulletCollisionCheck
+            );
+        }
+
+        /// <summary>
+        /// TODO: Remove this
+        /// </summary>
+        private void modGunelineBulletCollisionCheck(Action<Bullet> orig, Guneline.Bullet bullet) {
+            DynamicData bulletData = DynamicData.For(bullet);
+            CustomNPC enemy = bulletData.Get<Actor>("owner").Scene.CollideFirst<CustomNPC>(bullet.Hitbox);
+            if (enemy != null && !bulletData.Get<bool>("dead"))
+            {
+                enemy.Kill();
+                bulletData.Invoke("Kill");
+                return;
+            }
+            orig(bullet);
         }
 
         public override void Unload() {
             On.Celeste.Level.Begin -= ModLevelBegin;
+            gunelineHook?.Dispose();
             chapterPanel.UnhookMethods();
+        }
+        public override void PrepareMapDataProcessors(MapDataFixup context) {
+            context.Add<DoonvHelperMapDataProcessor>();
         }
 
 

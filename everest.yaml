@@ -8,3 +8,8 @@
       Version: 1.3471.0
     - Name: ExtendedVariantMode
       Version: 0.26.2
+    - Name: MaxHelpingHand
+      Version: 1.24.1
+  OptionalDependencies:
+    - Name: Guneline
+      Version: 1.0.0

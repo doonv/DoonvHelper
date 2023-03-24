@@ -1,5 +1,22 @@
 CompleteScreen:
-    Atlas: "Endscreens/DoonvHelper"
+    Atlas: "ForsakenCity"
+    Title:
+        ASide: "DoonvHelper_doonvhelpertesting_endscreen_title"
+        FullClear: "DoonvHelper_doonvhelpertesting_endscreen_title_full" 
     Layers:
       - Type: "layer"
-        Images: [ "fractaline" ] # why the heck does this look good
+        Images: [ "10" ]
+      - Type: "ui"
+Mountain:
+    Idle:
+        Position: [ -14.620, 3.606, 19.135 ]
+        Target: [ -13.134, 4.115, 17.897 ]
+    Select:
+        Position: [ -13.453, 5.141, 18.179 ]
+        Target: [ -11.907, 5.751, 17.067 ]
+    Zoom:
+        Position: [ -9.156, 6.872, 12.432 ]
+        Target: [ -8.014, 7.516, 10.922 ]
+    Cursor: [ -0.2239623, 14.5, -0.6094461 ]
+    State: 1
+    ShowCore: false
