@@ -1,9 +1,11 @@
 - DLL: bin/DoonvHelper.dll
   Name: DoonvHelper
-  Version: 0.2.0
+  Version: 0.3.1
   Dependencies:
     - Name: ContortHelper
       Version: 1.5.5
+    - Name: CrossoverCollab
+      Version: 0.1.0
     - Name: Everest
       Version: 1.3471.0
     - Name: ExtendedVariantMode
@@ -13,3 +15,5 @@
   OptionalDependencies:
     - Name: Guneline
       Version: 1.0.0
+    - Name: LuaCutscenes
+      Version: 0.2.7

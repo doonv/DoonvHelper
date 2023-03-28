@@ -85,10 +85,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             stretch.CenterOrigin();
             Add(light = new VertexLight(Color.White, 0.7f, 12, 20));
             Add(bloom = new BloomPoint(0.5f, 12f));
-            Add(wiggler = Wiggler.Create(0.4f, 3f, delegate
-            {
-                sprite.Scale = Vector2.One * (1f + wiggler.Value * 0.4f);
-            }));
+            Add(wiggler = Wiggler.Create(0.4f, 3f, (_) => sprite.Scale = Vector2.One * (1f + wiggler.Value * 0.4f) ));
             MoveParticle = new ParticleType
             {
                 Source = GFX.Game["particles/shard"],
@@ -300,7 +297,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 badeline.Active = true;
                 
             }
-            Add(Alarm.Create(Alarm.AlarmMode.Oneshot, delegate
+            Add(Alarm.Create(Alarm.AlarmMode.Oneshot, () =>
             {
                 if (player.Dashes < player.Inventory.Dashes)
                 {
@@ -322,7 +319,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 stretch.Visible = true;
                 stretch.Rotation = (to - from).Angle();
                 Tween tween = Tween.Create(Tween.TweenMode.Oneshot, Ease.SineInOut, val, start: true);
-                tween.OnUpdate = delegate (Tween t)
+                tween.OnUpdate = (Tween t) =>
                 {
                     Position = Vector2.Lerp(from, to, t.Eased);
                     stretch.Scale.X = 1f + Calc.YoYo(t.Eased) * 2f;
@@ -335,7 +332,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                         level.ParticlesFG.Emit(MoveParticle, 1, Center, Vector2.One * 4f);
                     }
                 };
-                tween.OnComplete = delegate
+                tween.OnComplete = (Tween _) =>
                 {
                     if (X >= (float)level.Bounds.Right)
                     {
@@ -393,7 +390,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             stretch.Visible = true;
             stretch.Rotation = (to - from).Angle();
             Tween tween = Tween.Create(Tween.TweenMode.Oneshot, Ease.SineInOut, val, start: true);
-            tween.OnUpdate = delegate (Tween t)
+            tween.OnUpdate = (Tween t) =>
             {
                 Position = Vector2.Lerp(from, to, t.Eased);
                 stretch.Scale.X = 1f + Calc.YoYo(t.Eased) * 2f;
@@ -404,7 +401,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                     level.ParticlesFG.Emit(MoveParticle, 1, Center, Vector2.One * 4f);
                 }
             };
-            tween.OnComplete = delegate
+            tween.OnComplete = (Tween _) =>
             {
                 if (X >= (float)level.Bounds.Right)
                 {

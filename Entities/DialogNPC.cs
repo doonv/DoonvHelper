@@ -1,25 +1,26 @@
 using Celeste.Mod.DoonvHelper.Utils;
 using Celeste.Mod.Entities;
-using Celeste.Mod.LuaCutscenes;
 using Microsoft.Xna.Framework;
 using Monocle;
-using MonoMod.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Celeste.Mod.DoonvHelper.Entities {
     [CustomEntity("DoonvHelper/DialogNPC")]
+    [Tracked]
     public class DialogNPC : CustomNPC
     {
         public string LuaCutsceneFilePath;
         public string BasicDialogID;
+        public string CsharpEventID;
+
         private bool cutsceneModeEnabled = false;
+
         public bool CutsceneModeEnabled {
             get { return cutsceneModeEnabled; }
             set { 
                 cutsceneModeEnabled = value;
-                AIEnabled = !value;
                 StateMachine.State = value ? (int)St.Dummy : (int)St.Idle;
                 if (value == true && Scene != null) {
                     Sprite.FlipX = Scene.Tracker.GetEntity<Player>().X > this.X;
@@ -61,13 +62,14 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                 x: data.Float("hitboxXOffset", 0f),
                 y: data.Float("hitboxYOffset", 0f)
             ),
-            data.Float("maxSpeed", 32f),
+            new Vector2(data.Float("XSpeed", 48f), data.Float("YSpeed", 240f)),
             data.Float("acceleration", 6f),
             Calc.StringToEnum<AIType>(data.Attr("aiType", "Fly").Replace(" ", "")),
-            data.Float("fallSpeed", 10f),
             data.Attr("spriteID", "DoonvHelper_CustomEnemy_zombie"),
+            data.Float("jumpHeight", 50f),
             data.Bool("faceMovement", false),
             data.Bool("waitForMovement", true),
+            data.Bool("outlineEnabled", true),
             new Point(
                 data.Int("talkBoundsWidth", 80),
                 data.Int("talkBoundsHeight", 40)
@@ -77,7 +79,8 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                 data.Float("talkIndicatorY")
             ),
             data.Attr("basicDialogID", ""),
-            data.Attr("luaCutscene", "")
+            data.Attr("luaCutscene", ""),
+            data.Attr("csEventID", "")
         ) 
         {
         }
@@ -85,22 +88,24 @@ namespace Celeste.Mod.DoonvHelper.Entities {
         public DialogNPC(
             Vector2[] nodes,
             Hitbox hitbox,
-            float speed,
+            Vector2 speed,
             float acceleration,
             AIType ai,
-            float fallSpeed,
             string spriteID,
+            float jumpHeight,
             bool faceMovement,
             bool waitForMovement,
+            bool outlineEnabled,
             Point talkBoundsSize,
             Vector2 talkIndicatorOffset,
             string basicDialogID = "",
-            string luaCutscene = ""
-        ) : base(nodes, hitbox, speed, acceleration, ai, fallSpeed, spriteID, faceMovement, waitForMovement)
+            string luaCutscene = "",
+            string csEventID = ""
+        ) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, faceMovement, waitForMovement, outlineEnabled)
         {
-            this.Depth = -1;
             this.LuaCutsceneFilePath = luaCutscene;
             this.BasicDialogID = basicDialogID;
+            this.CsharpEventID = csEventID;
             Add(new TalkComponent(
                 new Rectangle((int)(talkBoundsSize.X * -0.5f), -talkBoundsSize.Y, talkBoundsSize.X, talkBoundsSize.Y),
                 new Vector2(0f, -this.Sprite.Texture.Height),
@@ -115,12 +120,73 @@ namespace Celeste.Mod.DoonvHelper.Entities {
         
         public void OnTalk(Player player)
         {
-            Logger.Log(LogLevel.Info, "DoonvHelper", "walkie talkie!");
             if (!String.IsNullOrWhiteSpace(this.BasicDialogID)) {
                 (Scene as Level).Add(new BasicTalkCutscene(player, this));
             }
             if (!String.IsNullOrWhiteSpace(this.LuaCutsceneFilePath)) {
-                // DynamicData forbiddenCutscenes = DynamicData.For(LuaCutscenes.LuaTalker);
+                // Thanks cruor, very helpful! /s
+
+                // Get the LuaCutscenes module
+                LuaCutscenes.LuaCutscenesMod module = DoonvHelperModule.LuaCutscenesModule;
+                
+                if (module != null) {
+                    // Use reflection to create an instance of the internal
+                    // class `LuaCutscenes.LuaCutsceneTrigger` using the `EntityData`.
+                    Trigger cutsceneTrigger = (Trigger)module.GetType().Assembly
+                        .GetType("Celeste.Mod.LuaCutscenes.LuaCutsceneTrigger") // Get the class
+                        ?.GetConstructor(new Type[] {typeof(EntityData), typeof(Vector2)}) // Get the constructor
+                        ?.Invoke(new object[] {
+                            new EntityData() { // We make up the entityData of the trigger
+                                Values = new Dictionary<string, object>() {
+                                    ["onlyOnce"] = false,
+                                    ["unskippable"] = false,
+                                    ["filename"] = this.LuaCutsceneFilePath,
+                                    ["arguments"] = ""
+                                },
+                                Position = Vector2.Zero,
+                                Width = 1,
+                                Height = 1
+                            }, 
+                            Vector2.Zero
+                        }); // Call the constructor
+
+                    Scene.Add(cutsceneTrigger);
+
+                    // We need to wait until the next `Update` before activating the cutscene.
+                    Action<Entity> activateCutscene = null;
+                    activateCutscene = (_) => {
+                        cutsceneTrigger.OnEnter(player);
+                        // We must set `activateCutscene` to `null` before 
+                        // setting it to this `Action` or this line won't work.
+                        this.PreUpdate -= activateCutscene; 
+                    };
+                    this.PreUpdate += activateCutscene;
+                }
+            }
+            if (!String.IsNullOrWhiteSpace(this.CsharpEventID)) {
+                // Create the trigger
+                EventTrigger trigger = new EventTrigger(new EntityData() {
+                    // We make up the entityData of the trigger
+                    Values = new Dictionary<string, object>() {
+                        ["event"] = CsharpEventID,
+                        ["onSpawn"] = false
+                    },
+                    Position = Vector2.Zero,
+                    Width = 1,
+                    Height = 1
+                }, Vector2.Zero);
+                
+                Scene.Add(trigger);
+
+                // We need to wait until the next `Update` before activating the cutscene.
+                Action<Entity> activateCutscene = null;
+                activateCutscene = (_) => {
+                    EventTrigger.TriggerCustomEvent(trigger, player, CsharpEventID);
+                    // We must set `activateCutscene` to `null` before 
+                    // setting it to this `Action` or this line won't work.
+                    this.PreUpdate -= activateCutscene; 
+                };
+                this.PreUpdate += activateCutscene;
             }
         }
     }

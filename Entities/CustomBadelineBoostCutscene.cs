@@ -9,7 +9,7 @@ using Monocle;
 
 namespace Celeste.Mod.DoonvHelper.Entities
 {
-    public class CustomBadelineBoostCutscene : CutsceneEntity
+    internal class CustomBadelineBoostCutscene : CutsceneEntity
     {
         private Player player;
         private CustomBadelineBoost boost;
@@ -157,7 +157,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                 nextLevelIntro = Player.IntroTypes.Jump;
             }
             Engine.TimeRate = 1f;
-            Level.OnEndOfFrame += delegate
+            Level.OnEndOfFrame += () =>
             {
                 Level.TeleportTo(player, nextLevelName, nextLevelIntro);
                 

@@ -3,9 +3,18 @@ local customNPC = {}
 customNPC.name = "DoonvHelper/CustomNPC"
 customNPC.fieldInformation = {
     aiType = {
-        options = {"Swim", "Fly", "Smart Fly", "Node Walk", "Smart Walk", "Wander"},
+        options = {"Swim", "Fly", "Smart Fly", "Node Walk", "Chase Walk", "Wander", "Walk & Climb", "Chase Jump"},
         editable = false
     },
+}
+customNPC.fieldOrder = {
+    "x", "y", 
+    "XSpeed", "YSpeed",
+    "acceleration", "jumpHeight",
+    "aiType", "spriteID",
+    "hitboxXOffset", "hitboxYOffset",
+    "hitboxWidth", "hitboxHeight",
+    "faceMovement", "waitForMovement", "outlineEnabled"
 }
 customNPC.depth = 1
 customNPC.justification = {0.5, 1}
@@ -16,19 +25,21 @@ customNPC.nodeVisibility = "selected"
 customNPC.placements = {
     name = "normal",
     data = {
-        maxSpeed = 32.0,
-        acceleration = 6.0, 
+        XSpeed = 48.0,
+        YSpeed = 240,
+        acceleration = 240, 
+        jumpHeight = 200,
         aiType = "Wander",
         hitboxHeight = 16,
         hitboxWidth = 16,
         hitboxXOffset = 0,
         hitboxYOffset = 0,
-        fallSpeed = 69.420,
         faceMovement = false,
         spriteID = "DoonvHelper_CustomNPC_zombie",
         waitForMovement = true,
+        outlineEnabled = true,
+        invincible = false
     }
 }
-
 
 return customNPC

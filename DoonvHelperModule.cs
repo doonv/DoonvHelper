@@ -30,6 +30,8 @@ namespace Celeste.Mod.DoonvHelper {
         private Dictionary<LevelSideID, int> comfLevelTotals = new Dictionary<LevelSideID, int>();
         public static Dictionary<LevelSideID, int> ComfLevelTotals => Instance.comfLevelTotals;
         
+        private LuaCutscenes.LuaCutscenesMod luaCutscenesModule = null;
+        public static LuaCutscenes.LuaCutscenesMod LuaCutscenesModule => Instance.luaCutscenesModule; 
 
         public DoonvHelperModule() {
             Instance = this;
@@ -53,23 +55,25 @@ namespace Celeste.Mod.DoonvHelper {
             })) {
                 HookGuneline();
             }
-            // IL.Celeste.Mod.Gun
-            // On.Celeste.Mod.Bul
+            if (Everest.Loader.TryGetDependency(new() {
+                Name = "LuaCutscenes",
+                Version = new Version(0, 2, 7)
+            }, out EverestModule module)) {
+                luaCutscenesModule = (LuaCutscenes.LuaCutscenesMod)module;
+            }
             chapterPanel.HookMethods();
         }
 
+        /// <summary> TODO: Remove this when Guneline 2 comes out  </summary>
         private void HookGuneline()
         {
-            
             gunelineHook = new Hook(
                 typeof(Guneline.Bullet).GetMethod("CollisionCheck", BindingFlags.NonPublic | BindingFlags.Instance), 
                 modGunelineBulletCollisionCheck
             );
         }
 
-        /// <summary>
-        /// TODO: Remove this
-        /// </summary>
+        /// <summary> TODO: Remove this when Guneline 2 comes out  </summary>
         private void modGunelineBulletCollisionCheck(Action<Bullet> orig, Guneline.Bullet bullet) {
             DynamicData bulletData = DynamicData.For(bullet);
             CustomNPC enemy = bulletData.Get<Actor>("owner").Scene.CollideFirst<CustomNPC>(bullet.Hitbox);

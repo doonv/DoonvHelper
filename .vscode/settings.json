@@ -4,6 +4,14 @@
         "love.filesystem.load": "loadfile"
     },
     "Lua.workspace.library": [
-        "${3rd}/love2d/library"
+        "${3rd}/love2d/library",
+        "../../ModsUnzipped/LuaCutscenes/Assets/LuaCutscenes"
+    ],
+    "Lua.diagnostics.globals": [
+        "enableMovement",
+        "say",
+        "choice",
+        "disableMovement",
+        "getEntity"
     ]
 }

@@ -1,5 +1,4 @@
-local mods = require("mods")
-local dialogNPC = mods.requireFromPlugin('entities.customNPC', 'DoonvHelper')
+local dialogNPC = require("utils").deepcopy(require("mods").requireFromPlugin('entities.customNPC', 'DoonvHelper'))
 
 dialogNPC.name = "DoonvHelper/DialogNPC"
 for k, v in pairs({
@@ -13,6 +12,7 @@ for k, v in pairs({
     talkIndicatorY = 0,
     basicDialogID = "",
     luaCutscene = "",
+    csEventID = ""
 }) do dialogNPC.placements.data[k] = v end
 
 return dialogNPC

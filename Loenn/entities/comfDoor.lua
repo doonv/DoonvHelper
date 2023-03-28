@@ -101,7 +101,7 @@ function theAlmightyMightyComfDoorOfDeathAndSuffering.sprite(room, entity)
                 table.insert(sprites, sprite)
             end
 
-            hearts -= displayedHearts
+            hearts = hearts - displayedHearts
         end
     end
 

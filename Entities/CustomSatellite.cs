@@ -290,7 +290,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             birdFlyPosition = offset + nodes[0];
             gemSpawnPosition = offset + nodes[1];
             Add(dashListener = new DashListener());
-            dashListener.OnDash = delegate (Vector2 dir)
+            dashListener.OnDash = (Vector2 dir) =>
             {
                 string text = "";
                 if (dir.Y < 0f)
@@ -421,7 +421,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
                     Position + computer.Position).setVolume(volume);
                     yield return 0.2f;
                 }
-                Add(Alarm.Create(Alarm.AlarmMode.Oneshot, delegate
+                Add(Alarm.Create(Alarm.AlarmMode.Oneshot, () =>
                 {
                     if (enabled)
                     {

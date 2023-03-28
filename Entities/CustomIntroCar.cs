@@ -134,7 +134,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
         public override void Awake(Scene scene) {
             Level level = (Scene as Level);
             if (level.Session.GetFlag(persistenceFlag)) {
-                Scene.OnEndOfFrame += delegate {
+                Scene.OnEndOfFrame += () => {
                     Remove(disappearChecker);
                     base.Collider = null;
                     Visible = false;
@@ -147,7 +147,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
         
         // This runs when the player gets close enough to the car.
         private void PlayerTrigger(Player player) {
-            Scene.OnEndOfFrame += delegate {
+            Scene.OnEndOfFrame += () => {
                 Remove(disappearChecker);
                 Add(new Coroutine(Disappear(player, disappearanceType)));
             };

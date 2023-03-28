@@ -239,7 +239,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
     		// icon.Color = inactiveColor;
     		// icon.Position = (iconOffset = new Vector2(width / 2f, height / 2f));
     		// icon.CenterOrigin();
-    		// Add(wiggler = Wiggler.Create(0.5f, 4f, delegate(float f)
+    		// Add(wiggler = Wiggler.Create(0.5f, 4f, (float f) =>
     		// {
     		// 	icon.Scale = Vector2.One * (1f + f);
     		// }));
@@ -255,7 +255,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
     		Add(openSfx = new SoundSource());
     		Add(new LightOcclude(0.5f));
             Add(dashListener = new DashListener());
-            dashListener.OnDash = delegate (Vector2 dir) {
+            dashListener.OnDash = (Vector2 dir) => {
                 // Logger.Log(LogLevel.Info, "DoonvHelper", dir.ToString());
 				int oldCompletion = ComputeCodeCompletion();
                 string code = DashVectorToCode(dir);
@@ -421,7 +421,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
     		yield return 0.1f;
     		int particleAt = 0;
     		Tween tween = Tween.Create(Tween.TweenMode.Oneshot, Ease.CubeOut, 2f, start: true);
-    		tween.OnUpdate = delegate(Tween t)
+    		tween.OnUpdate = (Tween t) =>
     		{
     			MoveTo(Vector2.Lerp(start, node, t.Eased));
     			if (Scene.OnInterval(0.1f))
