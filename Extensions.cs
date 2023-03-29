@@ -65,12 +65,6 @@ namespace Celeste.Mod.DoonvHelper.Utils
                     sprite.Play(id, false, false);
                     return;
                 }
-                Logger.Log(LogLevel.Warn, "DoonvHelper.Utils", String.Format(
-                    "Sprite {0} doesn't contain animation \"{1}\". {2}", 
-                    sprite.Path,
-                    id,
-                    i < ids.Length - 1 ? String.Format("Falling back on animation \"{0}\".", ids[i+1]) : "Nothing to fall back on!"
-                ));
             }
             Logger.Log(LogLevel.Error, "DoonvHelper.Utils", String.Format(
                 "Sprite {0} doesn't contain any of the requested animations: {1}.", 
@@ -94,12 +88,6 @@ namespace Celeste.Mod.DoonvHelper.Utils
                     sprite.Play(id, restart, randomizeFrame);
                     return;
                 }
-                Logger.Log(LogLevel.Warn, "DoonvHelper.Utils", String.Format(
-                    "Sprite {0} doesn't contain animation \"{1}\". {2}", 
-                    sprite.Path,
-                    id,
-                    i < ids.Length - 1 ? String.Format("Falling back on animation \"{0}\".", ids[i+1]) : "Nothing to fall back on!"
-                ));
             }
             Logger.Log(LogLevel.Error, "DoonvHelper.Utils", String.Format(
                 "Sprite {0} doesn't contain any of the requested animations: {1}.", 

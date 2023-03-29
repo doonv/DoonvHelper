@@ -20,13 +20,14 @@ namespace Celeste.Mod.DoonvHelper.Entities
 
     	public static ParticleType P_Behind = SwitchGate.P_Behind;
     	public static ParticleType P_Dust = SwitchGate.P_Dust;
-		public static ParticleType Purple_Fire;
+		public ParticleType Purple_Fire;
+		public const float IconDistance = 2f;
+
 		private ParticleSystem above_particles;
     	private MTexture[,] nineSlice;
-		const float iconDistance = 2f;
     	private MTexture[] inactiveIcons;
     	private MTexture[] activeIcons;
-    	private Vector2 iconOffset;
+    	private Vector2 iconScale;
     	private Wiggler wiggler;
     	private Vector2 node;
     	private SoundSource openSfx;
@@ -35,9 +36,9 @@ namespace Celeste.Mod.DoonvHelper.Entities
     	private Color activeColor = Color.White;
     	private Color finishColor = Calc.HexToColor("f141df");
         private DashListener dashListener;
-        public string[] code;
         private List<string> currentInputs = new List<string>();
-		private IconOrientation iconOrientation;
+		public IconOrientation iconOrientation;
+        public string[] Code;
 		public bool moved = false;
 		public int columns;
 
@@ -60,11 +61,12 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			
             return text;
         }
+
 		/// <summary>
-		/// Convert a dash code to a Vector2
+		/// Convert a dash code to a <see cref="Vector2"/>
 		/// </summary>
-		/// <param name="code">A dash code. (i.e. UL, R, D, DL, R, U)</param>
-		/// <returns>A normalized vector2</returns>
+		/// <param name="code">A dash code. (i.e. "UL, R, D, DL, R, U")</param>
+		/// <returns>A normalized vector2.</returns>
 		private Vector2 CodeToDashVector(string code) {
 			Vector2 res = new Vector2(0f, 0f);
 			foreach (char c in code) {
@@ -84,41 +86,40 @@ namespace Celeste.Mod.DoonvHelper.Entities
 						break;
 				}
 			}
-			res.Normalize();
-			return res;
+			return res.SafeNormalize();
 		}
 		/// <summary>
 		/// 	500 IQ algorithm right here.
-		/// 	Computes how much of the code is activated
+		/// 	Computes how much of the <see cref="Code"/> is activated by dashes.
 		/// </summary>
 		/// <returns>
-		/// 	It outputs a number depending on how much of the code is activated
-		/// 	0 is for not activated at all, the code's length when fully activated.
+		/// 	It outputs a number depending on how much of the <see cref="Code"/> is activated
+		/// 	0 is for not activated at all, the <see cref="Code"/>'s length when fully activated.
 		/// </returns>
 		private int ComputeCodeCompletion() {
-			int code_counter = 0;
+			int codeCompletion = 0;
 			for (int i = 0; i < currentInputs.Count; i++)
 			{
-				if (currentInputs[i] == code[code_counter]) {
-					code_counter += 1;
+				if (currentInputs[i] == Code[codeCompletion]) {
+					codeCompletion += 1;
 				} else {
 					// If the code counter is greater than 0 and the current input does not match the corresponding code item, 
 					// the loop variable i is decremented by 1. This is done to ensure that the loop re-evaluates the previous input, 
 					// as it may have been the start of a correct code sequence.
-					if (code_counter > 0) {
+					if (codeCompletion > 0) {
 						i--;
 					}
-					code_counter = 0;
+					codeCompletion = 0;
 				}
 			}
-			return code_counter;
+			return codeCompletion;
 		}
 
 		/// <summary>
 		/// Gets the (centered) draw position of an arrow.
 		/// </summary>
 		/// <param name="arrowId">The id of the arrow</param>
-		/// <returns>The draw position</returns>
+		/// <returns>The draw position.</returns>
 		private Vector2 getArrowDrawPos(int arrowId) {
 			//! WARNING: Bad code ahead!
 			// Viewer discretion is advised.
@@ -137,18 +138,18 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			// I'm sorry. I did my best to tell you what it does but...
 			// I just used trial and error for this one.
 			if (orientation ==  IconOrientation.Horizontal) {
-				int columnSize = (int)Math.Ceiling((double)code.Length / (double)columns);
+				int columnSize = (int)Math.Ceiling((double)Code.Length / (double)columns);
 				int currentColumn = (arrowId) / columnSize; // Stores the column we should be in.
 				return
 					this.Position + // Get our positon
 					new Vector2(this.Width / 2f, this.Height / 2f) + // Center it to our block
 					new Vector2(
-						(arrowId - (currentColumn * columnSize)) * ((activeIcons[0].Width + iconDistance)),
-						currentColumn * (activeIcons[0].Height + iconDistance)
+						(arrowId - (currentColumn * columnSize)) * ((activeIcons[0].Width + IconDistance)),
+						currentColumn * (activeIcons[0].Height + IconDistance)
 					) + // Go right depending on arrow_id
 					new Vector2(
-						((columnSize - 1) / 2f) * -(float)(activeIcons[0].Width + iconDistance),
-						(columns - 1) * -((activeIcons[0].Height + iconDistance) / 2f)
+						((columnSize - 1) / 2f) * -(float)(activeIcons[0].Width + IconDistance),
+						(columns - 1) * -((activeIcons[0].Height + IconDistance) / 2f)
 					); // Shift all arrows left depending on how many arrows and columns we can have.
 			} else {
 				float currentColumn = arrowId % columns; // Stores the column we should be in.
@@ -156,12 +157,12 @@ namespace Celeste.Mod.DoonvHelper.Entities
 					this.Position + // Get our positon
 					new Vector2(this.Width / 2f, this.Height / 2f) + // Center it to our block
 					new Vector2(
-						currentColumn * (activeIcons[0].Width + iconDistance),
-						(arrowId - currentColumn) * ((activeIcons[0].Height + iconDistance) / columns)
+						currentColumn * (activeIcons[0].Width + IconDistance),
+						(arrowId - currentColumn) * ((activeIcons[0].Height + IconDistance) / columns)
 					) + // Go down depending on arrow_id
 					new Vector2(
-						(columns - 1) * -((activeIcons[0].Width + iconDistance) / 2f),
-						(code.Length / columns - 1) * -((activeIcons[0].Height + iconDistance) / 2f)
+						(columns - 1) * -((activeIcons[0].Width + IconDistance) / 2f),
+						(Code.Length / columns - 1) * -((activeIcons[0].Height + IconDistance) / 2f)
 					); // Shift all arrows up depending on how many arrows and columns we can have.
 			}
 
@@ -178,6 +179,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 			int columns = 1
         ) : base(position, width, height, safe: false)
     	{
+			
 			this.iconOrientation = iconOrientation;
 			this.columns = columns;
 			Purple_Fire = new ParticleType
@@ -199,12 +201,12 @@ namespace Celeste.Mod.DoonvHelper.Entities
 				SpeedMultiplier = 0.2f,
 				ScaleOut = true
 			};
-            this.code = code.ToUpper().Split(',');
-			this.inactiveIcons = new MTexture[this.code.Length];
-			this.activeIcons = new MTexture[this.code.Length];
-			for (int i = 0; i < this.code.Length; i++)
+            this.Code = code.ToUpper().Split(',');
+			this.inactiveIcons = new MTexture[this.Code.Length];
+			this.activeIcons = new MTexture[this.Code.Length];
+			for (int i = 0; i < this.Code.Length; i++)
 			{
-				Vector2 v = CodeToDashVector(this.code[i]);
+				Vector2 v = CodeToDashVector(this.Code[i]);
 				string text = "";
 				if (v.Y < 0f)
 				{
@@ -229,20 +231,13 @@ namespace Celeste.Mod.DoonvHelper.Entities
 					"objects/DoonvHelper/dashcodegate/arrows/active-{0}",
 				text.Trim('-'))];
 			}
-            Logger.Log(LogLevel.Info, "DoonvHelper", String.Join(", ", this.code));
+            Logger.Log(LogLevel.Info, "DoonvHelper", String.Join(", ", this.Code));
     		this.node = node;
     		this.persistenceFlag = persistenceFlag;
-    		// Add(icon = new Sprite(GFX.Game, "objects/switchgate/icon"));
-    		// icon.Add("spin", "", 0.1f, "spin");`
-    		// icon.Play("spin");
-    		// icon.Rate = 0f;
-    		// icon.Color = inactiveColor;
-    		// icon.Position = (iconOffset = new Vector2(width / 2f, height / 2f));
-    		// icon.CenterOrigin();
-    		// Add(wiggler = Wiggler.Create(0.5f, 4f, (float f) =>
-    		// {
-    		// 	icon.Scale = Vector2.One * (1f + f);
-    		// }));
+    		Add(wiggler = Wiggler.Create(0.5f, 4f, (float f) =>
+    		{
+    			iconScale = Vector2.One * (1f + f);
+    		}));
     		MTexture mTexture = GFX.Game["objects/switchgate/" + spriteName];
     		nineSlice = new MTexture[3, 3];
     		for (int i = 0; i < 3; i++)
@@ -260,7 +255,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 				int oldCompletion = ComputeCodeCompletion();
                 string code = DashVectorToCode(dir);
                 currentInputs.Add(code);
-                if (currentInputs.Count > this.code.Length)
+                if (currentInputs.Count > this.Code.Length)
                 {
                     currentInputs.RemoveAt(0);
                 }
@@ -286,7 +281,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
 						);
 					}
 				}
-                if (completion == this.code.Length) {
+                if (completion == this.Code.Length) {
                     Add(new Coroutine(Sequence(node)));
                 }
             };
@@ -362,7 +357,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
     			}
     		}
 			
-			for (int i = 0; i < code.Length; i++)
+			for (int i = 0; i < Code.Length; i++)
 			{
 				Vector2 draw_pos = getArrowDrawPos(i);
 
@@ -412,12 +407,6 @@ namespace Celeste.Mod.DoonvHelper.Entities
     		yield return 1f;
     		openSfx.Play("event:/game/general/touchswitch_gate_open");
     		StartShaking(0.5f);
-    		// while (icon.Rate < 1f)
-    		// {
-    		// 	icon.Color = Color.Lerp(inactiveColor, activeColor, icon.Rate);
-    		// 	icon.Rate += Engine.DeltaTime * 2f;
-    		// 	yield return null;
-    		// }
     		yield return 0.1f;
     		int particleAt = 0;
     		Tween tween = Tween.Create(Tween.TweenMode.Oneshot, Ease.CubeOut, 2f, start: true);
@@ -503,25 +492,9 @@ namespace Celeste.Mod.DoonvHelper.Entities
     		Collidable = collidable;
     		Audio.Play("event:/game/general/touchswitch_gate_finish", Position);
     		StartShaking(0.2f);
-    		// while (icon.Rate > 0f)
-    		// {
-    		// 	icon.Color = Color.Lerp(activeColor, finishColor, 1f - icon.Rate);
-    		// 	icon.Rate -= Engine.DeltaTime * 4f;
-    		// 	yield return null;
-    		// }
-    		// icon.Rate = 0f;
-    		// icon.SetAnimationFrame(0);
-    		// wiggler.Start();
+    		wiggler.Start();
     		bool collidable2 = Collidable;
     		Collidable = false;
-    		// if (!Scene.CollideCheck<Solid>(Center))
-    		// {
-    		// 	for (int m = 0; m < 32; m++)
-    		// 	{
-    		// 		float num = Calc.Random.NextFloat((float)Math.PI * 2f);
-    		// 		// SceneAs<Level>().ParticlesFG.Emit(TouchSwitch.P_Fire, Position + iconOffset + Calc.AngleToVector(num, 4f), num);
-    		// 	}
-    		// }
     		Collidable = collidable2;
     	}
     }

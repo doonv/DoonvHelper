@@ -10,22 +10,30 @@
         <Justify x="0.5" y="1"/>
         <Loop id="idle" path="zombie" delay="0" frames="0" />
         <Loop id="moving" path="zombie" delay="0.2" frames="0,1,2" />
+        <Loop id="zombie" path="zombie" delay="0.2" frames="0,1,2" />
     </DoonvHelper_CustomNPC_zombie>
     <DoonvHelper_CustomNPC_eye path="objects/DoonvHelper/customNPC/" start="idle">
         <Justify x="0.3" y="0.5"/>
         <Loop id="idle" path="eye" delay="0" frames="0" />
         <Loop id="moving" path="eye" delay="0.2" frames="0,1" />
+        <Loop id="flying" path="eye" delay="0.2" frames="0,1" />
     </DoonvHelper_CustomNPC_eye>
     <DoonvHelper_CustomNPC_harpy path="objects/DoonvHelper/customNPC/" start="idle">
         <Justify x="0.5" y="0.5"/>
         <Loop id="idle" path="harpy" delay="0.3" frames="0-5" />
         <Loop id="moving" path="harpy" delay="0.1" frames="0-5" />
+        <Loop id="flying" path="harpy" delay="0.1" frames="0-5" />
+        
+        <Loop id="gore" path="harpy_gore" frames="0,1" />
     </DoonvHelper_CustomNPC_harpy>
     <DoonvHelper_CustomNPC_guide path="objects/DoonvHelper/customNPC/" start="idle">
         <Justify x="0.5" y="0.95"/>
+
         <Anim id="idle" path="guide_" frames="0" delay="0.5" goto="idle:3,blink" />
         <Anim id="blink" path="guide_" frames="20" delay="0.2" goto="idle" />
         <Loop id="moving" path="guide_" delay="0.05" frames="1-14" />
-        <Loop id="gore" path="guide_gore" frames="0,1,2" delay="1"/>
+        <Loop id="walking" path="guide_" delay="0.05" frames="1-14" />
+
+        <Loop id="gore" path="guide_gore" frames="0,1,2" />
     </DoonvHelper_CustomNPC_guide>
 </Sprites>

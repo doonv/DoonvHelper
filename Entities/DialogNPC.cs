@@ -64,7 +64,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
             ),
             new Vector2(data.Float("XSpeed", 48f), data.Float("YSpeed", 240f)),
             data.Float("acceleration", 6f),
-            Calc.StringToEnum<AIType>(data.Attr("aiType", "Fly").Replace(" ", "")),
+            Calc.StringToEnum<AIType>(data.Attr("aiType", "Wander").Replace(" ", "").Replace('&', 'N')),
             data.Attr("spriteID", "DoonvHelper_CustomEnemy_zombie"),
             data.Float("jumpHeight", 50f),
             data.Bool("faceMovement", false),

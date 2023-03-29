@@ -19,7 +19,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
             ),
             new Vector2(data.Float("XSpeed", 48f), data.Float("YSpeed", 240f)),
             data.Float("acceleration", 6f),
-            Calc.StringToEnum<AIType>(data.Attr("aiType", "Wander").Replace(" ", "")),
+            Calc.StringToEnum<AIType>(data.Attr("aiType", "Wander").Replace(" ", "").Replace('&', 'N')),
             data.Attr("spriteID", "DoonvHelper_CustomEnemy_zombie"),
             data.Float("jumpHeight", 50f),
             data.Bool("faceMovement", false),
@@ -111,11 +111,9 @@ namespace Celeste.Mod.DoonvHelper.Entities {
         public override void Update()
         {
             base.Update();
-            Logger.Log(LogLevel.Info, "DoonvHelper", $"shoot time: {BulletShootTimer}");
             if (BulletRecharge > 0f) {
                 BulletShootTimer -= Engine.DeltaTime;
                 if (BulletShootTimer < 0f) {
-                    Logger.Log(LogLevel.Info, "DoonvHelper", "SHOOOOTOOT!!!!!!!");
                     Shoot();
                     BulletShootTimer = BulletRecharge;
                 }

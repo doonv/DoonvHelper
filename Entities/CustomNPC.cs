@@ -42,7 +42,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                     Velocity.X = Calc.Approach(Velocity.X, 0f, 240f * Engine.DeltaTime);
                 } else {
                     Velocity.Y = Calc.Approach(Velocity.Y, 240f, 480f * Engine.DeltaTime);
-                    Velocity.X = Calc.Approach(Velocity.X, 0f, 100f * Engine.DeltaTime);
+                    Velocity.X = Calc.Approach(Velocity.X, 0f, 50f * Engine.DeltaTime);
                 }
                 MoveH(Velocity.X * Engine.DeltaTime);
                 MoveV(Velocity.Y * Engine.DeltaTime);
@@ -175,7 +175,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                 ),
                 new Vector2(data.Float("XSpeed", 48f), data.Float("YSpeed", 240f)),
                 data.Float("acceleration", 6f),
-                Calc.StringToEnum<AIType>(data.Attr("aiType", "Fly").Replace(" ", "").Replace('&', 'N')),
+                Calc.StringToEnum<AIType>(data.Attr("aiType", "Wander").Replace(" ", "").Replace('&', 'N')),
                 data.Attr("spriteID", "DoonvHelper_CustomEnemy_zombie"),
                 data.Float("jumpHeight", 50f),
                 data.Bool("faceMovement", false),
@@ -284,7 +284,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
             if (FaceMovement) {
                 Sprite.Rotation = Velocity.Angle() - (float)Math.PI;
                 Sprite.FlipY = Math.Cos(Sprite.Rotation) < 0f;
-            } else if (Math.Abs(Velocity.X) > 0.1f) {
+            } else if (Velocity.Length() > 0.1f) {
                 Sprite.FlipX = Velocity.X > 0f;
             }
             // At the end of the frame our state changes to this function's return value.
@@ -295,16 +295,15 @@ namespace Celeste.Mod.DoonvHelper.Entities {
         {
             base.Update();
             if (player == null || StateMachine.State == (int)St.Dummy) return;
-
-            if (Math.Abs(Velocity.X) > 0.1f ) {
-                if (StateMachine.State == (int)St.Idle) StateMachine.State = (int)St.Walking;
+            if (WaitForMovement && player.JustRespawned) return;
+            
+            int newState = AIUpdate();
+            if (Velocity.Length() > 0.1f) {
+                StateMachine.State = newState;
             } else {
                 StateMachine.State = (int)St.Idle;
             }
-
-            if (WaitForMovement && player.JustRespawned) return;
-
-            AIUpdate();
+                
             MoveH(Velocity.X * Engine.DeltaTime);
             MoveV(Velocity.Y * Engine.DeltaTime);
         }
@@ -334,7 +333,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
         /// An overridable method used for the NPC's AI.
         /// Use the <see cref="Velocity"/> field to move the NPC. (The base method provides great examples of what you can do)
         /// </summary>
-        public virtual void AIUpdate()
+        public virtual int AIUpdate()
         {            
             switch (AI)
             {
@@ -344,20 +343,22 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                         if (this.CollideRect(new Rectangle(
                             (int)swimAIwater.Collider.AbsoluteX,
                             (int)swimAIwater.Collider.AbsoluteY + 16,
-                            (int)swimAIwater.Collider.Width - 16,
-                            (int)swimAIwater.Collider.Height
+                            (int)swimAIwater.Collider.Width,
+                            (int)swimAIwater.Collider.Height - 16
                         ))) {
+                            StateMachine.State = (int)St.Flying;
                             if (player.CollideCheck(swimAIwater)) {
                                 Velocity = Calc.Approach(Velocity, (player.Position - this.Position).SafeNormalize() * Speed, Acceleration * Engine.DeltaTime);
                             } else {
-                                Velocity.X = Calc.Approach(Velocity.X, 0f, Acceleration * Engine.DeltaTime); 
+                                Velocity = Calc.Approach(Velocity, Vector2.Zero, Acceleration * 0.25f * Engine.DeltaTime); 
                             }
                         } else {
+                            StateMachine.State = (int)St.Walking;
                             Velocity.X = Calc.Approach(Velocity.X, 0f, Acceleration * Engine.DeltaTime); 
                             WalkerFall();
                         }
                     }
-                    break;
+                    return StateMachine.State;
                 case AIType.WalkNClimb:
                     char bgTileAtPos = level.BgData[
                         (int)(this.Center.X / 8) - level.Session.MapData.TileBounds.Left, 
@@ -365,22 +366,21 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                     ];
 
                     if (bgTileAtPos == '0') {
-                        StateMachine.State = (int)St.Walking;
                         goto case AIType.ChaseWalk;
                     } else {
-                        StateMachine.State = (int)St.Walking;
-                        goto case AIType.SmartFly;
+                        Velocity = Calc.Approach(Velocity, (player.Position - this.Position).SafeNormalize() * Speed.X, Acceleration * Engine.DeltaTime);
+                        return (int)St.Flying;
                     }
                 case AIType.Fly:
                     Velocity = Calc.Approach(Velocity, (player.Position - this.Position).SafeNormalize() * Speed, Acceleration * Engine.DeltaTime);
-                    break;
+                    return (int)St.Walking;
                 case AIType.SmartFly:
                     if (Scene.OnInterval(0.2f) && CanSeePlayer(player)) {
                         nodeIndex = 0;
                         (Scene as Level).Pathfinder.Find(ref path, base.Center, player.Center, false, logging: true);
                     }
                     Velocity = Calc.Approach(Velocity, (GetNodeDirection(path.ToArray()) * Speed), Acceleration * Engine.DeltaTime);
-                    break;
+                    return (int)St.Flying;
                 case AIType.NodeWalk:
                     if (WalkerJumpCheck()) {
                         Velocity.Y = -JumpHeight;
@@ -388,7 +388,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                     
                     WalkerFall();
                     Velocity.X = Calc.Approach(Velocity.X, GetNodeDirection(Nodes, true).Sign().X * Speed.X, Acceleration * Engine.DeltaTime);
-                    break;
+                    return (int)St.Walking;
                 case AIType.ChaseWalk:
                     if (WalkerJumpCheck()) {
                         Velocity.Y = -JumpHeight;
@@ -396,7 +396,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                     
                     WalkerFall();
                     Velocity.X = Calc.Approach(Velocity.X, (player.Position - this.Position).Sign().X * Speed.X, Acceleration * Engine.DeltaTime);
-                    break;
+                    return (int)St.Walking;
                 case AIType.ChaseJump:
                     wanderAINextMoveTimer -= Engine.DeltaTime;
                     if (wanderAINextMoveTimer < 0f) {
@@ -407,7 +407,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                     WalkerFall();
                     if (this.OnGround()) Velocity.X = Calc.Approach(Velocity.X, 0, Acceleration * Engine.DeltaTime);
                     else Velocity.X = Calc.Approach(Velocity.X, (player.Position - this.Position).Sign().X * Speed.X, Acceleration * Engine.DeltaTime);
-                    break;
+                    return (int)St.Walking;
                 case AIType.Wander:
                     // The move timer gets reduced by 1.5 each second when moving.
                     // The move timer gets reduced by 1.0 each second when not moving.
@@ -418,9 +418,9 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                     }
                     WalkerFall();
                     Velocity.X = Calc.Approach(Velocity.X, Math.Sign(Velocity.X) * Speed.X, Acceleration * Engine.DeltaTime);
-                    break;
-                
+                    return (int)St.Walking;
             }
+            return StateMachine.State;
         }
     }
 }
