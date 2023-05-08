@@ -153,7 +153,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                     Scene.Add(cutsceneTrigger);
 
                     // We need to wait until the next `Update` before activating the cutscene.
-                    Action<Entity> activateCutscene = null;
+                    Action<Entity> activateCutscene = null; 
                     activateCutscene = (_) => {
                         cutsceneTrigger.OnEnter(player);
                         // We must set `activateCutscene` to `null` before 

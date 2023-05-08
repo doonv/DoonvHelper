@@ -4,9 +4,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Monocle;
 
+
 namespace Celeste.Mod.DoonvHelper.Utils
 {
-    public static class Utils {
+    public static class DoonvUtils {
         public static void DrawGradient(Hitbox rect, Color color1, Color color2) {
             for (float x = 0; x < rect.Width; x++)
             {
@@ -37,6 +38,18 @@ namespace Celeste.Mod.DoonvHelper.Utils
                 y: hitbox.Position.Y + position.Y,
                 width: hitbox.Width,
                 height: hitbox.Height
+            );
+        
+        /// <summary>
+        /// Returns a <see cref="Rectangle"/> where the <paramref name="position"/> vector has been added to its position.
+        /// </summary>
+        /// <param name="position">The <see cref="Point"/> position to add to the hitbox.</param>
+        public static Rectangle AddPosition(this Rectangle rect, Point position) => 
+            new Rectangle(
+                x: rect.X + position.X,
+                y: rect.Y + position.Y,
+                width: rect.Width,
+                height: rect.Height
             );
         
         

@@ -11,7 +11,8 @@ for k, v in pairs({
     bulletSpriteID = "badeline_projectile",
     bulletRecharge = 0.0,
     bulletSpeed = 300.0,
-    bulletSafeTime = 0.25
+    bulletSafeTime = 0.25,
+    bulletFaceMove = false
 }) do customEnemy.placements.data[k] = v end
 
 return customEnemy

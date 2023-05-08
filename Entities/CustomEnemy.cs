@@ -122,6 +122,8 @@ namespace Celeste.Mod.DoonvHelper.Entities {
 
         public void Shoot()
         {
+            // I don't know how the pooler works really I'm just copying from Spekio's toolbox
+            // I hope this increases performance or something? idk
             Scene.Add(Engine.Pooler.Create<Bullet>().Init(
                 BulletSpriteID,
                 this.Center,

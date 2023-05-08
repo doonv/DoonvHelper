@@ -25,7 +25,7 @@ namespace Celeste.Mod.DoonvHelper.Entities {
             : this(
                 data.Position + offset, 
                 data.Width, data.Height, 
-                Calc.HexToColor(data.Attr("color", defaultValue: "6969ee")),
+                data.HexColor("color", Calc.HexToColor("6969ee")),
                 data.Float("alpha", defaultValue: 1.0f),
                 data.Int("depth", defaultValue: 5000)
             ) 

@@ -3,7 +3,16 @@ local customNPC = {}
 customNPC.name = "DoonvHelper/CustomNPC"
 customNPC.fieldInformation = {
     aiType = {
-        options = {"Swim", "Fly", "Smart Fly", "Node Walk", "Chase Walk", "Wander", "Walk & Climb", "Chase Jump"},
+        options = {
+            {"Swim", "Swim"},
+            {"Fly", "Fly"},
+            {"Smart Fly", "SmartFly"},
+            {"Node Walk", "NodeWalk"},
+            {"Chase Walk", "ChaseWalk"},
+            {"Wander", "Wander"},
+            {"Walk & Climb", "WalkNClimb"},
+            {"Chase Jump", "ChaseJump"},
+        },   
         editable = false
     },
 }

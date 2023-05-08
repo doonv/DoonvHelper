@@ -72,7 +72,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             this.cutsceneTeleport = cutsceneTeleport;
             this.goldenTeleport = goldenTeleport;
             this.cutsceneBird = cutsceneBird;
-            this.transitionColor = transitionColor.GetValueOrDefault(Calc.HexToColor("ff6def"));
+            this.transitionColor = transitionColor ?? Calc.HexToColor("ff6def");
             base.Collider = new Circle(16f);
             Add(new PlayerCollider(OnPlayer));
             Add(sprite = GFX.SpriteBank.Create("DoonvHelper_CustomBadelineBoost"));
@@ -90,7 +90,7 @@ namespace Celeste.Mod.DoonvHelper.Entities
             {
                 Source = GFX.Game["particles/shard"],
                 Color = Color.White,
-                Color2 = moveParticleColor.GetValueOrDefault(Calc.HexToColor("e0a8d8")),
+                Color2 = moveParticleColor ?? Calc.HexToColor("e0a8d8"),
                 ColorMode = ParticleType.ColorModes.Blink,
                 FadeMode = ParticleType.FadeModes.Late,
                 RotationMode = ParticleType.RotationModes.Random,
@@ -105,8 +105,8 @@ namespace Celeste.Mod.DoonvHelper.Entities
             };
             AmbienceParticle = new ParticleType
             {
-                Color = ambientParticleColor1.GetValueOrDefault(Calc.HexToColor("f78ae7")),
-                Color2 = ambientParticleColor2.GetValueOrDefault(Calc.HexToColor("ffccf7")),
+                Color = ambientParticleColor1 ?? Calc.HexToColor("f78ae7"),
+                Color2 = ambientParticleColor2 ?? Calc.HexToColor("ffccf7"),
                 ColorMode = ParticleType.ColorModes.Blink,
                 FadeMode = ParticleType.FadeModes.Late,
                 Size = 1f,
@@ -132,13 +132,13 @@ namespace Celeste.Mod.DoonvHelper.Entities
             data.Attr("cutsceneTeleport", defaultValue: ""),
             data.Attr("goldenTeleport", defaultValue: ""),
             data.Bool("cutsceneBird", defaultValue: true),
-            Calc.HexToColor(data.Attr("ambientParticle1", defaultValue: "f78ae7")),
-            Calc.HexToColor(data.Attr("ambientParticle2", defaultValue: "ffccf7")),
-            Calc.HexToColor(data.Attr("moveColor", defaultValue: "ff6def")),
+            data.HexColor("ambientParticle1", defaultValue: Calc.HexToColor("f78ae7")),
+            data.HexColor("ambientParticle2", defaultValue: Calc.HexToColor("ffccf7")),
+            data.HexColor("moveColor", defaultValue: Calc.HexToColor("ff6def")),
             new Image(GFX.Game[
                 data.Attr("moveImage", defaultValue: "objects/badelineboost/stretch")
             ]),
-            Calc.HexToColor(data.Attr("moveParticleColor", defaultValue: "e0a8d8"))
+            data.HexColor("moveParticleColor", defaultValue: Calc.HexToColor("e0a8d8"))
         )
         {
         }

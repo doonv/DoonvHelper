@@ -417,6 +417,9 @@ namespace Celeste.Mod.DoonvHelper.Entities {
                         Velocity.X = Calc.Random.Choose<float>(0f, 1f, -1f);
                     }
                     WalkerFall();
+                    if (WalkerJumpCheck()) {
+                        Velocity.Y = -JumpHeight;
+                    }
                     Velocity.X = Calc.Approach(Velocity.X, Math.Sign(Velocity.X) * Speed.X, Acceleration * Engine.DeltaTime);
                     return (int)St.Walking;
             }

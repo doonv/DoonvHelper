@@ -92,3 +92,5 @@ entities.DoonvHelper/CustomEnemy.attributes.name.YSpeed=Y Speed
 entities.DoonvHelper/CustomEnemy.attributes.description.XSpeed=The maximum pixels/sec horizontal speed of the entity.
 entities.DoonvHelper/CustomEnemy.attributes.description.YSpeed=The maximum pixels/sec vertical/fall speed of the entity.
 entities.DoonvHelper/CustomEnemy.attributes.description.aiType=The type of AI being used by the NPC\n\nSwim: Similar to Fly AI, but only chases the player while the player is in Water. The NPC must start in Water or this won't work.\nFly: The NPC flies directly toward the player.\nSmart Fly: The NPC flies toward the player using pathfinding.\nNode Walk: The NPC walks between it's nodes.\nChase Walk: The NPC walks toward the player.\nWander: The NPC randomly walks and stands around.\nWalk & Climb: The NPC has Fly AI when behind a bg tile, and has Chase Walk AI when not behind a bg tile.\nChase Jump: Similar to ChaseWalk AI, but can only move in the air and not on the ground. (Similar to Terraria's slime AI)
+
+triggers.DoonvHelper/SetFlagOnEntityCount.placements.name.normal=Set Flag On Entity Count (Requires FrostHelper)
