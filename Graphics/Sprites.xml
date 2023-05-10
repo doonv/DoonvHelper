@@ -1,33 +1,35 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Sprites>
     <DoonvHelper_CustomBadelineBoost path="objects/badelineBoost/" start="idle">
-        <Justify x="0.5" y="0.5"/>
-        <Anim id="idle" path="idle" frames="0-5" delay="0.08" goto="idle:10,flash:2,blink"/>
-        <Anim id="flash" path="idle" frames="6-11" delay="0.08" goto="idle"/>
-        <Anim id="blink" path="idle" frames="12-25" delay="0.08" goto="idle"/>
+        <Justify x="0.5" y="0.5" />
+        <Anim id="idle" path="idle" frames="0-5" delay="0.08" goto="idle:10,flash:2,blink" />
+        <Anim id="flash" path="idle" frames="6-11" delay="0.08" goto="idle" />
+        <Anim id="blink" path="idle" frames="12-25" delay="0.08" goto="idle" />
     </DoonvHelper_CustomBadelineBoost>
     <DoonvHelper_CustomNPC_zombie path="objects/DoonvHelper/customNPC/" start="idle">
-        <Justify x="0.5" y="1"/>
+        <Justify x="0.5" y="1" />
         <Loop id="idle" path="zombie" delay="0" frames="0" />
         <Loop id="moving" path="zombie" delay="0.2" frames="0,1,2" />
         <Loop id="zombie" path="zombie" delay="0.2" frames="0,1,2" />
+
+        <Loop id="connector" path="snatcherVine" frames="0" />
     </DoonvHelper_CustomNPC_zombie>
     <DoonvHelper_CustomNPC_eye path="objects/DoonvHelper/customNPC/" start="idle">
-        <Justify x="0.3" y="0.5"/>
+        <Justify x="0.3" y="0.5" />
         <Loop id="idle" path="eye" delay="0" frames="0" />
         <Loop id="moving" path="eye" delay="0.2" frames="0,1" />
         <Loop id="flying" path="eye" delay="0.2" frames="0,1" />
     </DoonvHelper_CustomNPC_eye>
     <DoonvHelper_CustomNPC_harpy path="objects/DoonvHelper/customNPC/" start="idle">
-        <Justify x="0.5" y="0.5"/>
+        <Justify x="0.5" y="0.5" />
         <Loop id="idle" path="harpy" delay="0.3" frames="0-5" />
         <Loop id="moving" path="harpy" delay="0.1" frames="0-5" />
         <Loop id="flying" path="harpy" delay="0.1" frames="0-5" />
-        
+
         <Loop id="gore" path="harpy_gore" frames="0,1" />
     </DoonvHelper_CustomNPC_harpy>
     <DoonvHelper_CustomNPC_guide path="objects/DoonvHelper/customNPC/" start="idle">
-        <Justify x="0.5" y="0.95"/>
+        <Justify x="0.5" y="0.95" />
 
         <Anim id="idle" path="guide_" frames="0" delay="0.5" goto="idle:3,blink" />
         <Anim id="blink" path="guide_" frames="20" delay="0.2" goto="idle" />

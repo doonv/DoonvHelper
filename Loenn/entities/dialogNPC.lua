@@ -1,4 +1,4 @@
-local dialogNPC = require("utils").deepcopy(require("mods").requireFromPlugin('entities.customNPC', 'DoonvHelper'))
+local dialogNPC = require("utils").deepcopy(require("mods").requireFromPlugin("entities.customNPC", "DoonvHelper"))
 
 dialogNPC.name = "DoonvHelper/DialogNPC"
 for k, v in pairs({

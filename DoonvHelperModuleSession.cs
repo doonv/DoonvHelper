@@ -1,5 +1,6 @@
-namespace Celeste.Mod.DoonvHelper {
-    public class DoonvHelperModuleSession : EverestModuleSession {
+namespace Celeste.Mod.DoonvHelper;
 
-    }
+public class DoonvHelperModuleSession : EverestModuleSession
+{
+
 }

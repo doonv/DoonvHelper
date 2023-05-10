@@ -91,4 +91,8 @@ DoonvHelper_doonvhelpertesting_comf=
     That's pretty much it, however I smell a lot of unknown issues.
     Oh btw will have to crouch-dash into the comf spots to get into them. You can crouch dash by binding it in the menu.
 
-DoonvHelper_doonvhelpertesting_comfheart_madelinetalking=[MADELINE_MIRROR normal left] coding is awes o{>> 0.002}m...{>>} and this was fun{>> 0.001}..{>>} i like the comf counter{>> 0.000000001}.. .. ... .....{>>}
+DoonvHelper_doonvhelpertesting_comfheart_madelinetalking=[MADELINE_MIRROR normal left] coding is awes o{>> 0.002}m...{>>} and this was fun{>> 0.001}..{>>} i like the comf counter{>> 0.000000001}.. .. ... .....u ok?{>>}
+
+DoonvHelper_doonvhelpertesting_guide_dialog=
+    [THEO normal left] Hello, this is an example of some dialog from the DialogNPC!
+    [THEO yolo left] It's awesome!

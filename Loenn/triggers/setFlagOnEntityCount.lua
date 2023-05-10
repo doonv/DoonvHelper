@@ -1,17 +1,23 @@
 local setFlagOnEntityCount = {}
 setFlagOnEntityCount.name = "DoonvHelper/SetFlagOnEntityCount"
 setFlagOnEntityCount.fieldInformation = {
-    operator = { options = {
-        {"Equal to", "EqualTo"},
-        {"Greater than", "GreaterThan"},
-        {"Less than", "LessThan"},
-    }, editable = false },
-    check = { options = {
-        {"Always", "Always"},
-        {"On Enter", "OnEnter"},
-        {"On Stay", "OnStay"},
-        {"On Leave", "OnLeave"},
-    }, editable = false },
+    operator = {
+        options = {
+            { "Equal to",     "EqualTo" },
+            { "Greater than", "GreaterThan" },
+            { "Less than",    "LessThan" },
+        },
+        editable = false
+    },
+    check = {
+        options = {
+            { "Always",   "Always" },
+            { "On Enter", "OnEnter" },
+            { "On Stay",  "OnStay" },
+            { "On Leave", "OnLeave" },
+        },
+        editable = false
+    },
     count = { fieldType = "integer" },
 }
 setFlagOnEntityCount.placements = {
@@ -23,7 +29,7 @@ setFlagOnEntityCount.placements = {
         operator = "EqualTo",
         count = 0,
         flag = "",
-        check = "OnEnter"
+        checkOn = "OnEnter"
     }
 }
 

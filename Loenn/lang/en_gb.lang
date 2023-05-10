@@ -55,6 +55,7 @@ entities.DoonvHelper/CustomIntroCar.attributes.description.persistenceFlag=If a 
 
 # comf
 entities.DoonvHelper/ComfySpot.placements.name.normal=Comfy Spot
+
 # The mightiest door ever made
 entities.DoonvHelper/ComfDoor.placements.name.normal=Almighty Mighty Comf Door
 entities.DoonvHelper/ComfDoor.placements.description.normal=Full Name: The Almighty Mighty Comf Door Of Death And Suffering
@@ -63,34 +64,46 @@ entities.DoonvHelper/ComfDoor.attributes.description.startHidden=Whether the doo
 
 # Custom NPC
 entities.DoonvHelper/CustomNPC.placements.name.normal=Custom NPC
+entities.DoonvHelper/CustomNPC.placements.description.normal=A very customizable NPC with many different AIs.
 entities.DoonvHelper/CustomNPC.attributes.name.aiType=AI Type
 entities.DoonvHelper/CustomNPC.attributes.name.hitboxXOffset=Hitbox X Offset
 entities.DoonvHelper/CustomNPC.attributes.name.hitboxYOffset=Hitbox Y Offset
 entities.DoonvHelper/CustomNPC.attributes.name.XSpeed=X Speed
 entities.DoonvHelper/CustomNPC.attributes.name.YSpeed=Y Speed
-entities.DoonvHelper/CustomNPC.attributes.description.XSpeed=The maximum pixels/sec horizontal speed of the entity.
-entities.DoonvHelper/CustomNPC.attributes.description.YSpeed=The maximum pixels/sec vertical/fall speed of the entity.
-entities.DoonvHelper/CustomNPC.attributes.description.aiType=The type of AI being used by the NPC\n\nSwim: Similar to Fly AI, but only chases the player while the player is in Water. The NPC must start in Water or this won't work.\nFly: The NPC flies directly toward the player.\nSmart Fly: The NPC flies toward the player using pathfinding.\nNode Walk: The NPC walks between it's nodes.\nChase Walk: The NPC walks toward the player.\nWander: The NPC randomly walks and stands around.\nWalk & Climb: The NPC has Fly AI when behind a bg tile, and has Chase Walk AI when not behind a bg tile.\nChase Jump: Similar to ChaseWalk AI, but can only move in the air and not on the ground. (Similar to Terraria's slime AI)
+entities.DoonvHelper/CustomNPC.attributes.description.XSpeed=The maximum pixels/second horizontal speed of the NPC.
+entities.DoonvHelper/CustomNPC.attributes.description.YSpeed=The maximum pixels/second vertical/fall speed of the NPC.
+entities.DoonvHelper/CustomNPC.attributes.description.aiType=The type of AI being used by the NPC\n\nSwim: Similar to Fly AI, but only chases the player while the player is in Water. The NPC must start in Water or this won't work.\nFly: The NPC flies directly toward the player.\nFly (Tied): The NPC flies directly toward the player, but cant go further than the distance the starting position has from their node.\nSmart Fly: The NPC flies toward the player using pathfinding.\nNode Walk: The NPC walks between it's nodes.\nChase Walk: The NPC walks toward the player.\nWander: The NPC randomly walks and stands around.\nWalk & Climb: The NPC has Fly AI when behind a bg tile, and has Chase Walk AI when not behind a bg tile.\nChase Jump: Similar to ChaseWalk AI, but can only move in the air and not on the ground. (Similar to Terraria's slime AI)
+entities.DoonvHelper/CustomNPC.attributes.description.waitForMovement=If enabled the NPC will wait until the player moves before the NPC starts moving. 
+entities.DoonvHelper/CustomNPC.attributes.description.acceleration=The change per second of the NPC's speed.
 
 entities.DoonvHelper/DialogNPC.placements.name.normal=Dialog NPC
+entities.DoonvHelper/DialogNPC.placements.description.normal=A very customizable Dialog NPC with many different AIs and the ability to start C#/Dialog/Lua cutscenes.
 entities.DoonvHelper/DialogNPC.attributes.name.aiType=AI Type
 entities.DoonvHelper/DialogNPC.attributes.name.hitboxXOffset=Hitbox X Offset
 entities.DoonvHelper/DialogNPC.attributes.name.hitboxYOffset=Hitbox Y Offset
 entities.DoonvHelper/DialogNPC.attributes.name.XSpeed=X Speed
 entities.DoonvHelper/DialogNPC.attributes.name.YSpeed=Y Speed
-entities.DoonvHelper/DialogNPC.attributes.description.XSpeed=The maximum pixels/sec horizontal speed of the entity.
-entities.DoonvHelper/DialogNPC.attributes.description.YSpeed=The maximum pixels/sec vertical/fall speed of the entity.
+entities.DoonvHelper/DialogNPC.attributes.description.XSpeed=The maximum pixels/second horizontal speed of the NPC.
+entities.DoonvHelper/DialogNPC.attributes.description.YSpeed=The maximum pixels/second vertical/fall speed of the NPC.
+entities.DoonvHelper/DialogNPC.attributes.description.aiType=The type of AI being used by the NPC\n\nSwim: Similar to Fly AI, but only chases the player while the player is in Water. The NPC must start in Water or this won't work.\nFly: The NPC flies directly toward the player.\nFly (Tied): The NPC flies directly toward the player, but cant go further than the distance the starting position has from their node.\nSmart Fly: The NPC flies toward the player using pathfinding.\nNode Walk: The NPC walks between it's nodes.\nChase Walk: The NPC walks toward the player.\nWander: The NPC randomly walks and stands around.\nWalk & Climb: The NPC has Fly AI when behind a bg tile, and has Chase Walk AI when not behind a bg tile.\nChase Jump: Similar to ChaseWalk AI, but can only move in the air and not on the ground. (Similar to Terraria's slime AI)
+entities.DoonvHelper/DialogNPC.attributes.description.waitForMovement=If enabled the NPC will wait until the player moves before the NPC starts moving. 
+entities.DoonvHelper/DialogNPC.attributes.description.acceleration=The change per second of the NPC's speed.
 entities.DoonvHelper/DialogNPC.attributes.name.csEventID=C# Event ID
-entities.DoonvHelper/DialogNPC.attributes.description.aiType=The type of AI being used by the NPC\n\nSwim: Similar to Fly AI, but only chases the player while the player is in Water. The NPC must start in Water or this won't work.\nFly: The NPC flies directly toward the player.\nSmart Fly: The NPC flies toward the player using pathfinding.\nNode Walk: The NPC walks between it's nodes.\nChase Walk: The NPC walks toward the player.\nWander: The NPC randomly walks and stands around.\nWalk & Climb: The NPC has Fly AI when behind a bg tile, and has Chase Walk AI when not behind a bg tile.\nChase Jump: Similar to ChaseWalk AI, but can only move in the air and not on the ground. (Similar to Terraria's slime AI)
 
 entities.DoonvHelper/CustomEnemy.placements.name.normal=Custom Enemy
+entities.DoonvHelper/CustomEnemy.placements.description.normal=A very customizable Enemy with many different AIs and methods of destroying it.
 entities.DoonvHelper/CustomEnemy.attributes.name.aiType=AI Type
 entities.DoonvHelper/CustomEnemy.attributes.name.hitboxXOffset=Hitbox X Offset
 entities.DoonvHelper/CustomEnemy.attributes.name.hitboxYOffset=Hitbox Y Offset
 entities.DoonvHelper/CustomEnemy.attributes.name.XSpeed=X Speed
 entities.DoonvHelper/CustomEnemy.attributes.name.YSpeed=Y Speed
-entities.DoonvHelper/CustomEnemy.attributes.description.XSpeed=The maximum pixels/sec horizontal speed of the entity.
-entities.DoonvHelper/CustomEnemy.attributes.description.YSpeed=The maximum pixels/sec vertical/fall speed of the entity.
-entities.DoonvHelper/CustomEnemy.attributes.description.aiType=The type of AI being used by the NPC\n\nSwim: Similar to Fly AI, but only chases the player while the player is in Water. The NPC must start in Water or this won't work.\nFly: The NPC flies directly toward the player.\nSmart Fly: The NPC flies toward the player using pathfinding.\nNode Walk: The NPC walks between it's nodes.\nChase Walk: The NPC walks toward the player.\nWander: The NPC randomly walks and stands around.\nWalk & Climb: The NPC has Fly AI when behind a bg tile, and has Chase Walk AI when not behind a bg tile.\nChase Jump: Similar to ChaseWalk AI, but can only move in the air and not on the ground. (Similar to Terraria's slime AI)
+entities.DoonvHelper/CustomEnemy.attributes.description.XSpeed=The maximum pixels/second horizontal speed of the Enemy.
+entities.DoonvHelper/CustomEnemy.attributes.description.YSpeed=The maximum pixels/second vertical/fall speed of the Enemy.
+entities.DoonvHelper/CustomEnemy.attributes.description.aiType=The type of AI being used by the Enemy\n\nSwim: Similar to Fly AI, but only chases the player while the player is in Water. The NPC must start in Water or this won't work.\nFly: The NPC flies directly toward the player.\nFly (Tied): The NPC flies directly toward the player, but cant go further than the distance the starting position has from their node.\nSmart Fly: The NPC flies toward the player using pathfinding.\nNode Walk: The NPC walks between it's nodes.\nChase Walk: The NPC walks toward the player.\nWander: The NPC randomly walks and stands around.\nWalk & Climb: The NPC has Fly AI when behind a bg tile, and has Chase Walk AI when not behind a bg tile.\nChase Jump: Similar to ChaseWalk AI, but can only move in the air and not on the ground. (Similar to Terraria's slime AI)
+entities.DoonvHelper/CustomEnemy.attributes.description.waitForMovement=If enabled the Eneny will wait until the player moves before the Enemy starts moving. 
+entities.DoonvHelper/CustomEnemy.attributes.description.acceleration=The change per second of the Enemy's speed.
+entities.DoonvHelper/CustomEnemy.attributes.name.bounceboxXOffset=Bouncebox X Offset
+entities.DoonvHelper/CustomEnemy.attributes.name.bounceboxYOffset=Bouncebox Y Offset
+entities.DoonvHelper/CustomEnemy.attributes.description.dashable=Allows the player to dash through the enemy and deal 1 point of damage.
 
 triggers.DoonvHelper/SetFlagOnEntityCount.placements.name.normal=Set Flag On Entity Count (Requires FrostHelper)
