@@ -61,14 +61,8 @@ namespace Celeste.Mod.DoonvHelper.Utils
 		/// <param name="randomizeFrame">Whether to randomize the starting frame and animation timer.</param>
 		public static void PlaySafe(this Sprite sprite, string id, bool restart = false, bool randomizeFrame = false)
 		{
-			if (sprite.Has(id))
-			{
-				sprite.Play(id, restart, randomizeFrame);
-			}
-			else
-			{
-				Logger.Log(LogLevel.Error, "DoonvHelper.Utils", $"Sprite {sprite.Path} doesn't contain animation \"{id}\".");
-			}
+			if (sprite.Has(id)) sprite.Play(id, restart, randomizeFrame);
+			else Logger.Log(LogLevel.Error, "DoonvHelper.Utils", $"Sprite {sprite.Path} doesn't contain animation \"{id}\".");
 		}
 
 		/// <summary>

@@ -42,7 +42,7 @@
         <Reference Include="LuaCutscenes">
             <HintPath>../../ModsUnzipped/LuaCutscenes/LuaCutscenes.dll</HintPath>
         </Reference>
-        <Reference Include="LuaCutscenes">
+        <Reference Include="XaphanHelper">
             <HintPath>../../ModsUnzipped/XaphanHelper/Code/bin/XaphanHelper.dll</HintPath>
         </Reference>
     </ItemGroup>

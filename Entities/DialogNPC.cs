@@ -79,6 +79,7 @@ public class DialogNPC : CustomNPC
 		data.Enum<FacingAt>("facing", FacingAt.MovementFlip),
 		data.Bool("waitForMovement", true),
 		data.Bool("outlineEnabled", true),
+		data.Bool("enforceLevelBounds", true),
 		new Point(
 			data.Int("talkBoundsWidth", 80),
 			data.Int("talkBoundsHeight", 40)
@@ -105,16 +106,18 @@ public class DialogNPC : CustomNPC
 		FacingAt facing,
 		bool waitForMovement,
 		bool outlineEnabled,
+		bool enforceLevelBounds,
 		Point talkBoundsSize,
 		Vector2 talkIndicatorOffset,
 		string basicDialogID = "",
 		string luaCutscene = "",
 		string csEventID = ""
-	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled)
+	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
 	{
 		this.LuaCutsceneFilePath = luaCutscene;
 		this.BasicDialogID = basicDialogID;
 		this.CsharpEventID = csEventID;
+		
 		Add(new TalkComponent(
 			new Rectangle((int)(talkBoundsSize.X * -0.5f), -talkBoundsSize.Y, talkBoundsSize.X, talkBoundsSize.Y),
 			new Vector2(0f, -this.Sprite.Texture.Height) + talkIndicatorOffset,

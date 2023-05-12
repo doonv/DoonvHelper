@@ -37,5 +37,6 @@
         <Loop id="walking" path="guide_" delay="0.05" frames="1-14" />
 
         <Loop id="gore" path="guide_gore" frames="0,1,2" />
+        <Loop id="connector" path="snatcherVine" frames="0" />
     </DoonvHelper_CustomNPC_guide>
 </Sprites>

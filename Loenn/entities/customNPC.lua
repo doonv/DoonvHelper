@@ -18,8 +18,10 @@ customNPC.fieldInformation = {
     },
     facing = {
         options = {
-            { "Movement (Flip)",   "MovementFlip" },
-            { "Movement (Rotate)", "MovementRotate" },
+            { "None",                     "None" },
+            { "Movement (Flip)",          "MovementFlip" },
+            { "Movement (Rotate)",        "MovementRotate" },
+            { "Movement (Rotate + Flip)", "MovementRotateFlip" },
         },
         editable = false,
     },
@@ -31,9 +33,10 @@ customNPC.fieldOrder = {
     "XSpeed", "YSpeed",
     "acceleration", "jumpHeight",
     "aiType", "spriteID",
-    "hitboxXOffset", "hitboxYOffset",
     "hitboxWidth", "hitboxHeight",
-    "facing", "waitForMovement", "outlineEnabled"
+    "hitboxXOffset", "hitboxYOffset",
+    "facing", "waitForMovement", "outlineEnabled",
+    "enforceLevelBounds"
 }
 customNPC.depth = 1
 customNPC.justification = { 0.5, 1 }
@@ -56,7 +59,8 @@ customNPC.placements = {
         facing = "MovementFlip",
         spriteID = "DoonvHelper_CustomNPC_zombie",
         waitForMovement = true,
-        outlineEnabled = false
+        outlineEnabled = false,
+        enforceLevelBounds = true
     }
 }
 

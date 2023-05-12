@@ -47,8 +47,13 @@ public class SetFlagOnEntityCount : Trigger
 
 	public SetFlagOnEntityCount(EntityData data, Vector2 offset) : base(data, offset)
 	{
-		if (DoonvHelperModule.FrostHelperImports.EntityNameToType is null)
-			Logger.LogDetailed(LogLevel.Error, "DoonvHelper", "FrostHelper `EntityNameToType` ModInterop function not found!");
+		if (DoonvHelperModule.FrostHelperImports.EntityNameToType is null) {
+			Logger.LogDetailed(
+				LogLevel.Error,
+				"DoonvHelper",
+				"FrostHelper `EntityNameToType` ModInterop function not found! (Install FrostHelper to fix)" 
+			);
+		}
 		this.Flag = data.Attr("flag", "");
 		this.TargetCount = data.Int("count", 0);
 		this.Operator = data.Enum<OperatorType>("operator", OperatorType.EqualTo);

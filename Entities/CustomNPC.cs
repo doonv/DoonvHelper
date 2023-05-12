@@ -107,8 +107,10 @@ public class CustomNPC : Actor
 	/// <summary>An enum facing behaviors.</summary>
 	public enum FacingAt
 	{
+		None,
 		MovementFlip,
 		MovementRotate,
+		MovementRotateFlip,
 	}
 	/// <summary>The positions of each of the nodes.</summary>
 	public readonly Vector2[] Nodes;
@@ -126,6 +128,7 @@ public class CustomNPC : Actor
 	public FacingAt Facing;
 	public bool WaitForMovement;
 	public bool OutlineEnabled;
+	public bool EnforceLevelBounds;
 
 	public Hitbox JumpCheckCollider => new Hitbox(
 		this.Collider.Width + 20f,
@@ -157,7 +160,7 @@ public class CustomNPC : Actor
 		AIType ai, string spriteID,
 		float jumpHeight,
 		FacingAt facing, bool waitForMovement = true,
-		bool outlineEnabled = true
+		bool outlineEnabled = true, bool enforceLevelBounds = true
 	) : base(nodes[0])
 	{
 		this.Depth = 1;
@@ -174,6 +177,7 @@ public class CustomNPC : Actor
 		this.WaitForMovement = waitForMovement;
 		this.JumpHeight = jumpHeight;
 		this.OutlineEnabled = outlineEnabled;
+		this.EnforceLevelBounds = enforceLevelBounds;
 
 		if (this.Nodes.Length > 1)
 			this.flyTiedAICircleRadius = Vector2.Distance(this.Nodes[0], this.Nodes[1]);
@@ -209,7 +213,8 @@ public class CustomNPC : Actor
 		data.Float("jumpHeight", 50f),
 		data.Enum<FacingAt>("facing", FacingAt.MovementFlip),
 		data.Bool("waitForMovement", true),
-		data.Bool("outlineEnabled", true)
+		data.Bool("outlineEnabled", true),
+		data.Bool("enforceLevelBounds", true)
 	)
 	{
 	}
@@ -262,7 +267,6 @@ public class CustomNPC : Actor
 		StateMachine.State = (int)St.Idle;
 		level = (scene as Level);
 	}
-
 	public override void Awake(Scene scene)
 	{
 		base.Awake(scene);
@@ -325,24 +329,33 @@ public class CustomNPC : Actor
 				frame
 			));
 		}
+
 		Scene.OnEndOfFrame += () => this.RemoveSelf();
+	}
+
+	public static void RotateSpriteToFacing(ref Sprite sprite, in Vector2 velocity, in FacingAt facingAt)
+	{
+		if (velocity.LengthSquared() < 0.1f) return;
+
+		switch (facingAt)
+		{
+			// This line isn't needed because the None option doesn't do anything
+			// case FacingAt.None: break;
+			case FacingAt.MovementRotateFlip:
+				sprite.FlipY = Math.Cos(sprite.Rotation) < 0f;
+				goto case FacingAt.MovementRotate;
+			case FacingAt.MovementRotate:
+				sprite.Rotation = velocity.Angle() - (float)Math.PI;
+				break;
+			case FacingAt.MovementFlip:
+				sprite.FlipX = velocity.X > 0f;
+				break;
+		}
 	}
 
 	private int stMovingUpdate()
 	{
-		if (Velocity.LengthSquared() > 0.1f)
-		{
-			switch (Facing)
-			{
-				case FacingAt.MovementRotate:
-					Sprite.Rotation = Velocity.Angle() - (float)Math.PI;
-					Sprite.FlipY = Math.Cos(Sprite.Rotation) < 0f;
-					break;
-				case FacingAt.MovementFlip:
-					Sprite.FlipX = Velocity.X > 0f;
-					break;
-			}
-		}
+		RotateSpriteToFacing(ref Sprite, Velocity, Facing);
 		// At the end of the frame our state changes to this function's return value.
 		return StateMachine.State;
 	}
@@ -350,20 +363,45 @@ public class CustomNPC : Actor
 	public override void Update()
 	{
 		base.Update();
+
 		if (player is null || StateMachine.State == (int)St.Dummy || (WaitForMovement && player.JustRespawned)) return;
 
-		int newState = AIUpdate();
-		if (Velocity.Length() > 0.1f)
-		{
+		int newState = AIUpdate(); // Update the enemy based on its AI and then store the new state.
+		if (Velocity.LengthSquared() > 0.1f) 
 			StateMachine.State = newState;
-		}
 		else
-		{
-			StateMachine.State = (int)St.Idle;
-		}
+			StateMachine.State = (int)St.Idle; 
 
+
+		// Open doors
+		foreach (Door door in Scene.Tracker.GetEntities<Door>())
+			if (this.CollideCheck(door)) door.Open(this.X);
+
+		// Move the NPC and then enforce the level bounds.
 		MoveH(Velocity.X * Engine.DeltaTime);
 		MoveV(Velocity.Y * Engine.DeltaTime);
+
+		if (EnforceLevelBounds) {
+			if (this.Left < (float)level.Bounds.Left)
+			{
+				this.Left = level.Bounds.Left;
+				this.Velocity.X = 0f;
+			}
+			if (this.Right > (float)level.Bounds.Right)
+			{
+				this.Right = level.Bounds.Right;
+				this.Velocity.X = 0f;
+			}
+			if (this.Top < (float)(level.Bounds.Top - 24))
+			{
+				this.Top = level.Bounds.Top - 24;
+				this.Velocity.Y = 0f;
+			}
+			if (this.Top > (float)(level.Bounds.Bottom + 4))
+			{
+				this.Kill();
+			}
+		}
 	}
 
 

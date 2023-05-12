@@ -9,13 +9,13 @@ using Celeste.Mod.DoonvHelper.DoonvHelperUtils;
 
 namespace Celeste.Mod.DoonvHelper;
 
-public class ComfCounterInChapterPanel
+internal class ComfCounterInChapterPanel
 {
 
 	/// <summary>
 	/// Hook the methods of `OuiChapterPanel` so it displays a comf counter.
 	/// </summary>
-	public void HookMethods()
+	internal void HookMethods()
 	{
 		On.Celeste.Session.ctor_AreaKey_string_AreaStats += ModSessionCreate; // Store comf amount at beginning of session
 		On.Celeste.OuiChapterPanel.ctor += ModOuiChapterPanelConstructor; // Create the counter
@@ -35,7 +35,7 @@ public class ComfCounterInChapterPanel
 	/// <summary>
 	/// Unhook the methods of `OuiChapterPanel` so it doesn't display a comf counter.
 	/// </summary>
-	public void UnhookMethods()
+	internal void UnhookMethods()
 	{
 		On.Celeste.Session.ctor_AreaKey_string_AreaStats -= ModSessionCreate;
 		On.Celeste.OuiChapterPanel.ctor -= ModOuiChapterPanelConstructor;

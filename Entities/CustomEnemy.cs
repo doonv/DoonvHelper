@@ -15,24 +15,30 @@ public class CustomEnemy : CustomNPC
 		public Sprite Sprite;
 		public Vector2 Velocity;
 		public float SafeTime;
+		public FacingAt Facing;
 
 		private Player player;
 
 		public Bullet() : base(Vector2.Zero) { }
-		public Bullet Init(string spriteID, Vector2 position, Vector2 velocity, float safeTime, Player player)
+		public Bullet Init(string spriteID, Vector2 position, Vector2 velocity, float safeTime, Player player, FacingAt facing)
 		{
 			Add(Sprite = GFX.SpriteBank.Create(spriteID));
-			Collider = new Hitbox(6f, 6f, -3f, -3f);
-			Position = position;
-			Velocity = velocity;
-			SafeTime = safeTime;
+
+			this.Collider = new Hitbox(6f, 6f, -3f, -3f);
+			this.Position = position;
+			this.Velocity = velocity;
+			this.SafeTime = safeTime;
+			this.Facing = facing;
 			this.player = player;
+
 			return this;
 		}
 
 		public override void Update()
 		{
 			base.Update();
+			
+			RotateSpriteToFacing(ref Sprite, Velocity, Facing);
 			SafeTime -= Engine.DeltaTime;
 			if (this.CollideCheck(player))
 			{
@@ -43,6 +49,7 @@ public class CustomEnemy : CustomNPC
 				destroy();
 			}
 			if ((Scene as Level).IsInCamera(Position, 32f) == false) destroy();
+			
 			MoveH(Velocity.X * Engine.DeltaTime, destroy);
 			MoveV(Velocity.Y * Engine.DeltaTime, destroy);
 		}
@@ -60,6 +67,7 @@ public class CustomEnemy : CustomNPC
 	public float BulletShootTimer = -1f;
 	public float InvincibilityFramesTimer = -1f;
 	public Hitbox Bouncebox;
+	public FacingAt BulletFacing;
 
 	private Player player;
 
@@ -79,6 +87,7 @@ public class CustomEnemy : CustomNPC
 		data.Enum<FacingAt>("facing", FacingAt.MovementFlip),
 		data.Bool("waitForMovement", true),
 		data.Bool("outlineEnabled", true),
+		data.Bool("enforceLevelBounds", true),
 		data.Attr("bulletSpriteID", "badeline_projectile"),
 		data.Float("bulletRecharge", 0f),
 		data.Float("bulletSpeed", 300f),
@@ -90,7 +99,8 @@ public class CustomEnemy : CustomNPC
 			y: data.Float("bounceboxYOffset", 0f)
 		),
 		data.Int("health", 0),
-		data.Bool("dashable", false)
+		data.Bool("dashable", false),
+		data.Enum<FacingAt>("bulletFacing", FacingAt.None)
 	)
 	{
 	}
@@ -106,14 +116,16 @@ public class CustomEnemy : CustomNPC
 		FacingAt facing,
 		bool waitForMovement,
 		bool outlineEnabled,
+		bool enforceLevelBounds,
 		string bulletSpriteID = "badeline_projectile",
 		float bulletRecharge = 0.0f,
 		float bulletSpeed = 300f,
 		float bulletSafeTime = 0.25f,
 		Hitbox bouncebox = null,
 		int health = 1,
-		bool dashable = false
-	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled)
+		bool dashable = false,
+		FacingAt bulletFacing = FacingAt.None
+	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
 	{
 		this.BulletSpriteID = bulletSpriteID;
 		this.BulletRecharge = bulletRecharge;
@@ -121,6 +133,7 @@ public class CustomEnemy : CustomNPC
 		this.BulletSafeTime = bulletSafeTime;
 		this.Health = health;
 		this.Dashable = dashable;
+		this.BulletFacing = bulletFacing;
 
 		if (bouncebox is not null && bouncebox.Width > 0 && bouncebox.Height > 0)
 		{
@@ -175,7 +188,8 @@ public class CustomEnemy : CustomNPC
 			this.Center,
 			(target - this.Center).SafeNormalize(BulletSpeed),
 			BulletSafeTime,
-			player
+			player,
+			BulletFacing
 		));
 	}
 
@@ -183,24 +197,26 @@ public class CustomEnemy : CustomNPC
 	/// Makes the enemy takes damage, kills them if the damage is lethal.
 	/// </summary>
 	/// <param name="damage">The amount of health to deal.</param>
-	public virtual void Damage(int damage = 1)
+	/// <returns>A bool which is true if damage was dealt to the enemy.</returns>
+	public virtual bool Damage(int damage = 1)
 	{
-		if (InvincibilityFramesTimer > 0f) return;
+		if (InvincibilityFramesTimer > 0f) return false;
 		int newHealth = Health - damage;
 		if (newHealth <= 0)
 		{
 			this.Kill();
-			return;
+			return true;
 		}
 		Health = newHealth;
 		InvincibilityFramesTimer = 0.5f;
+		return true;
 	}
 
 	private void OnPlayerCollide(Player player)
 	{
 		if (Dashable && player.StateMachine.State == Player.StDash)
 		{
-			if (InvincibilityFramesTimer <= 0f) this.Damage();
+			this.Damage();
 			if (Input.Jump.Pressed)
 			{
 				player.Jump();
@@ -214,9 +230,11 @@ public class CustomEnemy : CustomNPC
 
 	private void OnPlayerBounce(Player player)
 	{
-		this.Damage();
-		player.Jump();
-		player.RefillDash();
-		player.RefillStamina();
+		if (this.Damage())
+		{
+			player.Jump();
+			player.RefillDash();
+			player.RefillStamina();
+		}
 	}
 }

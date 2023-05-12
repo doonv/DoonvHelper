@@ -8,13 +8,7 @@ namespace Celeste.Mod.DoonvHelper.Entities;
 
 public class ComfInGameDisplay : Entity
 {
-	private const float YOffset = 96f;
-	private const float NumberUpdateDelay = 0.4f;
-	private const float ComboUpdateDelay = 0.3f;
-	private const float AfterUpdateDelay = 2f;
-	private const float LerpInSpeed = 1.2f;
-	private const float LerpOutSpeed = 2f;
-	public static readonly Color FlashColor = Calc.HexToColor("FF5E76");
+	public const float YOffset = 96f;
 	private MTexture bg;
 	public float drawLerp;
 	private float comfUpdateTimer;
@@ -94,8 +88,7 @@ public class ComfInGameDisplay : Entity
 
 	public override void Render()
 	{
-		Vector2 vec = Vector2.Lerp(new Vector2(-bg.Width, base.Y), new Vector2(32f, base.Y), Ease.CubeOut(drawLerp));
-		vec = vec.Round();
+		Vector2 vec = Vector2.Lerp(new Vector2(-bg.Width, base.Y), new Vector2(32f, base.Y), Ease.CubeOut(drawLerp)).Round();
 		bg.DrawJustified(vec + new Vector2(-96f, 12f), new Vector2(0f, 0.5f));
 		comfCounter.Position = vec + new Vector2(0f, 0f - base.Y);
 		comfCounter.Render();
