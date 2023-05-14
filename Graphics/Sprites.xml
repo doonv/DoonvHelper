@@ -39,4 +39,8 @@
         <Loop id="gore" path="guide_gore" frames="0,1,2" />
         <Loop id="connector" path="snatcherVine" frames="0" />
     </DoonvHelper_CustomNPC_guide>
+    <testDoonv path="objects/DoonvHelper/customNPC/" start="loop">
+        <Justify x="0.5" y="0.5" />
+        <Anim id="loop" path="feather" delay="2" frames="0" />
+    </testDoonv>
 </Sprites>

@@ -22,9 +22,10 @@ public class CustomEnemy : CustomNPC
 		public Bullet() : base(Vector2.Zero) { }
 		public Bullet Init(string spriteID, Vector2 position, Vector2 velocity, float safeTime, Player player, FacingAt facing)
 		{
+			if (Sprite is not null) Remove(Sprite);
 			Add(Sprite = GFX.SpriteBank.Create(spriteID));
 
-			this.Collider = new Hitbox(6f, 6f, -3f, -3f);
+			this.Collider = new Hitbox(Sprite.Width / 2f, Sprite.Height / 2f, -Sprite.Width / 4f, -Sprite.Height / 4f);
 			this.Position = position;
 			this.Velocity = velocity;
 			this.SafeTime = safeTime;
@@ -37,8 +38,8 @@ public class CustomEnemy : CustomNPC
 		public override void Update()
 		{
 			base.Update();
-			
-			RotateSpriteToFacing(ref Sprite, Velocity, Facing);
+
+			RotateSpriteToFacing(this.Sprite, Velocity, Facing);
 			SafeTime -= Engine.DeltaTime;
 			if (this.CollideCheck(player))
 			{
@@ -49,7 +50,7 @@ public class CustomEnemy : CustomNPC
 				destroy();
 			}
 			if ((Scene as Level).IsInCamera(Position, 32f) == false) destroy();
-			
+
 			MoveH(Velocity.X * Engine.DeltaTime, destroy);
 			MoveV(Velocity.Y * Engine.DeltaTime, destroy);
 		}

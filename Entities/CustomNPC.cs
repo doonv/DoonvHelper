@@ -333,7 +333,7 @@ public class CustomNPC : Actor
 		Scene.OnEndOfFrame += () => this.RemoveSelf();
 	}
 
-	public static void RotateSpriteToFacing(ref Sprite sprite, in Vector2 velocity, in FacingAt facingAt)
+	public static void RotateSpriteToFacing(Sprite sprite, Vector2 velocity, FacingAt facingAt)
 	{
 		if (velocity.LengthSquared() < 0.1f) return;
 
@@ -355,7 +355,7 @@ public class CustomNPC : Actor
 
 	private int stMovingUpdate()
 	{
-		RotateSpriteToFacing(ref Sprite, Velocity, Facing);
+		RotateSpriteToFacing(Sprite, Velocity, Facing);
 		// At the end of the frame our state changes to this function's return value.
 		return StateMachine.State;
 	}
@@ -367,10 +367,10 @@ public class CustomNPC : Actor
 		if (player is null || StateMachine.State == (int)St.Dummy || (WaitForMovement && player.JustRespawned)) return;
 
 		int newState = AIUpdate(); // Update the enemy based on its AI and then store the new state.
-		if (Velocity.LengthSquared() > 0.1f) 
+		if (Velocity.LengthSquared() > 0.1f)
 			StateMachine.State = newState;
 		else
-			StateMachine.State = (int)St.Idle; 
+			StateMachine.State = (int)St.Idle;
 
 
 		// Open doors
@@ -381,7 +381,8 @@ public class CustomNPC : Actor
 		MoveH(Velocity.X * Engine.DeltaTime);
 		MoveV(Velocity.Y * Engine.DeltaTime);
 
-		if (EnforceLevelBounds) {
+		if (EnforceLevelBounds)
+		{
 			if (this.Left < (float)level.Bounds.Left)
 			{
 				this.Left = level.Bounds.Left;
