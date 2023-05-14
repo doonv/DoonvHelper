@@ -462,9 +462,9 @@ public class CustomNPC : Actor
 				{
 					if (this.CollideRect(new Rectangle(
 						(int)swimAILiquid.Collider.AbsoluteX,
-						(int)swimAILiquid.Collider.AbsoluteY + 16,
+						(int)swimAILiquid.Collider.AbsoluteY + ((int)this.Collider.Height / 2),
 						(int)swimAILiquid.Collider.Width,
-						(int)swimAILiquid.Collider.Height - 16
+						(int)swimAILiquid.Collider.Height - ((int)this.Collider.Height / 2)
 					)))
 					{
 						if (player.CollideCheck(swimAILiquid))
