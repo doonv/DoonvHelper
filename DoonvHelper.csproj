@@ -14,6 +14,9 @@
         <CelesteType Condition="'$(CelesteType)' == ''">FNA</CelesteType>
         <XNAPath Condition="'$(XNAPath)' == ''">
             $(WINDIR)\Microsoft.NET\assembly\GAC_32\{0}\v4.0_4.0.0.0__842cf8be1de50553\{0}.dll</XNAPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <OutputPath>bin</OutputPath>
     </PropertyGroup>
 
     <!--Disable
@@ -30,20 +33,20 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="$(CelestePrefix)\Celeste.exe">
+        <Reference Include="$(CelestePrefix)\legacyRef\Celeste.exe">
             <Private>false</Private>
         </Reference>
-        <Reference Include="$(CelestePrefix)\MMHOOK_Celeste.dll">
+        <Reference Include="$(CelestePrefix)\legacyRef\MMHOOK_Celeste.dll">
             <Private>false</Private>
         </Reference>
         <Reference Include="Guneline">
-            <HintPath>../../ModsUnzipped/Guneline/Guneline.dll</HintPath>
+            <HintPath>../Cache/Guneline.Guneline.dll</HintPath>
         </Reference>
         <Reference Include="LuaCutscenes">
-            <HintPath>../../ModsUnzipped/LuaCutscenes/LuaCutscenes.dll</HintPath>
+            <HintPath>../Cache/LuaCutscenes.LuaCutscenes.dll</HintPath>
         </Reference>
         <Reference Include="XaphanHelper">
-            <HintPath>../../ModsUnzipped/XaphanHelper/Code/bin/XaphanHelper.dll</HintPath>
+            <HintPath>../Cache/XaphanHelper.XaphanHelper.dll</HintPath>
         </Reference>
     </ItemGroup>
 

@@ -11,6 +11,7 @@ This isn't done yet.
 - Project Creator - Doonv
 - Ideas - Doonv
 - Programmer Lead - Doonv
+- Code Update - EllaTAS
 - Project Manager - Doonv
 - Testing Lead - Doonv
 - Testing - Doonv

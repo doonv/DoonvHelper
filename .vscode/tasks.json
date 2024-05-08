@@ -1,0 +1,52 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet build",
+            "type": "shell",
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "release build",
+            "command": "dotnet build . -c Release;rm bin/DoonvHelper.pdb",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "zip build",
+            "command": "C:/Program Files/7-Zip/7z.exe",
+            "args": [
+                "a",
+                "${workspaceFolder}/DoonvHelper.zip",
+                "${workspaceFolder}/bin",
+                "${workspaceFolder}/Dialog",
+                "${workspaceFolder}/Graphics",
+                "${workspaceFolder}/Loenn",
+                "${workspaceFolder}/Maps",
+                "${workspaceFolder}/everest.yaml",
+                "${workspaceFolder}/LICENSE.txt",
+                "${workspaceFolder}/README.md"
+            ],
+            "type": "process",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "silent"
+            }
+        }
+    ]
+}

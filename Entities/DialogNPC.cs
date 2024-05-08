@@ -1,4 +1,3 @@
-using Celeste.Mod.DoonvHelper.Utils;
 using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
@@ -15,6 +14,7 @@ public class DialogNPC : CustomNPC
 	public string LuaCutsceneFilePath;
 	public string BasicDialogID;
 	public string CsharpEventID;
+	private EntityID id;
 
 	private bool cutsceneModeEnabled = false;
 
@@ -63,7 +63,7 @@ public class DialogNPC : CustomNPC
 		}
 	}
 
-	public DialogNPC(EntityData data, Vector2 offset) : this(
+	public DialogNPC(EntityData data, Vector2 offset, EntityID id) : this(
 		data.NodesWithPosition(offset),
 		new Hitbox(
 			width: data.Float("hitboxWidth", 16f),
@@ -88,6 +88,7 @@ public class DialogNPC : CustomNPC
 			data.Float("talkIndicatorX"),
 			data.Float("talkIndicatorY")
 		),
+		id,
 		data.Attr("basicDialogID", ""),
 		data.Attr("luaCutscene", ""),
 		data.Attr("csEventID", "")
@@ -109,6 +110,7 @@ public class DialogNPC : CustomNPC
 		bool enforceLevelBounds,
 		Point talkBoundsSize,
 		Vector2 talkIndicatorOffset,
+		EntityID id,
 		string basicDialogID = "",
 		string luaCutscene = "",
 		string csEventID = ""
@@ -117,7 +119,8 @@ public class DialogNPC : CustomNPC
 		this.LuaCutsceneFilePath = luaCutscene;
 		this.BasicDialogID = basicDialogID;
 		this.CsharpEventID = csEventID;
-		
+		this.id = id;
+
 		Add(new TalkComponent(
 			new Rectangle((int)(talkBoundsSize.X * -0.5f), -talkBoundsSize.Y, talkBoundsSize.X, talkBoundsSize.Y),
 			new Vector2(0f, -this.Sprite.Texture.Height) + talkIndicatorOffset,
@@ -144,7 +147,7 @@ public class DialogNPC : CustomNPC
 				// class `LuaCutscenes.LuaCutsceneTrigger` using the `EntityData`.
 				Trigger cutsceneTrigger = (Trigger)module.GetType().Assembly
 					.GetType("Celeste.Mod.LuaCutscenes.LuaCutsceneTrigger") // Get the class
-					?.GetConstructor(new Type[] { typeof(EntityData), typeof(Vector2) }) // Get the constructor
+					?.GetConstructor(new Type[] { typeof(EntityData), typeof(Vector2), typeof(EntityID) }) // Get the constructor
 					?.Invoke(new object[] {
 							new EntityData() { // We make up the entityData of the trigger
                                 Values = new Dictionary<string, object>() {
@@ -157,7 +160,8 @@ public class DialogNPC : CustomNPC
 								Width = 1,
 								Height = 1
 							},
-							Vector2.Zero
+							Vector2.Zero,
+							id
 					}); // Call the constructor
 
 				Scene.Add(cutsceneTrigger);
@@ -167,7 +171,7 @@ public class DialogNPC : CustomNPC
 				activateCutscene = (_) =>
 				{
 					cutsceneTrigger.OnEnter(player);
-					// We must set `activateCutscene` to `null` before 
+					// We must set `activateCutscene` to `null` before
 					// setting it to this `Action` or this line won't work.
 					this.PreUpdate -= activateCutscene;
 				};
@@ -197,7 +201,7 @@ public class DialogNPC : CustomNPC
 			activateCutscene = (_) =>
 			{
 				EventTrigger.TriggerCustomEvent(trigger, player, CsharpEventID);
-				// We must set `activateCutscene` to `null` before 
+				// We must set `activateCutscene` to `null` before
 				// setting it to this `Action` or this line won't work.
 				this.PreUpdate -= activateCutscene;
 			};
