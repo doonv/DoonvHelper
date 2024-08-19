@@ -69,7 +69,7 @@ public class CustomEnemy : CustomNPC
 	public float InvincibilityFramesTimer = -1f;
 	public Hitbox Bouncebox;
 	public FacingAt BulletFacing;
-
+	public string DeathSound = "event:/-";
 	private Player player;
 
 	public CustomEnemy(EntityData data, Vector2 offset) : this(
@@ -100,6 +100,7 @@ public class CustomEnemy : CustomNPC
 			y: data.Float("bounceboxYOffset", 0f)
 		),
 		data.Int("health", 0),
+		data.Attr("deathSound"),
 		data.Bool("dashable", false),
 		data.Enum<FacingAt>("bulletFacing", FacingAt.None)
 	)
@@ -124,6 +125,7 @@ public class CustomEnemy : CustomNPC
 		float bulletSafeTime = 0.25f,
 		Hitbox bouncebox = null,
 		int health = 1,
+		string deathSound = "event:/-",
 		bool dashable = false,
 		FacingAt bulletFacing = FacingAt.None
 	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
@@ -133,6 +135,7 @@ public class CustomEnemy : CustomNPC
 		this.BulletSpeed = bulletSpeed;
 		this.BulletSafeTime = bulletSafeTime;
 		this.Health = health;
+		this.DeathSound = deathSound;
 		this.Dashable = dashable;
 		this.BulletFacing = bulletFacing;
 
@@ -205,6 +208,7 @@ public class CustomEnemy : CustomNPC
 		int newHealth = Health - damage;
 		if (newHealth <= 0)
 		{
+  			Audio.Play(DeathSound);
 			this.Kill();
 			return true;
 		}
