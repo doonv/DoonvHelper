@@ -69,7 +69,7 @@ public class CustomEnemy : CustomNPC
 	public float InvincibilityFramesTimer = -1f;
 	public Hitbox Bouncebox;
 	public FacingAt BulletFacing;
-
+	public string deathSound = "event:/-";
 	private Player player;
 
 	public CustomEnemy(EntityData data, Vector2 offset) : this(
@@ -205,6 +205,7 @@ public class CustomEnemy : CustomNPC
 		int newHealth = Health - damage;
 		if (newHealth <= 0)
 		{
+  			Audio.Play(deathSound);
 			this.Kill();
 			return true;
 		}
