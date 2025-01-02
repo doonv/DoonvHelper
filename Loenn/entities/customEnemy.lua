@@ -14,7 +14,7 @@ customEnemy.fieldOrder = {
     "bulletRecharge", "bulletSpeed",
     "bulletSafeTime", "bulletFacing",
     "bulletSpriteID",
-    "health", "deathSound", "dashable"
+    "health", "deathSound", "shootSound", "dashable"
 }
 for k, v in pairs({
     health = { fieldType = "integer", minimumValue = 0 },
@@ -26,7 +26,8 @@ for k, v in pairs({
 }) do customEnemy.fieldInformation[k] = v end
 for k, v in pairs({
     health = 1,
-    deathSound = "event:/-",
+    deathSound = "event:/none",
+	shootSound = "event:/none",
     bulletSpriteID = "badeline_projectile",
     bulletRecharge = 0.0,
     bulletSpeed = 100.0,

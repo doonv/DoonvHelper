@@ -447,7 +447,9 @@ public class CustomNPC : Actor
 			return colliding && this.OnGround();
 		}
 
-		switch (AI)
+        Random deterministicRandom = new Random(level.Session.DeathsInCurrentLevel * 37 + SaveData.Instance.Name.GetHashCode()); //For the jump time
+
+        switch (AI)
 		{
 			case AIType.Swim:
 				if (swimAILiquid is null)
@@ -545,13 +547,17 @@ public class CustomNPC : Actor
 				nextMoveTimer -= Engine.DeltaTime;
 				if (nextMoveTimer < 0f)
 				{
-					if (this.OnGround()) Velocity.Y = -JumpHeight;
-					nextMoveTimer = Calc.Random.NextFloat(2f - 0.5f) + 0.5f;
+					if (this.OnGround())
+						Velocity.Y = -JumpHeight;
+					//nextMoveTimer = Calc.Random.NextFloat(2f - 0.5f) + 0.5f;
+					nextMoveTimer = (float)deterministicRandom.NextDouble() * (2f - 0.5f) + 0.5f;
 				}
 
 				WalkerFall();
-				if (this.OnGround()) Velocity.X = Calc.Approach(Velocity.X, 0, Acceleration * Engine.DeltaTime);
-				else Velocity.X = Calc.Approach(Velocity.X, (player.Position - this.Position).Sign().X * Speed.X, Acceleration * Engine.DeltaTime);
+				if (this.OnGround())
+					Velocity.X = Calc.Approach(Velocity.X, 0, Acceleration * Engine.DeltaTime);
+				else
+					Velocity.X = Calc.Approach(Velocity.X, (player.Position - this.Position).Sign().X * Speed.X, Acceleration * Engine.DeltaTime);
 				return (int)St.Walking;
 			case AIType.Wander:
 				// The move timer gets reduced by 1.5 each second when moving.
