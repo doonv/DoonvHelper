@@ -117,5 +117,7 @@ entities.DoonvHelper/CustomEnemy.attributes.description.dashable=Allows the play
 entities.DoonvHelper/CustomEnemy.attributes.description.bulletRecharge=The time delay between every bullet shot in seconds. Set to 0 to disable shooting.
 entities.DoonvHelper/CustomEnemy.attributes.description.bulletSafeTime=The amount of time a bullet doesn't deal damage for in seconds. (Used to make approaching the enemy more fair)
 entities.DoonvHelper/CustomEnemy.attributes.description.health=The maximum health (HP) of the enemy.\nThis is also the amount of health the enemy starts with. (This cannot be changed as there is no reason to do it)
+entities.DoonvHelper/CustomEnemy.attributes.description.deathSound=The sound the enemy makes when killed.
+entities.DoonvHelper/CustomEnemy.attributes.description.shootSound=The sound the enemy makes when it's about to shoot.
 
 triggers.DoonvHelper/SetFlagOnEntityCount.placements.name.normal=Set Flag On Entity Count (Requires FrostHelper)

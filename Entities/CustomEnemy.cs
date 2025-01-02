@@ -2,6 +2,7 @@ using Celeste.Mod.DoonvHelper.Utils;
 using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
+using System.Collections;
 
 namespace Celeste.Mod.DoonvHelper.Entities;
 
@@ -69,10 +70,12 @@ public class CustomEnemy : CustomNPC
 	public float InvincibilityFramesTimer = -1f;
 	public Hitbox Bouncebox;
 	public FacingAt BulletFacing;
-	public string DeathSound = "event:/-";
+	public string DeathSound = "event:/none";
+	public string ShootSound = "event:/none";
 	private Player player;
+    public bool aboutToShoot;
 
-	public CustomEnemy(EntityData data, Vector2 offset) : this(
+    public CustomEnemy(EntityData data, Vector2 offset) : this(
 		data.NodesWithPosition(offset),
 		new Hitbox(
 			width: data.Float("hitboxWidth", 16f),
@@ -101,6 +104,7 @@ public class CustomEnemy : CustomNPC
 		),
 		data.Int("health", 0),
 		data.Attr("deathSound"),
+		data.Attr("shootSound"),
 		data.Bool("dashable", false),
 		data.Enum<FacingAt>("bulletFacing", FacingAt.None)
 	)
@@ -125,7 +129,8 @@ public class CustomEnemy : CustomNPC
 		float bulletSafeTime = 0.25f,
 		Hitbox bouncebox = null,
 		int health = 1,
-		string deathSound = "event:/-",
+		string deathSound = "event:/none",
+		string shootSound = "event:/none",
 		bool dashable = false,
 		FacingAt bulletFacing = FacingAt.None
 	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
@@ -136,6 +141,7 @@ public class CustomEnemy : CustomNPC
 		this.BulletSafeTime = bulletSafeTime;
 		this.Health = health;
 		this.DeathSound = deathSound;
+		this.ShootSound = shootSound;
 		this.Dashable = dashable;
 		this.BulletFacing = bulletFacing;
 
@@ -165,18 +171,22 @@ public class CustomEnemy : CustomNPC
 			BulletShootTimer -= Engine.DeltaTime;
 			if (BulletShootTimer < 0f)
 			{
-				Shoot(player.Position);
-				BulletShootTimer = BulletRecharge;
+				Add(new Coroutine(ShootBegin()));
 			}
 		}
-		if (InvincibilityFramesTimer > 0f)
+		if (!aboutToShoot)
 		{
-			InvincibilityFramesTimer -= Engine.DeltaTime;
-			if (InvincibilityFramesTimer % 0.1f > 0.05f)
-				Sprite.Color = Color.Transparent;
-			else Sprite.Color = Color.White;
+			if (InvincibilityFramesTimer > 0f)
+			{
+				InvincibilityFramesTimer -= Engine.DeltaTime;
+				if (InvincibilityFramesTimer % 0.1f > 0.05f)
+					Sprite.Color = Color.Transparent;
+				else
+					Sprite.Color = Color.White;
+			}
+			else
+				Sprite.Color = Color.White;
 		}
-		else Sprite.Color = Color.White;
 	}
 
 	/// <summary>
@@ -197,6 +207,19 @@ public class CustomEnemy : CustomNPC
 		));
 	}
 
+	public IEnumerator ShootBegin()
+	{
+        BulletShootTimer = BulletRecharge;
+		Audio.Play(ShootSound, Position);
+		aboutToShoot = true;
+        Sprite.Color = Color.LightPink;
+		yield return 0.03f;
+		aboutToShoot = false;
+		yield return 0.1f;
+        Shoot(player.Position);
+        yield break;
+	}
+
 	/// <summary>
 	/// Makes the enemy takes damage, kills them if the damage is lethal.
 	/// </summary>
@@ -208,7 +231,7 @@ public class CustomEnemy : CustomNPC
 		int newHealth = Health - damage;
 		if (newHealth <= 0)
 		{
-  			Audio.Play(DeathSound);
+  			Audio.Play(DeathSound, Position);
 			this.Kill();
 			return true;
 		}

@@ -9,13 +9,13 @@ public class DoonvHelperMapDataProcessor : EverestMapDataProcessor
 
 	public override void End()
 	{
-		Logger.Log(LogLevel.Info, "DoonvHelper", String.Format(
+		/*Logger.Log(LogLevel.Info, "DoonvHelper", String.Format(
 			"Storing Comf Info for {0} Ch. {1} {2}-Side: {3} comfs in level.",
 			String.IsNullOrWhiteSpace(this.AreaKey.GetSID()) ? this.AreaKey.GetLevelSet() : this.AreaKey.GetSID(),
 			this.AreaKey.ChapterIndex,
 			this.AreaKey.Mode == AreaMode.Normal ? "A" : (this.AreaKey.Mode == AreaMode.BSide ? "B" : "C"),
 			comfs
-		));
+		));*/
 		DoonvHelperModule.ComfLevelTotals[new LevelSideID(this.AreaKey)] = comfs;
 	}
 
