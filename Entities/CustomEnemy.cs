@@ -3,6 +3,8 @@ using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
 using System.Collections;
+using Celeste.Mod.XaphanHelper.Entities;
+using MonoMod.Utils;
 
 namespace Celeste.Mod.DoonvHelper.Entities;
 
@@ -75,6 +77,8 @@ public class CustomEnemy : CustomNPC
 	private Player player;
     public bool aboutToShoot;
 
+	private bool xaphanHelperCompat;
+
     public CustomEnemy(EntityData data, Vector2 offset) : this(
 		data.NodesWithPosition(offset),
 		new Hitbox(
@@ -106,8 +110,9 @@ public class CustomEnemy : CustomNPC
 		data.Attr("deathSound"),
 		data.Attr("shootSound"),
 		data.Bool("dashable", false),
-		data.Enum<FacingAt>("bulletFacing", FacingAt.None)
-	)
+		data.Enum<FacingAt>("bulletFacing", FacingAt.None),
+		data.Bool("xaphanHelperCompat",false)
+    )
 	{
 	}
 
@@ -132,8 +137,9 @@ public class CustomEnemy : CustomNPC
 		string deathSound = "event:/none",
 		string shootSound = "event:/none",
 		bool dashable = false,
-		FacingAt bulletFacing = FacingAt.None
-	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
+		FacingAt bulletFacing = FacingAt.None,
+		bool xaphanHelperCompat = false
+    ) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
 	{
 		this.BulletSpriteID = bulletSpriteID;
 		this.BulletRecharge = bulletRecharge;
@@ -144,8 +150,10 @@ public class CustomEnemy : CustomNPC
 		this.ShootSound = shootSound;
 		this.Dashable = dashable;
 		this.BulletFacing = bulletFacing;
+		this.xaphanHelperCompat = xaphanHelperCompat;
 
-		if (bouncebox is not null && bouncebox.Width > 0 && bouncebox.Height > 0)
+
+        if (bouncebox is not null && bouncebox.Width > 0 && bouncebox.Height > 0)
 		{
 			bouncebox.Position.X -= bouncebox.Width / 2f;
 			bouncebox.Position.Y -= bouncebox.Height;
@@ -187,7 +195,33 @@ public class CustomEnemy : CustomNPC
 			else
 				Sprite.Color = Color.White;
 		}
-	}
+		if (xaphanHelperCompat)
+		{
+			Beam beam;
+			Bomb bomb;
+			MegaBomb megaBomb;
+			if ((beam = CollideFirst<Beam>()) != null)
+			{
+				beam.RemoveSelf();
+				if (beam.beamType.Contains("plasma") || beam.beamType.Contains("spazer"))
+					Damage(2);
+				else
+					Damage(1);
+			}
+			if ((bomb = CollideFirst<Bomb>()) != null)
+			{
+				bomb.explode = true;
+				DynamicData.For(bomb).Set("shouldExplodeImmediately", true);
+				Damage(1);
+			}
+			if ((megaBomb = CollideFirst<MegaBomb>()) != null)
+			{
+				DynamicData.For(megaBomb).Set("explode", true);
+				DynamicData.For(megaBomb).Set("shouldExplodeImmediately", true);
+				Damage(2);
+			}
+		}
+    }
 
 	/// <summary>
 	/// Makes the enemy shoot at the <paramref name="target"/>.
