@@ -276,7 +276,7 @@ public class CustomEnemy : CustomNPC
 
 	private void OnPlayerCollide(Player player)
 	{
-		if (Dashable && player.StateMachine.State == Player.StDash)
+		if (Dashable && player.DashAttacking)
 		{
 			this.Damage();
 			if (Input.Jump.Pressed)
