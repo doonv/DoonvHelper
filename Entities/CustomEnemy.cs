@@ -1,8 +1,10 @@
+using System.Collections;
 using Celeste.Mod.DoonvHelper.Utils;
 using Celeste.Mod.Entities;
+using Celeste.Mod.XaphanHelper.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
-using System.Collections;
+using MonoMod.Utils;
 
 namespace Celeste.Mod.DoonvHelper.Entities;
 
@@ -73,9 +75,11 @@ public class CustomEnemy : CustomNPC
 	public string DeathSound = "event:/none";
 	public string ShootSound = "event:/none";
 	private Player player;
-    public bool aboutToShoot;
+	public bool aboutToShoot;
 
-    public CustomEnemy(EntityData data, Vector2 offset) : this(
+	private bool xaphanHelperCompat;
+
+	public CustomEnemy(EntityData data, Vector2 offset) : this(
 		data.NodesWithPosition(offset),
 		new Hitbox(
 			width: data.Float("hitboxWidth", 16f),
@@ -106,7 +110,8 @@ public class CustomEnemy : CustomNPC
 		data.Attr("deathSound"),
 		data.Attr("shootSound"),
 		data.Bool("dashable", false),
-		data.Enum<FacingAt>("bulletFacing", FacingAt.None)
+		data.Enum<FacingAt>("bulletFacing", FacingAt.None),
+		data.Bool("xaphanHelperCompat", false)
 	)
 	{
 	}
@@ -132,7 +137,8 @@ public class CustomEnemy : CustomNPC
 		string deathSound = "event:/none",
 		string shootSound = "event:/none",
 		bool dashable = false,
-		FacingAt bulletFacing = FacingAt.None
+		FacingAt bulletFacing = FacingAt.None,
+		bool xaphanHelperCompat = false
 	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
 	{
 		this.BulletSpriteID = bulletSpriteID;
@@ -144,6 +150,8 @@ public class CustomEnemy : CustomNPC
 		this.ShootSound = shootSound;
 		this.Dashable = dashable;
 		this.BulletFacing = bulletFacing;
+		this.xaphanHelperCompat = xaphanHelperCompat;
+
 
 		if (bouncebox is not null && bouncebox.Width > 0 && bouncebox.Height > 0)
 		{
@@ -187,6 +195,32 @@ public class CustomEnemy : CustomNPC
 			else
 				Sprite.Color = Color.White;
 		}
+		if (xaphanHelperCompat)
+		{
+			Beam beam;
+			Bomb bomb;
+			MegaBomb megaBomb;
+			if ((beam = CollideFirst<Beam>()) != null)
+			{
+				beam.RemoveSelf();
+				if (beam.beamType.Contains("plasma") || beam.beamType.Contains("spazer"))
+					Damage(2);
+				else
+					Damage(1);
+			}
+			if ((bomb = CollideFirst<Bomb>()) != null)
+			{
+				bomb.explode = true;
+				DynamicData.For(bomb).Set("shouldExplodeImmediately", true);
+				Damage(1);
+			}
+			if ((megaBomb = CollideFirst<MegaBomb>()) != null)
+			{
+				DynamicData.For(megaBomb).Set("explode", true);
+				DynamicData.For(megaBomb).Set("shouldExplodeImmediately", true);
+				Damage(2);
+			}
+		}
 	}
 
 	/// <summary>
@@ -209,15 +243,15 @@ public class CustomEnemy : CustomNPC
 
 	public IEnumerator ShootBegin()
 	{
-        BulletShootTimer = BulletRecharge;
+		BulletShootTimer = BulletRecharge;
 		Audio.Play(ShootSound, Position);
 		aboutToShoot = true;
-        Sprite.Color = Color.LightPink;
+		Sprite.Color = Color.LightPink;
 		yield return 0.03f;
 		aboutToShoot = false;
 		yield return 0.1f;
-        Shoot(player.Position);
-        yield break;
+		Shoot(player.Position);
+		yield break;
 	}
 
 	/// <summary>
@@ -231,7 +265,7 @@ public class CustomEnemy : CustomNPC
 		int newHealth = Health - damage;
 		if (newHealth <= 0)
 		{
-  			Audio.Play(DeathSound, Position);
+			Audio.Play(DeathSound, Position);
 			this.Kill();
 			return true;
 		}
@@ -242,7 +276,7 @@ public class CustomEnemy : CustomNPC
 
 	private void OnPlayerCollide(Player player)
 	{
-		if (Dashable && player.StateMachine.State == Player.StDash)
+		if (Dashable && player.DashAttacking)
 		{
 			this.Damage();
 			if (Input.Jump.Pressed)
