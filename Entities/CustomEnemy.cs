@@ -1,9 +1,9 @@
+using System.Collections;
 using Celeste.Mod.DoonvHelper.Utils;
 using Celeste.Mod.Entities;
+using Celeste.Mod.XaphanHelper.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
-using System.Collections;
-using Celeste.Mod.XaphanHelper.Entities;
 using MonoMod.Utils;
 
 namespace Celeste.Mod.DoonvHelper.Entities;
@@ -75,11 +75,11 @@ public class CustomEnemy : CustomNPC
 	public string DeathSound = "event:/none";
 	public string ShootSound = "event:/none";
 	private Player player;
-    public bool aboutToShoot;
+	public bool aboutToShoot;
 
 	private bool xaphanHelperCompat;
 
-    public CustomEnemy(EntityData data, Vector2 offset) : this(
+	public CustomEnemy(EntityData data, Vector2 offset) : this(
 		data.NodesWithPosition(offset),
 		new Hitbox(
 			width: data.Float("hitboxWidth", 16f),
@@ -111,8 +111,8 @@ public class CustomEnemy : CustomNPC
 		data.Attr("shootSound"),
 		data.Bool("dashable", false),
 		data.Enum<FacingAt>("bulletFacing", FacingAt.None),
-		data.Bool("xaphanHelperCompat",false)
-    )
+		data.Bool("xaphanHelperCompat", false)
+	)
 	{
 	}
 
@@ -139,7 +139,7 @@ public class CustomEnemy : CustomNPC
 		bool dashable = false,
 		FacingAt bulletFacing = FacingAt.None,
 		bool xaphanHelperCompat = false
-    ) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
+	) : base(nodes, hitbox, speed, acceleration, ai, spriteID, jumpHeight, facing, waitForMovement, outlineEnabled, enforceLevelBounds)
 	{
 		this.BulletSpriteID = bulletSpriteID;
 		this.BulletRecharge = bulletRecharge;
@@ -153,7 +153,7 @@ public class CustomEnemy : CustomNPC
 		this.xaphanHelperCompat = xaphanHelperCompat;
 
 
-        if (bouncebox is not null && bouncebox.Width > 0 && bouncebox.Height > 0)
+		if (bouncebox is not null && bouncebox.Width > 0 && bouncebox.Height > 0)
 		{
 			bouncebox.Position.X -= bouncebox.Width / 2f;
 			bouncebox.Position.Y -= bouncebox.Height;
@@ -221,7 +221,7 @@ public class CustomEnemy : CustomNPC
 				Damage(2);
 			}
 		}
-    }
+	}
 
 	/// <summary>
 	/// Makes the enemy shoot at the <paramref name="target"/>.
@@ -243,15 +243,15 @@ public class CustomEnemy : CustomNPC
 
 	public IEnumerator ShootBegin()
 	{
-        BulletShootTimer = BulletRecharge;
+		BulletShootTimer = BulletRecharge;
 		Audio.Play(ShootSound, Position);
 		aboutToShoot = true;
-        Sprite.Color = Color.LightPink;
+		Sprite.Color = Color.LightPink;
 		yield return 0.03f;
 		aboutToShoot = false;
 		yield return 0.1f;
-        Shoot(player.Position);
-        yield break;
+		Shoot(player.Position);
+		yield break;
 	}
 
 	/// <summary>
@@ -265,7 +265,7 @@ public class CustomEnemy : CustomNPC
 		int newHealth = Health - damage;
 		if (newHealth <= 0)
 		{
-  			Audio.Play(DeathSound, Position);
+			Audio.Play(DeathSound, Position);
 			this.Kill();
 			return true;
 		}
